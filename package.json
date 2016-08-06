@@ -1,0 +1,31 @@
+{
+  "name": "sourcegrade2",
+  "version": "1.0.0",
+  "description": "A web scraper to find grades easily from gradesource.com",
+  "main": "server.js",
+  "scripts": {
+    "init": "npm install",
+    "install": "bower install",
+    "start": "node build/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joelseq/SourceGrade2.git"
+  },
+  "keywords": [
+    "source",
+    "grade",
+    "nodejs",
+    "web",
+    "scraper",
+    "express",
+    "mongo"
+  ],
+  "author": "Joel Sequeira",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/joelseq/SourceGrade2/issues"
+  },
+  "homepage": "https://github.com/joelseq/SourceGrade2#readme"
+}
