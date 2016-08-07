@@ -1,3 +1,7 @@
+/**
+ * Created by joelsequeira on 8/6/16.
+ */
+
 'use strict';
 
 const gulp           = require('gulp'),
