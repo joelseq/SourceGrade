@@ -31,7 +31,7 @@ app.use(function(req,res,next) {
 
 //mongoose.connect(process.env.DB_URI);
 
-//require('./routes')(app);
+require('./routes')(app);
 
 app.get('/ping', (req, res) => {
   res.send('This route works!');
