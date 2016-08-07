@@ -12,6 +12,8 @@ const bodyParser = require('body-parser');
 
 const app = express();
 
+require('dotenv').config();
+
 //==============================
 // Express Config
 //==============================
@@ -29,12 +31,8 @@ app.use(function(req,res,next) {
 	next();
 });
 
-//mongoose.connect(process.env.DB_URI);
+mongoose.connect(process.env.DB_URI);
 
 require('./routes')(app);
-
-app.get('/ping', (req, res) => {
-  res.send('This route works!');
-});
 
 module.exports = app;
