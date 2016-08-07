@@ -8,6 +8,7 @@ const gulp           = require('gulp'),
       batch          = require('gulp-batch'),
       cssnano        = require('gulp-cssnano'),
       nodemon        = require('gulp-nodemon'),
+      injector       = require('gulp-inject'),
       sourcemaps     = require('gulp-sourcemaps'),
       browserSync    = require('browser-sync'),
       autoprefixer   = require('gulp-autoprefixer');
@@ -30,6 +31,18 @@ gulp.task('workflow', function() {
         .pipe(browserSync.reload({
             stream: true
         }));
+});
+
+//===============================================
+// Automatically inject js files in index.html
+//===============================================
+gulp.task('inject', function () {
+    var target = gulp.src('./public/index.html');
+    // It's not necessary to read the files (will speed up things), we're only after their paths:
+    var sources = gulp.src(['!./public/vendor/**/*.js', './public/**/*.js'], {read: false});
+
+    return target.pipe(injector(sources))
+        .pipe(gulp.dest('./public'));
 });
 
 
