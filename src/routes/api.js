@@ -7,9 +7,6 @@
 //==============================
 const express = require('express');
 const scraper = require('./utils/scrape');
-const async = require('async');
-const request = require('request');
-const cheerio = require('cheerio');
 
 const router = express.Router();
 
