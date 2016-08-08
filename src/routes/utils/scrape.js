@@ -9,7 +9,7 @@ const async = require('async');
 const request = require('request');
 const cheerio = require('cheerio');
 
-var scrape = {
+var scraper = {
   scrapeData: scrapeData
 };
 
@@ -26,9 +26,9 @@ function replaceUrl(url) {
 
 /**
  * scrapeData - Scrapes the user's data depending on the given id and url
- * @param id - the user's gradesource number
- * @param url - the course homepage
- * @returns grades - an array containing all the scores
+ * @param req - the request object
+ * @param res - the response object
+ * @param next
  */
 function scrapeData(req, res, next) {
   const id = req.query.id;
@@ -44,40 +44,43 @@ function scrapeData(req, res, next) {
 
   // Array of async functions
   let asyncTasks = [];
-  // Boolean for if id is found
-  var idFound = false;
 
   // Initial request to homepage
   request(url, (error, response, html) => {
     if (error) {
       return {error: 'Invalid URL'};
     }
-    const $ = cheerio.load(html);
-    let tables = $('center>table');
-    let table;
+    var $ = cheerio.load(html);
 
-    tables.each(() => {
-      if ($(this).attr('width', '50%'))
+    var baseUrl = replaceUrl(url); //The 1 is just for the paramater
+
+    var tables = $('center>table');
+
+    var table;
+
+    tables.each(function() {
+      if($(this).attr("width", "50%"))
         table = $(this);
     });
 
-    coursestand = baseUrl + 'coursestand.html';
+    coursestand = baseUrl + "coursestand.html";
 
-    // Filter out the table to reach the anchor tags
-    table.filter(() => {
-      let table = $(this);
-      // Get the tr containing the td we need
-      let tr = table.children().last();
-      // Get the td containing all the anchors we need
-      let td = tr.children().last();
-      // Find all the anchors
-      let anchors = td.find('a');
-      // For one assessment anchor
-      let anchor;
+    //Filter out the table to reach the anchor tags
+    table.filter(function(){
+      var table = $(this);
+      //Get the tr containing the td we need
+      var tr = table.children().last();
+      //Get the td containing all the anchors we need
+      var td = tr.children().last();
+      //Find all the anchors
+      var anchors = td.find("a");
 
-      anchors.each((i, elem) => {
-        let ahref = $(this).attr('href');
-        if (ahref.includes('as')) {
+      /* Get one assessment anchor */
+      var anchor;
+
+      anchors.each(function(i, elem){
+        var ahref = $(this).attr("href");
+        if(ahref.includes('as')) {
           anchor = baseUrl + ahref;
           return false;
         }
@@ -85,12 +88,261 @@ function scrapeData(req, res, next) {
 
       asLink = anchor;
 
-      csGrades = getGrades(id, coursestand);
-      asGrades = getGrades(id, asLink);
-      csGrades = csGrades.reverse();
-      grades = csGrades.concat(asGrades);
-      res.json(grades);
+    }); /* end of filter */
 
+    asyncTasks.push(function(done) {
+      request(coursestand, (error, response, html) => {
+        if(error) {
+          return false;
+        } else {
+          var $ = cheerio.load(html);
+          // Filter out the table containing the scores
+          var tables = $('table');
+          var table;
+          var categories;
+
+          tables.each(function() {
+            if($(this).attr('cellpadding', '3'))
+              table = $(this);
+          });
+
+          table.filter(function() {
+            // Get the first row of that table
+            var row = table.children().first();
+            // Keep track of the number of categories/assessments
+            categories = row.children().length - 2;
+            // Start from the 3rd td in that row
+            var td = row.children().first().next().next();
+
+            // Loop through the entire row, store the info of each td
+            for(var i = 0; i < categories; i++) {
+              // Create grade object and push to grades array
+              var grade = {
+                numProps: td.attr('colspan'),
+                name: td.text(),
+                scores: []
+              };
+              csGrades.push(grade);
+              td = td.next();
+            }
+
+            // Variable for row with target id
+            var targetRow;
+            // Variable to keep track of the row as parsing through for grades
+            var currentRow = row;
+            // Keeps track of the row containing the labels
+            var labelsRow = row.next();
+            // Variable to keep track of label and grade tds
+            var labelTd, gradeTd;
+            var numLabels = labelsRow.children().length - 2;
+            currentRow = currentRow.next().next().next(); // start from first secret number
+
+            // Parse through rows to record all the students scores for each category
+            for(var i = 0; i < table.children().length - 3; i++) {
+              if(currentRow.children().first().text() === id) {
+                targetRow = currentRow;
+              }
+              // Get the labels td in position for the first label
+              labelTd = labelsRow.children().first().next().next();
+              // Get the grades td in position for the first grade
+              gradeTd = currentRow.children().first().next().next();
+
+              var index = 0;
+
+              for(var j = 0; j < numLabels; j++) {
+                if(labelTd.text() === "Score") {
+                  var score = parseFloat(gradeTd.text());
+                  // Push the score of this student into the respective category
+                  if(score) {
+                    csGrades[index].scores.push(score);
+                  }
+                  index++;
+                }
+                labelTd = labelTd.next();
+                gradeTd = gradeTd.next();
+              }
+
+              if(currentRow.next())
+                currentRow = currentRow.next();
+            }
+
+            // Get the second row of the table
+            row = row.next();
+            // Get row containing limits
+            var limitsRow = row.next();
+
+            // Td holding the property name
+            td = row.children().first().next().next();
+            // Tds holding property values and limits
+            var targetTd = targetRow.children().first().next().next();
+            var limitTd = limitsRow.children().first().next().next();
+
+            // Variables used to get the properties for each grade
+            var j = 0;
+            var count = parseInt(csGrades[0].numProps, 10);
+
+            // Loop through the row getting the properties and their values and limits
+            for(var i = 0; i < numLabels; i++) {
+              if(count == 0) {
+                j++;
+                count = parseInt(csGrades[j].numProps, 10);
+              }
+              var propName = td.text();
+              var propValue = targetTd.text();
+              // Check if text is not empty the JS way
+              if(limitTd.text() != String.fromCharCode(160)) {
+                propValue+= " / " + limitTd.text();
+              }
+              csGrades[j][propName] = propValue;
+              td = td.next();
+              limitTd = limitTd.next();
+              targetTd = targetTd.next();
+              count--;
+            }
+
+          }); /* end of filter */
+
+        } /* end of else */
+        done();
+      }, function(err) {
+        if(err) {
+          console.log(err);
+        }
+      });
+    });
+
+    asyncTasks.push(function(done) {
+      request(asLink, (error, response, html) => {
+        if(error) {
+          return false;
+        } else {
+          var $ = cheerio.load(html);
+          // Filter out the table containing the scores
+          var tables = $('table');
+          var table;
+          var categories;
+
+          tables.each(function() {
+            if($(this).attr('cellpadding', '3'))
+              table = $(this);
+          });
+
+          table.filter(function() {
+            // Get the first row of that table
+            var row = table.children().first();
+            // Keep track of the number of categories/assessments
+            categories = row.children().length - 2;
+            // Start from the 3rd td in that row
+            var td = row.children().first().next().next();
+
+            // Loop through the entire row, store the info of each td
+            for(var i = 0; i < categories; i++) {
+              // Create grade object and push to grades array
+              var grade = {
+                numProps: td.attr('colspan'),
+                name: td.text(),
+                scores: []
+              };
+              asGrades.push(grade);
+              td = td.next();
+            }
+
+            // Variable for row with target id
+            var targetRow;
+            // Variable to keep track of the row as parsing through for grades
+            var currentRow = row;
+            // Keeps track of the row containing the labels
+            var labelsRow = row.next();
+            // Variable to keep track of label and grade tds
+            var labelTd, gradeTd;
+            var numLabels = labelsRow.children().length - 2;
+            currentRow = currentRow.next().next().next(); // start from first secret number
+
+            // Parse through rows to record all the students scores for each category
+            for(var i = 0; i < table.children().length - 3; i++) {
+              if(currentRow.children().first().text() === id) {
+                targetRow = currentRow;
+              }
+              // Get the labels td in position for the first label
+              labelTd = labelsRow.children().first().next().next();
+              // Get the grades td in position for the first grade
+              gradeTd = currentRow.children().first().next().next();
+
+              var index = 0;
+
+              for(var j = 0; j < numLabels; j++) {
+                if(labelTd.text() === "Score") {
+                  var score = parseFloat(gradeTd.text());
+                  // Push the score of this student into the respective category
+                  if(score) {
+                    asGrades[index].scores.push(score);
+                  }
+                  index++;
+                }
+                labelTd = labelTd.next();
+                gradeTd = gradeTd.next();
+              }
+
+              if(currentRow.next())
+                currentRow = currentRow.next();
+            }
+
+            // Get the second row of the table
+            row = row.next();
+            // Get row containing limits
+            var limitsRow = row.next();
+
+            // Td holding the property name
+            td = row.children().first().next().next();
+            // Tds holding property values and limits
+            var targetTd = targetRow.children().first().next().next();
+            var limitTd = limitsRow.children().first().next().next();
+
+            // Variables used to get the properties for each grade
+            var j = 0;
+            var count = parseInt(asGrades[0].numProps, 10);
+
+            // Loop through the row getting the properties and their values and limits
+            for(var i = 0; i < numLabels; i++) {
+              if(count == 0) {
+                j++;
+                count = parseInt(asGrades[j].numProps, 10);
+              }
+              var propName = td.text();
+              var propValue = targetTd.text();
+              // Check if text is not empty the JS way
+              if(limitTd.text() != String.fromCharCode(160)) {
+                propValue+= " / " + limitTd.text();
+              }
+              asGrades[j][propName] = propValue;
+              td = td.next();
+              limitTd = limitTd.next();
+              targetTd = targetTd.next();
+              count--;
+            }
+
+          }); /* end of filter */
+
+        } /* end of else */
+        done();
+      }, function(err) {
+        if(err) {
+          console.log(err);
+        }
+      });
+    });
+
+    // Now we have an array of functions doing async tasks
+    // Execute all async tasks in the asyncTasks array
+    async.parallel(asyncTasks, function(err){
+      if(err) {
+        console.log(err);
+      } else {
+        // All tasks are done now
+        csGrades.reverse();
+        grades = csGrades.concat(asGrades);
+        res.json(grades);
+      }
     });
 
   });
@@ -103,57 +355,57 @@ function scrapeData(req, res, next) {
  * @param gradesArray - array containing all the grades
  * @returns true on successful execution
  */
-function getGrades(id, url) {
-  request(url, (error, response, html) => {
+function getGrades(data, callback) {
+  request(data.url, (error, response, html) => {
     if(error) {
       return false;
     } else {
-      let $ = cheerio.load(html);
+      var $ = cheerio.load(html);
       // Filter out the table containing the scores
-      let tables = $('table');
-      let table;
-      let categories;
-      let gradesArray = [];
+      var tables = $('table');
+      var table;
+      var categories;
+      var grades;
 
-      tables.each(() => {
+      tables.each(function() {
         if($(this).attr('cellpadding', '3'))
           table = $(this);
       });
 
-      table.filter(() => {
+      table.filter(function() {
         // Get the first row of that table
-        let row = table.children().first();
+        var row = table.children().first();
         // Keep track of the number of categories/assessments
         categories = row.children().length - 2;
         // Start from the 3rd td in that row
-        let td = row.children().first().next().next();
+        var td = row.children().first().next().next();
 
         // Loop through the entire row, store the info of each td
-        for(let i = 0; i < categories; i++) {
+        for(var i = 0; i < categories; i++) {
           // Create grade object and push to grades array
-          let grade = {
+          var grade = {
             numProps: td.attr('colspan'),
             name: td.text(),
             scores: []
           };
-          gradesArray.push(grade);
+          grades.push(grade);
           td = td.next();
         }
 
         // Variable for row with target id
-        let targetRow;
+        var targetRow;
         // Variable to keep track of the row as parsing through for grades
-        let currentRow = row;
+        var currentRow = row;
         // Keeps track of the row containing the labels
-        let labelsRow = row.next();
+        var labelsRow = row.next();
         // Variable to keep track of label and grade tds
-        let labelTd, gradeTd;
-        let numLabels = labelsRow.children().length - 2;
+        var labelTd, gradeTd;
+        var numLabels = labelsRow.children().length - 2;
         currentRow = currentRow.next().next().next(); // start from first secret number
 
         // Parse through rows to record all the students scores for each category
-        for(let i = 0; i < table.children().length; i++) {
-          if(currentRow.children().first().text() === id) {
+        for(var i = 0; i < table.children().length - 3; i++) {
+          if(currentRow.children().first().text() === data.id) {
             targetRow = currentRow;
           }
           // Get the labels td in position for the first label
@@ -161,13 +413,15 @@ function getGrades(id, url) {
           // Get the grades td in position for the first grade
           gradeTd = currentRow.children().first().next().next();
 
-          let index = 0;
+          var index = 0;
 
-          for(let j = 0; j < numLabels; j++) {
+          for(var j = 0; j < numLabels; j++) {
             if(labelTd.text() === "Score") {
-              let score = parseInt(gradeTd.text(), 10);
+              var score = parseFloat(gradeTd.text());
               // Push the score of this student into the respective category
-              gradesArray[index].scores.push(score);
+              if(score) {
+                grades[index].scores.push(score);
+              }
               index++;
             }
             labelTd = labelTd.next();
@@ -181,44 +435,42 @@ function getGrades(id, url) {
         // Get the second row of the table
         row = row.next();
         // Get row containing limits
-        let limitsRow = row.next();
+        var limitsRow = row.next();
 
         // Td holding the property name
         td = row.children().first().next().next();
         // Tds holding property values and limits
-        let targetTd = targetRow.children().first().next().next();
-        let limitTd = limitsRow.children().first().next().next();
+        var targetTd = targetRow.children().first().next().next();
+        var limitTd = limitsRow.children().first().next().next();
 
         // Variables used to get the properties for each grade
-        let j = 0;
-        let count = parseInt(gradesArray[0].numProps, 10);
+        var j = 0;
+        var count = parseInt(grades[0].numProps, 10);
 
         // Loop through the row getting the properties and their values and limits
-        for(let i = 0; i < labels; i++) {
+        for(var i = 0; i < numLabels; i++) {
           if(count == 0) {
             j++;
-            count = parseInt(gradesArray[j].numProps, 10);
+            count = parseInt(grades[j].numProps, 10);
           }
-          let propName = td.text();
-          let propValue = targetTd.text();
+          var propName = td.text();
+          var propValue = targetTd.text();
           // Check if text is not empty the JS way
           if(limitTd.text() != String.fromCharCode(160)) {
             propValue+= " / " + limitTd.text();
           }
-          gradesArray[j][propName] = propValue;
+          grades[j][propName] = propValue;
           td = td.next();
           limitTd = limitTd.next();
           targetTd = targetTd.next();
           count--;
         }
 
-        return gradesArray;
-
       }); /* end of filter */
 
     } /* end of else */
-
+    callback(null, grades);
   });
 }
 
-module.exports = scrape;
+module.exports = scraper;
