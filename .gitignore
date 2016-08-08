@@ -39,3 +39,6 @@ components
 
 # Environment variables
 .env
+
+# Build folder - used only for production
+build
