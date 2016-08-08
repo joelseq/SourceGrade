@@ -70,7 +70,7 @@ gulp.task('browserSync', function() {
 // Transpiling ES6 to ES5
 //===========================
 gulp.task('build', ['clean'], function() {
-  gulp.src('./src/**/*.js')
+  return gulp.src('./src/**/*.js')
     .pipe(babel())
     .pipe(gulp.dest('./build'))
 });
@@ -98,12 +98,14 @@ gulp.task('nodemon', function() {
 // Watch files and call appropriate task
 //======================================
 gulp.task('watch', ['browserSync'], function () {
-  watch('./src/**/*.js', batch(function (events, done) {
-    gulp.start('build', done);
-  }));
+
+  //watch('./src/**/*.js', batch(function (events, done) {
+  //  gulp.start('build', done);
+  //}));
+
   watch('./src/sass/**/*.scss', batch(function (events, done) {
     gulp.start('workflow', done);
   }));
 });
 
-gulp.task('default', ['workflow', 'build', 'watch', 'nodemon']);
+gulp.task('default', ['workflow', 'watch', 'nodemon']);

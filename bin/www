@@ -4,8 +4,18 @@
  * Module dependencies.
  */
 
-var app = require('../build/server');
+var app;
 var http = require('http');
+require('dotenv').config();
+
+/**
+ * Set app to point to the appropriate server file for the environment
+ */
+if(process.env.NODE_ENV === 'dev') {
+  app = require('../src/server');
+} else {
+  app = require('../build/server');
+}
 
 /**
  * Get port from environment and store in Express.
