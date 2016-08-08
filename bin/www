@@ -6,7 +6,7 @@
 
 var app;
 var http = require('http');
-require('dotenv').config();
+//require('dotenv').config();
 
 /**
  * Set app to point to the appropriate server file for the environment
