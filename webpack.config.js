@@ -23,7 +23,9 @@ module.exports = {
     root: __dirname,
     alias: {
       Main: 'app/components/Main.jsx',
-      Scrape: 'app/components/Scrape.jsx'
+      Scrape: 'app/components/Scrape.jsx',
+      Nav: 'app/components/Nav.jsx',
+      getData: 'app/api/getData.jsx'
     },
     extensions: ['', '.js', '.jsx']
   },
