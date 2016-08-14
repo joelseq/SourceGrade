@@ -22,6 +22,8 @@ module.exports = {
   resolve: {
     root: __dirname,
     alias: {
+      Main: 'app/components/Main.jsx',
+      Scrape: 'app/components/Scrape.jsx'
     },
     extensions: ['', '.js', '.jsx']
   },
