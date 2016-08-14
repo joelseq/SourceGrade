@@ -25,7 +25,8 @@ module.exports = {
       Main: 'app/components/Main.jsx',
       Scrape: 'app/components/Scrape.jsx',
       Nav: 'app/components/Nav.jsx',
-      getData: 'app/api/getData.jsx'
+      getData: 'app/api/getData.jsx',
+      Grades: 'app/components/Grades.jsx'
     },
     extensions: ['', '.js', '.jsx']
   },
