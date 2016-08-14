@@ -6,13 +6,13 @@
 
 var app;
 var http = require('http');
-require('dotenv').config();
 
 /**
  * Set app to point to the appropriate server file for the environment
  */
-if(process.env.NODE_ENV === 'dev') {
+if (process.env.NODE_ENV !== 'production') {
   app = require('../src/server');
+  require('dotenv').config();
 } else {
   app = require('../build/server');
 }
