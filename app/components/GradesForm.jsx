@@ -1,7 +1,7 @@
 const React = require('react');
 
 const GradesForm = React.createClass({
-  onFormSubmit: () => {
+  onFormSubmit: function(e) {
     e.preventDefault();
 
     let id = this.refs.id.value;
@@ -13,7 +13,7 @@ const GradesForm = React.createClass({
       this.props.onSearch(id, url);
     }
   },
-  render: () => {
+  render: function() {
     return (
       <div className="row">
         <div className="columns medium-6 small-centered">
@@ -22,9 +22,6 @@ const GradesForm = React.createClass({
             <input type="text" ref="url" placeholder="Course URL"/>
             <button className="button expanded hollow">Get Grades</button>
           </form>
-        </div>
-        <div>
-          {renderGrades()}
         </div>
       </div>
     );

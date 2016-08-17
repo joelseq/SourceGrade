@@ -4,10 +4,14 @@ const GradesForm = require('GradesForm');
 const GradesResult = require('GradesResult');
 
 const Grades = React.createClass({
-  getInitialState: () => {
-    grades: []
+  getInitialState: function() {
+    return {
+      grades: []
+    }
   },
-  handleSearch: (id, url) => {
+  handleSearch: function(id, url) {
+    let self = this;
+
     getData.fetch(id, url).then(function(grades) {
       self.setState({
         grades: grades
@@ -16,14 +20,15 @@ const Grades = React.createClass({
       alert(errorMessage);
     });
   },
-  render: () => {
-    let {grades} = this.state;
+  render: function() {
+    let self = this;
+    let {grades} = self.state;
 
     function renderGrades() {
       if(grades.length > 0) {
         return <GradesResult grades={grades} />;
       } else {
-        return <GradesForm onSearch={this.handleSearch} />
+        return <GradesForm onSearch={self.handleSearch} />
       }
     }
 
