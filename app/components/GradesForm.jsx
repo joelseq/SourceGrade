@@ -1,7 +1,19 @@
-const React = require('react');
+import React, { PropTypes } from 'react';
 
-const GradesForm = React.createClass({
-  onFormSubmit: function(e) {
+const propTypes = {
+  onSearch: PropTypes.func
+}
+
+const defaultProps = {
+  onSearch() {}
+};
+
+export default class GradesForm extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  onFormSubmit = (e) => {
     e.preventDefault();
 
     let id = this.refs.id.value;
@@ -12,8 +24,9 @@ const GradesForm = React.createClass({
       this.refs.url.value = '';
       this.props.onSearch(id, url);
     }
-  },
-  render: function() {
+  };
+
+  render() {
     return (
       <div className="row">
         <div className="columns medium-6 small-centered">
@@ -26,6 +39,7 @@ const GradesForm = React.createClass({
       </div>
     );
   }
-});
+}
 
-module.exports = GradesForm;
+GradesForm.propTypes = propTypes;
+GradesForm.defaultProps = defaultProps;

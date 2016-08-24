@@ -1,9 +1,20 @@
-const React = require('react');
-const rd3 = require('react-d3');
-const LineChart = rd3.LineChart
+import React, { PropTypes } from 'react';
+import rd3, { LineChart } from 'react-d3';
 
-const GradesResult = React.createClass({
-  render: function() {
+const propTypes = {
+  grades: PropTypes.array
+};
+
+const defaultProps = {
+  grades: []
+};
+
+export default class GradesResult extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
     var {grades} = this.props;
 
     var width = 700;
@@ -39,6 +50,7 @@ const GradesResult = React.createClass({
       </div>
     );
   }
-});
+}
 
-module.exports = GradesResult;
+GradesResult.propTypes = propTypes;
+GradesResult.defaultProps = defaultProps;

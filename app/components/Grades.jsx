@@ -1,16 +1,18 @@
-const React = require('react');
-const getData = require('getData');
-const GradesForm = require('GradesForm');
-const GradesResult = require('GradesResult');
+import React from 'react';
+import getData from 'getData';
+import GradesForm from 'GradesForm';
+import GradesResult from 'GradesResult';
 
-const Grades = React.createClass({
-  getInitialState: function() {
-    return {
+export default class Grades extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
       grades: []
-    }
-  },
-  handleSearch: function(id, url) {
-    let self = this;
+    };
+  }
+
+  handleSearch = (id, url) => {
+    const self = this;
 
     getData.fetch(id, url).then(function(grades) {
       self.setState({
@@ -19,10 +21,11 @@ const Grades = React.createClass({
     }, function(errorMessage) {
       alert(errorMessage);
     });
-  },
-  render: function() {
-    let self = this;
-    let {grades} = self.state;
+  };
+
+  render() {
+    const self = this;
+    const {grades} = self.state;
 
     function renderGrades() {
       if(grades.length > 0) {
@@ -39,6 +42,4 @@ const Grades = React.createClass({
       </div>
     );
   }
-})
-
-module.exports = Grades;
+}

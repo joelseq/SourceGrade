@@ -1,13 +1,11 @@
-var React = require('react');
-var Nav = require('Nav');
+import React from 'react';
+import Nav from 'Nav';
 
-var Main = (props) => {
+export default function Main({children}) {
   return (
     <div>
       <Nav/>
-      {props.children}
+      {children}
     </div>
   );
-};
-
-module.exports = Main;
+}
