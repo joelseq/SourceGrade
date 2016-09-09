@@ -75,7 +75,7 @@ function scrapeData(req, res, next) {
       //Find all the anchors
       var anchors = td.find("a");
 
-      /* Get one assessment anchor */
+      //Get one assessment anchor
       var anchor;
 
       anchors.each(function(i, elem){

@@ -16,5 +16,4 @@ router.get('/', (req, res) => {
 
 router.get('/scrape', scraper.scrapeData);
 
-
 module.exports = router;
