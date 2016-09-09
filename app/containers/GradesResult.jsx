@@ -17,7 +17,7 @@ class GradesResult extends Component {
   }
 
   componentWillMount() {
-    const query = this.props.location.query
+    const query = this.props.location.query;
     if(query) {
       this.props.fetchGrades(query);
     }
