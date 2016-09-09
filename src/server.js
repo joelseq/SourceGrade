@@ -9,6 +9,7 @@ const express = require('express');
 const logger = require('morgan');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const path = require('path');
 
 const app = express();
 
@@ -37,5 +38,10 @@ app.use(function(req,res,next) {
 //mongoose.connect(process.env.DB_URI);
 
 require('./routes')(app);
+
+// To make browserHistory work for ReactJS
+app.get('*', (req,res) => {
+  res.sendFile(path.resolve(__dirname,'../public/index.html'));
+});
 
 module.exports = app;
