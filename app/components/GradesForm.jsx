@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 
 const propTypes = {
   onSearch: PropTypes.func
@@ -8,31 +8,54 @@ const defaultProps = {
   onSearch() {}
 };
 
-export default class GradesForm extends React.Component {
+export default class GradesForm extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      id: '',
+      url: ''
+    };
+
+    this.onFormSubmit = this.onFormSubmit.bind(this);
+    this.onIdChange = this.onIdChange.bind(this);
+    this.onUrlChange = this.onUrlChange.bind(this);
   }
 
-  onFormSubmit = (e) => {
+  static contextTypes = {
+    router: PropTypes.object
+  };
+
+  onFormSubmit(e) {
     e.preventDefault();
 
-    let id = this.refs.id.value;
-    let url = this.refs.url.value;
+    const { id, url } = this.state;
 
     if(id.length > 0 && url.length > 0) {
-      this.refs.id.value = '';
-      this.refs.url.value = '';
-      this.props.onSearch(id, url);
+      this.context.router.push(`/grades?id=${id}&url=${url}`);
     }
   };
+
+  onIdChange(e) {
+    this.setState({
+      id: e.target.value
+    });
+  }
+
+  onUrlChange(e) {
+    this.setState({
+      url: e.target.value
+    });
+  }
 
   render() {
     return (
       <div className="row">
         <div className="columns medium-6 small-centered">
+          <h1 className="text-center">Get Grades</h1>
           <form onSubmit={this.onFormSubmit}>
-            <input type="text" ref="id" placeholder="Secret Number"/>
-            <input type="text" ref="url" placeholder="Course URL"/>
+            <input value={this.state.id} type="text" onChange={this.onIdChange} placeholder="Secret Number"/>
+            <input value={this.state.url} type="text" onChange={this.onUrlChange} placeholder="Course URL"/>
             <button className="button expanded hollow">Get Grades</button>
           </form>
         </div>
