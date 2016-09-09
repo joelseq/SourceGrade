@@ -4,7 +4,7 @@ module.exports = {
   entry: [
     'script!jquery/dist/jquery.min.js',
     'script!foundation-sites/dist/foundation.min.js',
-    './app/app.jsx'
+    './app/index.js'
   ],
   externals: {
     jquery: 'jQuery'
@@ -22,7 +22,6 @@ module.exports = {
   resolve: {
     root: __dirname,
     alias: {
-      Main: 'app/components/Main.jsx',
       Nav: 'app/components/Nav.jsx',
       getData: 'app/api/getData.jsx',
       Grades: 'app/components/Grades.jsx',
