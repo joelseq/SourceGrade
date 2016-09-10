@@ -50,7 +50,7 @@ export default class GradesForm extends Component {
 
   render() {
     return (
-      <div className="row">
+      <div id="grades-form" className="row">
         <div className="columns medium-6 small-centered">
           <h1 className="text-center">Get Grades</h1>
           <form onSubmit={this.onFormSubmit}>

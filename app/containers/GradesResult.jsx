@@ -43,14 +43,16 @@ class GradesResult extends Component {
             values: []
           }]);
 
+          grade.scores.sort((x, y) => x - y);
+
           for(var i = 0; i < grade.scores.length; i++) {
             chartData[chartIndex][0].values.push({
-              x: i,
-              y: grade.scores[i]
+              x: grade.scores[i],
+              y: i
             });
           }
           chartIndex++;
-          return <LineChart data={chartData[chartIndex-1]} width={width} height={height} title={grade.name} />;
+          return <LineChart key={chartIndex} data={chartData[chartIndex-1]} width={width} height={height} title={grade.name} />;
         })
       );
     }
