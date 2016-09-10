@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 
 $bg-color: #bdbdc0;
-$nav-color: #0b003d;
+$primary-color: #0b003d;
 
 body, html, #app {
   width: 100%;
@@ -10,8 +10,17 @@ body, html, #app {
   font-family: 'Roboto', sans-serif;
 }
 
+.brand-text {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
 #grades-form {
   margin-top: 50px;
+
+  .text-center {
+    color: $primary-color;
+  }
 }
 
 #gold-line {
@@ -23,11 +32,11 @@ body, html, #app {
 }
 
 .top-bar {
-  background-color: $nav-color;
+  background-color: $primary-color;
   color: white;
 
   a {
-    background-color: $nav-color;
+    background-color: $primary-color;
     color: white;
   }
 }

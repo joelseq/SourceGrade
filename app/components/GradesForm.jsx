@@ -56,7 +56,7 @@ export default class GradesForm extends Component {
           <form onSubmit={this.onFormSubmit}>
             <input value={this.state.id} type="text" onChange={this.onIdChange} placeholder="Secret Number"/>
             <input value={this.state.url} type="text" onChange={this.onUrlChange} placeholder="Course URL"/>
-            <button className="button expanded hollow">Get Grades</button>
+            <button className="button expanded">Get Grades</button>
           </form>
         </div>
       </div>

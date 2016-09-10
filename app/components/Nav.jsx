@@ -9,17 +9,17 @@ export default class Nav extends React.Component {
           <div className="top-bar-left">
             <ul className="menu">
               <li>
-                <IndexLink to="/" activeClassName="active" activeStyle={{fontWeight: 'bold'}}>Home</IndexLink>
+                <IndexLink to="/" className="brand-text">SourceGrade</IndexLink>
               </li>
             </ul>
           </div>
           <div className="top-bar-right">
             <ul className="menu">
               <li>
-                <Link to="/" activeClassName="active" activeStyle={{fontWeight: 'bold'}}>Login</Link>
+                <Link to="login" activeClassName="active" activeStyle={{fontWeight: 'bold'}}>Login</Link>
               </li>
               <li>
-                <Link to="/" activeClassName="active" activeStyle={{fontWeight: 'bold'}}>Sign Up</Link>
+                <Link to="signup" activeClassName="active" activeStyle={{fontWeight: 'bold'}}>Sign Up</Link>
               </li>
             </ul>
           </div>
