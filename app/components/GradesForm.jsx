@@ -52,7 +52,8 @@ export default class GradesForm extends Component {
     return (
       <div id="grades-form" className="row">
         <div className="columns medium-6 small-centered">
-          <h1 className="text-center">Get Grades</h1>
+          <h1 className="text-center">Welcome to SourceGrade</h1>
+          <h3 className="text-center">Search for your grades</h3>
           <form onSubmit={this.onFormSubmit}>
             <input value={this.state.id} type="text" onChange={this.onIdChange} placeholder="Secret Number"/>
             <input value={this.state.url} type="text" onChange={this.onUrlChange} placeholder="Course URL"/>

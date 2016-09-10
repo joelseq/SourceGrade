@@ -1,13 +1,13 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto');
+@import 'mixins';
+@import 'variables';
 
-$bg-color: #bdbdc0;
-$primary-color: #0b003d;
+@import url('https://fonts.googleapis.com/css?family=PT+Sans');
 
 body, html, #app {
   width: 100%;
   height: 100%;
   background: $bg-color;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'PT Sans', sans-serif;
 }
 
 .brand-text {
@@ -21,22 +21,67 @@ body, html, #app {
   .text-center {
     color: $primary-color;
   }
+
+  button {
+    background-color: $primary-color;
+
+    &:hover {
+      background-color: $primary-hover-color;
+    }
+  }
 }
 
 #gold-line {
   width: 100%;
-  height: 5px;
-  background: gold;
-  margin: 5px 0px;
+  height: 7px;
+  background: #f1c40f;
+  margin: 3px 0px;
   padding: 0px;
 }
 
+
+//==================================
+// Navbar Styles
+//==================================
 .top-bar {
   background-color: $primary-color;
   color: white;
+  padding: 0px;
 
-  a {
-    background-color: $primary-color;
-    color: white;
+  .top-bar-right {
+    padding: 0px;
+    height: 100%;
+
+    a {
+      @include center-elements;
+      background-color: $primary-color;
+      color: white;
+      height: 3.2em;
+      margin: 0px;
+      font-weight: 600;
+      font-family: 'PT Sans', sans-serif;
+
+      &:hover {
+        background-color: $primary-hover-color;
+      }
+    }
+  }
+
+  .top-bar-left {
+    padding: 0px;
+    height: 100%;
+
+    a {
+      @include center-elements;
+      background-color: $primary-color;
+      color: white;
+      margin: 0px;
+      height: 2.1em;
+      font-size: 24px;
+
+      &:hover {
+        background-color: $primary-hover-color;
+      }
+    }
   }
 }
