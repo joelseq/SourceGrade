@@ -10,6 +10,20 @@ body, html, #app {
   font-family: 'PT Sans', sans-serif;
 }
 
+h3 {
+  margin-bottom: 50px;
+  color: $primary-color;
+}
+
+.bottom-links {
+  margin: 5px 15px;
+}
+
+h2 {
+  margin-top: 25px;
+  color: $primary-color;
+}
+
 .brand-text {
   font-size: 1.2em;
   font-weight: bold;

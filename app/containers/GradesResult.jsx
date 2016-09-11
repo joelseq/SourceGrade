@@ -1,19 +1,21 @@
 import React, { Component, PropTypes } from 'react';
-import rd3, { LineChart } from 'react-d3';
 import { connect } from 'react-redux';
 import { fetchGrades } from '../actions';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import { Chart } from 'react-google-charts';
 
 const propTypes = {
-  grades: PropTypes.array
+  grades: PropTypes.object
 };
 
 const defaultProps = {
-  grades: []
+  grades: {}
 };
 
 class GradesResult extends Component {
   constructor(props) {
     super(props);
+    this.renderCategories = this.renderCategories.bind(this);
   }
 
   componentWillMount() {
@@ -23,44 +25,69 @@ class GradesResult extends Component {
     }
   }
 
+  renderCategories() {
+    const {csGrades} = this.props.grades;
+    const names = csGrades.map(grade => grade.name);
+    const values = csGrades.map(grade => {
+      const num = parseFloat(grade.Score.split("%")[0]);
+      return num;
+    });
+    const data = [];
+
+    for(let i = 0; i < names.length; i++) {
+      const name = names[i];
+      const value = values[i];
+      data.push({ name, value });
+    }
+
+    return (
+      <BarChart width={800} height={300} data={data}>
+        <XAxis dataKey="name" />
+        <YAxis />
+        <CartesianGrid strokeDasharray="3 3" />
+        <Tooltip/>
+        <Bar dataKey="value" fill="#0f0060" />
+      </BarChart>
+    );
+  }
+
+  renderGrades() {
+    const {asGrades} = this.props.grades;
+
+    return (
+      asGrades.map(grade => {
+        const options = { title: grade.name };
+        const data = [grade.scores];
+        return (
+          <Chart
+            chartType="Histogram"
+            data={data}
+            options={options}
+            key={grade.name}
+            width={"80%"}
+            height={"400px"}
+          />
+        );
+      })
+    );
+  }
+
   render() {
     var {grades} = this.props;
 
-    if(!grades) {
+    if(!grades.courseName) {
       return <h3>Loading...</h3>;
-    }
-
-    var width = 700;
-    var height = 300;
-    var chartData = [];
-
-    function renderGrades() {
-      let chartIndex = 0;
-      return (
-        grades.map((grade) => {
-          chartData.push([{
-            name: 'Grades',
-            values: []
-          }]);
-
-          grade.scores.sort((x, y) => x - y);
-
-          for(var i = 0; i < grade.scores.length; i++) {
-            chartData[chartIndex][0].values.push({
-              x: grade.scores[i],
-              y: i
-            });
-          }
-          chartIndex++;
-          return <LineChart key={chartIndex} data={chartData[chartIndex-1]} width={width} height={height} title={grade.name} />;
-        })
-      );
     }
 
     return (
       <div className="row">
-        <div className="columns medium-6 small-centered">
-          {renderGrades()}
+        <div className="columns medium-9 small-centered">
+          <h2>{grades.courseName}</h2>
+          <h3>{grades.instructor}</h3>
+          {this.renderCategories()}
+          {this.renderGrades()}
+          <a className="bottom-links" href="#">View All Scores</a>
+          <a className="bottom-links" href="#">View Statistics</a>
         </div>
       </div>
     );

@@ -1,13 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 
-const propTypes = {
-  onSearch: PropTypes.func
-}
-
-const defaultProps = {
-  onSearch() {}
-};
-
 export default class GradesForm extends Component {
   constructor(props) {
     super(props);
@@ -64,6 +56,3 @@ export default class GradesForm extends Component {
     );
   }
 }
-
-GradesForm.propTypes = propTypes;
-GradesForm.defaultProps = defaultProps;
