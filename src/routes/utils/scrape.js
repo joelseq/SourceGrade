@@ -34,10 +34,11 @@ function scrapeData(req, res, next) {
   const id = req.query.id;
   const url = req.query.url;
 
-  // Arrays of grade objects
-  let grades = [];
+  let grades = {};
   let csGrades = [];
   let asGrades = [];
+  let courseName;
+  let instructor;
 
   const baseUrl = replaceUrl(url);
   let coursestand, asLink;
@@ -52,22 +53,18 @@ function scrapeData(req, res, next) {
     }
     var $ = cheerio.load(html);
 
-    var baseUrl = replaceUrl(url); //The 1 is just for the paramater
-
     var tables = $('center>table');
 
-    var table;
-
-    tables.each(function() {
-      if($(this).attr("width", "50%"))
-        table = $(this);
-    });
+    var courseNameTable = tables.first();
+    courseName = courseNameTable.find("b").text();
+    var linksTable = courseNameTable.next();
 
     coursestand = baseUrl + "coursestand.html";
 
     //Filter out the table to reach the anchor tags
-    table.filter(function(){
+    linksTable.filter(function(){
       var table = $(this);
+      instructor = table.find("font").first().text();
       //Get the tr containing the td we need
       var tr = table.children().last();
       //Get the td containing all the anchors we need
@@ -110,7 +107,12 @@ function scrapeData(req, res, next) {
         res.sendStatus(500);
       } else {
         csGrades.reverse();
-        grades = csGrades.concat(asGrades);
+        grades = {
+          courseName,
+          instructor,
+          csGrades,
+          asGrades
+        };
         res.json(grades);
       }
     });
