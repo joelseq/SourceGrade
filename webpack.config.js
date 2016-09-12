@@ -29,14 +29,24 @@ module.exports = {
     extensions: ['', '.js', '.jsx']
   },
   module: {
-    loaders: [{
-      loader: 'babel-loader',
-      query: {
-        presets: ['react', 'es2015', 'stage-0']
+    loaders: [
+      {
+        loader: 'babel-loader',
+        query: {
+          presets: ['react', 'es2015', 'stage-0']
+        },
+        test: /\.jsx?$/,
+        exclude: /(node_modules|bower_components)/
       },
-      test: /\.jsx?$/,
-      exclude: /(node_modules|bower_components)/
-    }]
+      {
+        test: /\.scss$/,
+        loader: 'style-loader!css-loader!sass-loader'
+      },
+      {
+        test: /\.css$/,
+        loader: 'style-loader!css-loader'
+      }
+    ]
   },
   devtool: 'cheap-module-source-map'
 };

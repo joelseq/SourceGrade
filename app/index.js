@@ -9,11 +9,11 @@ import routes from './routes';
 import promise from 'redux-promise';
 
 // Load foundation
-require('style!css!foundation-sites/dist/foundation.min.css');
+require('foundation-sites/dist/foundation.min.css');
 $(document).foundation();
 
 // App css
-require('style!css!sass!./styles/styles.scss');
+require('./styles/styles.scss');
 
 const createStoreWithMiddleware = applyMiddleware(
   promise
