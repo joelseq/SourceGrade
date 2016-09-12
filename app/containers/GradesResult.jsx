@@ -52,24 +52,7 @@ class GradesResult extends Component {
   }
 
   renderGrades() {
-    const {asGrades} = this.props.grades;
-
-    return (
-      asGrades.map(grade => {
-        const options = { title: grade.name };
-        const data = [grade.scores];
-        return (
-          <Chart
-            chartType="Histogram"
-            data={data}
-            options={options}
-            key={grade.name}
-            width={"80%"}
-            height={"400px"}
-          />
-        );
-      })
-    );
+    
   }
 
   render() {

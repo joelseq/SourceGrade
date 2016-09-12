@@ -39,8 +39,5 @@ jspm_packages
 # Environment variables
 .env
 
-# Build folder - used only for production
-build
-
 # Ignore WebStorm files
 .idea/
