@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Created by joelsequeira on 8/6/16.
  */
@@ -5,13 +7,13 @@
 //==============================
 // Module Dependencies
 //==============================
-const express = require('express');
-const logger = require('morgan');
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
-const path = require('path');
+var express = require('express');
+var logger = require('morgan');
+var mongoose = require('mongoose');
+var bodyParser = require('body-parser');
+var path = require('path');
 
-const app = express();
+var app = express();
 
 if (process.env.NODE_ENV !== 'production') {
 	require('dotenv').config();
@@ -39,7 +41,7 @@ app.use(function (req, res, next) {
 require('./routes')(app);
 
 // To make browserHistory work for ReactJS
-app.get('*', (req, res) => {
+app.get('*', function (req, res) {
 	res.sendFile(path.resolve(__dirname, '../public/index.html'));
 });
 

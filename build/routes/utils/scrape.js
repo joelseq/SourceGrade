@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Created by joelsequeira on 8/6/16.
  */
@@ -5,9 +7,9 @@
 //==============================
 // Module Dependencies
 //==============================
-const async = require('async');
-const request = require('request');
-const cheerio = require('cheerio');
+var async = require('async');
+var request = require('request');
+var cheerio = require('cheerio');
 
 var scraper = {
   scrapeData: scrapeData
@@ -19,7 +21,7 @@ var scraper = {
  * @returns string - base url
  */
 function replaceUrl(url) {
-  let str = url.substr(url.lastIndexOf('/') + 1) + '$';
+  var str = url.substr(url.lastIndexOf('/') + 1) + '$';
   return url.replace(new RegExp(str), '');
 }
 
@@ -30,23 +32,24 @@ function replaceUrl(url) {
  * @param next
  */
 function scrapeData(req, res, next) {
-  const id = req.query.id;
-  const url = req.query.url;
+  var id = req.query.id;
+  var url = req.query.url;
 
-  let grades = {};
-  let csGrades = [];
-  let asGrades = [];
-  let courseName;
-  let instructor;
+  var grades = {};
+  var csGrades = [];
+  var asGrades = [];
+  var courseName = void 0;
+  var instructor = void 0;
 
-  const baseUrl = replaceUrl(url);
-  let coursestand, asLink;
+  var baseUrl = replaceUrl(url);
+  var coursestand = void 0,
+      asLink = void 0;
 
   // Array of async functions
-  let asyncTasks = [];
+  var asyncTasks = [];
 
   // Initial request to homepage
-  request(url, (error, response, html) => {
+  request(url, function (error, response, html) {
     if (error) {
       return { error: 'Invalid URL' };
     }
@@ -106,10 +109,10 @@ function scrapeData(req, res, next) {
       } else {
         csGrades.reverse();
         grades = {
-          courseName,
-          instructor,
-          csGrades,
-          asGrades
+          courseName: courseName,
+          instructor: instructor,
+          csGrades: csGrades,
+          asGrades: asGrades
         };
         res.json(grades);
       }
@@ -124,7 +127,7 @@ function scrapeData(req, res, next) {
  * @returns true on successful execution
  */
 function getGrades(data, callback) {
-  request(data.url, (error, response, html) => {
+  request(data.url, function (error, response, html) {
     if (error) {
       return callback(error);
     } else {

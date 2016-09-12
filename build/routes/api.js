@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Created by joelsequeira on 8/6/16.
  */
@@ -5,12 +7,12 @@
 //==============================
 // Module Dependencies
 //==============================
-const express = require('express');
-const scraper = require('./utils/scrape');
+var express = require('express');
+var scraper = require('./utils/scrape');
 
-const router = express.Router();
+var router = express.Router();
 
-router.get('/', (req, res) => {
+router.get('/', function (req, res) {
   res.send("Hello World!");
 });
 
