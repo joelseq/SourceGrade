@@ -154,7 +154,7 @@ function getGrades(data, callback) {
         for(var i = 0; i < categories; i++) {
           // Create grade object and push to grades array
           var grade = {
-            numProps: td.attr('colspan'),
+            numProps: td.attr('colspan') || 1,
             name: td.text(),
             scores: []
           };
@@ -189,7 +189,7 @@ function getGrades(data, callback) {
             if(labelTd.text() === "Score") {
               var score = parseFloat(gradeTd.text());
               // Push the score of this student into the respective category
-              if(score) {
+              if(score >= 0) {
                 data.grades[index].scores.push(score);
               }
               index++;

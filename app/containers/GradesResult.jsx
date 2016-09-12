@@ -26,7 +26,7 @@ class GradesResult extends Component {
   }
 
   renderCategories() {
-    const {csGrades} = this.props.grades;
+    const { csGrades } = this.props.grades;
     const names = csGrades.map(grade => grade.name);
     const values = csGrades.map(grade => {
       const num = parseFloat(grade.Score.split("%")[0]);
@@ -51,12 +51,12 @@ class GradesResult extends Component {
     );
   }
 
-  renderGrades() {
-    
+  renderGrades(assessment) {
+
   }
 
   render() {
-    var {grades} = this.props;
+    const { grades } = this.props;
 
     if(!grades.courseName) {
       return <h3>Loading...</h3>;
@@ -68,9 +68,19 @@ class GradesResult extends Component {
           <h2>{grades.courseName}</h2>
           <h3>{grades.instructor}</h3>
           {this.renderCategories()}
-          {this.renderGrades()}
-          <a className="bottom-links" href="#">View All Scores</a>
-          <a className="bottom-links" href="#">View Statistics</a>
+          <table>
+            <thead>
+              <tr>
+                <th>Assessment name</th>
+                <th>Rank</th>
+                <th>Score</th>
+                <th>Points</th>
+              </tr>
+            </thead>
+            <tbody>
+              {grades.asGrades.map(this.renderGrades)}
+            </tbody>
+          </table>
         </div>
       </div>
     );
