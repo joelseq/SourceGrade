@@ -4,7 +4,7 @@
   "description": "A web scraper to find grades easily from gradesource.com",
   "main": "server.js",
   "scripts": {
-    "start": "node build/server.js",
+    "start": "node bin/www",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
