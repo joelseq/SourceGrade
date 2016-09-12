@@ -52,7 +52,14 @@ class GradesResult extends Component {
   }
 
   renderGrades(assessment) {
-
+    return (
+      <tr key={assessment.name}>
+        <td>{assessment.name}</td>
+        <td>{assessment.Rank}</td>
+        <td>{assessment.Score}</td>
+        <td>{assessment.Points}</td>
+      </tr>
+    );
   }
 
   render() {
@@ -68,7 +75,8 @@ class GradesResult extends Component {
           <h2>{grades.courseName}</h2>
           <h3>{grades.instructor}</h3>
           {this.renderCategories()}
-          <table>
+          <h3>Asessments</h3>
+          <table class="stack">
             <thead>
               <tr>
                 <th>Assessment name</th>
