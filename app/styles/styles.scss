@@ -57,6 +57,10 @@ h2 {
 //==================================
 // Navbar Styles
 //==================================
+.nav-container, .menu, .top-bar, .top-bar ul {
+  background-color: $primary-color;
+}
+
 .top-bar {
   background-color: $primary-color;
   color: white;

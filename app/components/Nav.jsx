@@ -4,7 +4,7 @@ import {Link, IndexLink} from 'react-router';
 export default class Nav extends React.Component {
   render() {
     return (
-      <div>
+      <div className="nav-container">
         <div className="top-bar">
           <div className="top-bar-left">
             <ul className="menu">
