@@ -24,7 +24,7 @@ export default class Nav extends React.Component {
             </ul>
           </div>
         </div>
-        <div id="gold-line" />
+        <div className="gold-line" />
       </div>
     );
   }
