@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { fetchGrades } from '../actions';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import { Chart } from 'react-google-charts';
 
 const propTypes = {
   grades: PropTypes.object
@@ -31,22 +31,30 @@ class GradesResult extends Component {
       const num = parseFloat(grade.Score.split("%")[0]);
       return num;
     });
-    const data = [];
+    const data = [['Category', 'Score']];
 
     for(let i = 0; i < names.length; i++) {
       const name = names[i];
       const value = values[i];
-      data.push({ name, value });
+      data.push([name, value]);
+    }
+
+    const options = {
+      title: 'Category Scores'
     }
 
     return (
-      <BarChart width={800} height={300} data={data}>
-        <XAxis dataKey="name" />
-        <YAxis />
-        <CartesianGrid strokeDasharray="3 3" />
-        <Tooltip/>
-        <Bar dataKey="value" fill="#0f0060" />
-      </BarChart>
+      <div className="chart-container">
+        <Chart
+          chartType="ColumnChart"
+          data={data}
+          options={options}
+          graph_id="ColumnChart"
+          width={"100%"}
+          height={"400px"}
+          legend_toggle={true}
+        />
+      </div>
     );
   }
 
@@ -54,9 +62,10 @@ class GradesResult extends Component {
     return (
       <tr key={assessment.name}>
         <td>{assessment.name}</td>
-        <td>{assessment.Rank}</td>
+        <td>{(assessment.Rank) ? `${assessment.Rank} / ${assessment.scores.length}` : ""}</td>
         <td>{assessment.Score}</td>
         <td>{assessment.Points}</td>
+        <td><a href="#">View Statistics</a></td>
       </tr>
     );
   }
@@ -75,13 +84,14 @@ class GradesResult extends Component {
           <h3>{grades.instructor}</h3>
           {this.renderCategories()}
           <h3>Asessments</h3>
-          <table class="stack">
+          <table className="assessments-table stack">
             <thead>
               <tr>
                 <th>Assessment name</th>
                 <th>Rank</th>
                 <th>Score</th>
                 <th>Points</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
