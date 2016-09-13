@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { fetchGrades } from '../actions';
 import { Chart } from 'react-google-charts';
+import Spinner from 'react-spinkit';
 
 const propTypes = {
   grades: PropTypes.object
@@ -74,7 +75,11 @@ class GradesResult extends Component {
     const { grades } = this.props;
 
     if(!grades.courseName) {
-      return <h3>Loading...</h3>;
+      return (
+        <div className="spinner-container">
+          <Spinner spinnerName="circle" noFadeIn className="spinner" />
+        </div>
+      );
     }
 
     return (

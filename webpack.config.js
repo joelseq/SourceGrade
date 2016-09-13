@@ -24,7 +24,8 @@ module.exports = {
     alias: {
       Nav: 'app/components/Nav.jsx',
       GradesForm: 'app/components/GradesForm.jsx',
-      GradesResult: 'app/containers/GradesResult.jsx'
+      GradesResult: 'app/containers/GradesResult.jsx',
+      Spinner: 'app/components/Spinner.jsx'
     },
     extensions: ['', '.js', '.jsx']
   },
