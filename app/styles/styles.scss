@@ -53,10 +53,18 @@ h2 {
   padding: 0px;
 }
 
+.chart-container {
+  @include depth-shadow;
+  width: 100%;
+}
 
-//==================================
-// Navbar Styles
-//==================================
+.assessments-table {
+  @include depth-shadow;
+  margin-bottom: 75px;
+}
+
+
+/* Navbar Styles */
 .nav-container, .menu, .top-bar, .top-bar ul {
   background-color: $primary-color;
 }
@@ -104,18 +112,13 @@ h2 {
   }
 }
 
-.chart-container {
-  @include depth-shadow;
-  width: 100%;
+/* Spinner Styles */
+.loading-spinner {
+  color: $accent-color;
 }
 
-.assessments-table {
-  @include depth-shadow;
-  margin-bottom: 75px;
-}
-
-.spinner {
-  width: 50px;
-  height: 50px;
-  margin: 100px auto;
+.spinner-container {
+  width: 100px;
+  height: 100px;
+  margin: 20% auto;
 }

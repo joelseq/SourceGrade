@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { fetchGrades } from '../actions';
 import { Chart } from 'react-google-charts';
-import Spinner from 'react-spinkit';
+import FontAwesome from 'react-fontawesome';
 
 const propTypes = {
   grades: PropTypes.object
@@ -77,7 +77,12 @@ class GradesResult extends Component {
     if(!grades.courseName) {
       return (
         <div className="spinner-container">
-          <Spinner spinnerName="circle" noFadeIn className="spinner" />
+          <FontAwesome
+            className='loading-spinner'
+            name='circle-o-notch'
+            size='3x'
+            spin
+          />
         </div>
       );
     }
