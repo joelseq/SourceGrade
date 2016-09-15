@@ -59,6 +59,16 @@ class GradesResult extends Component {
     );
   }
 
+  renderStats(assessment) {
+    if(!assessment) {
+      return (
+        <div className="chart-container">
+          <h5 className="pre-stats-text">Click "View Statistics" on an assessment or category to begin.</h5>
+        </div>
+      );
+    }
+  }
+
   renderGrades(assessment) {
     return (
       <tr key={assessment.name}>
@@ -92,8 +102,26 @@ class GradesResult extends Component {
         <div className="columns medium-9 small-centered">
           <h2>{grades.courseName}</h2>
           <h3>{grades.instructor}</h3>
-          {this.renderCategories()}
+          <hr />
+          {this.renderStats()}
+          <h3>Categories</h3>
+          <hr />
+          <table className="assessments-table stack">
+            <thead>
+              <tr>
+                <th>Assessment name</th>
+                <th>Rank</th>
+                <th>Score</th>
+                <th>Points</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {grades.csGrades.map(this.renderGrades)}
+            </tbody>
+          </table>
           <h3>Asessments</h3>
+          <hr />
           <table className="assessments-table stack">
             <thead>
               <tr>

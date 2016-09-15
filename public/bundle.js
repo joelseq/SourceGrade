@@ -30484,6 +30484,21 @@
 	      );
 	    }
 	  }, {
+	    key: 'renderStats',
+	    value: function renderStats(assessment) {
+	      if (!assessment) {
+	        return _react2.default.createElement(
+	          'div',
+	          { className: 'chart-container' },
+	          _react2.default.createElement(
+	            'h5',
+	            { className: 'pre-stats-text' },
+	            'Click "View Statistics" on an assessment or category to begin.'
+	          )
+	        );
+	      }
+	    }
+	  }, {
 	    key: 'renderGrades',
 	    value: function renderGrades(assessment) {
 	      return _react2.default.createElement(
@@ -30555,12 +30570,58 @@
 	            null,
 	            grades.instructor
 	          ),
-	          this.renderCategories(),
+	          _react2.default.createElement('hr', null),
+	          this.renderStats(),
+	          _react2.default.createElement(
+	            'h3',
+	            null,
+	            'Categories'
+	          ),
+	          _react2.default.createElement('hr', null),
+	          _react2.default.createElement(
+	            'table',
+	            { className: 'assessments-table stack' },
+	            _react2.default.createElement(
+	              'thead',
+	              null,
+	              _react2.default.createElement(
+	                'tr',
+	                null,
+	                _react2.default.createElement(
+	                  'th',
+	                  null,
+	                  'Assessment name'
+	                ),
+	                _react2.default.createElement(
+	                  'th',
+	                  null,
+	                  'Rank'
+	                ),
+	                _react2.default.createElement(
+	                  'th',
+	                  null,
+	                  'Score'
+	                ),
+	                _react2.default.createElement(
+	                  'th',
+	                  null,
+	                  'Points'
+	                ),
+	                _react2.default.createElement('th', null)
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'tbody',
+	              null,
+	              grades.csGrades.map(this.renderGrades)
+	            )
+	          ),
 	          _react2.default.createElement(
 	            'h3',
 	            null,
 	            'Asessments'
 	          ),
+	          _react2.default.createElement('hr', null),
 	          _react2.default.createElement(
 	            'table',
 	            { className: 'assessments-table stack' },
@@ -38731,7 +38792,7 @@
 	exports.push([module.id, "@import url(https://fonts.googleapis.com/css?family=PT+Sans);", ""]);
 
 	// module
-	exports.push([module.id, "body, html, #app {\n  width: 100%;\n  height: 100%;\n  background: #e4e6ea;\n  font-family: 'PT Sans', sans-serif; }\n\nh3 {\n  margin: 30px 0px;\n  color: #110070; }\n\n.bottom-links {\n  margin: 5px 15px; }\n\nh2 {\n  margin-top: 25px;\n  color: #110070; }\n\n.brand-text {\n  font-size: 1.2em;\n  font-weight: bold; }\n\n#grades-form {\n  margin-top: 50px; }\n  #grades-form .text-center {\n    color: #110070; }\n  #grades-form button {\n    background-color: #110070; }\n    #grades-form button:hover {\n      background-color: #0b0046; }\n\n.gold-line {\n  width: 100%;\n  height: 7px;\n  background: #f1c40f;\n  margin: 3px 0px;\n  padding: 0px; }\n\n.chart-container {\n  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);\n  width: 100%; }\n\n.assessments-table {\n  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);\n  margin-bottom: 75px; }\n\n/* Navbar Styles */\n.nav-container, .menu, .top-bar, .top-bar ul {\n  background-color: #110070; }\n\n.top-bar {\n  background-color: #110070;\n  color: white;\n  padding: 0px; }\n  .top-bar .top-bar-right {\n    padding: 0px;\n    height: 100%; }\n    .top-bar .top-bar-right a {\n      display: -ms-flexbox;\n      display: -webkit-flex;\n      display: flex;\n      -ms-flex-align: center;\n      -webkit-align-items: center;\n      -webkit-box-align: center;\n      align-items: center;\n      background-color: #110070;\n      color: white;\n      height: 3.2em;\n      margin: 0px;\n      font-weight: 600;\n      font-family: 'PT Sans', sans-serif; }\n      .top-bar .top-bar-right a:hover {\n        background-color: #0b0046; }\n  .top-bar .top-bar-left {\n    padding: 0px;\n    height: 100%; }\n    .top-bar .top-bar-left a {\n      display: -ms-flexbox;\n      display: -webkit-flex;\n      display: flex;\n      -ms-flex-align: center;\n      -webkit-align-items: center;\n      -webkit-box-align: center;\n      align-items: center;\n      background-color: #110070;\n      color: white;\n      margin: 0px;\n      height: 2.1em;\n      font-size: 24px; }\n      .top-bar .top-bar-left a:hover {\n        background-color: #0b0046; }\n\n/* Spinner Styles */\n.loading-spinner {\n  color: #f1c40f; }\n\n.spinner-container {\n  width: 100px;\n  height: 100px;\n  margin: 20% auto; }\n", ""]);
+	exports.push([module.id, "body, html, #app {\n  width: 100%;\n  height: 100%;\n  background: #e4e6ea;\n  font-family: 'PT Sans', sans-serif; }\n\nh3 {\n  margin: 10px 0px;\n  color: #110070; }\n\nh2 {\n  margin-top: 25px;\n  color: #110070; }\n\nhr {\n  background: #f1c40f;\n  height: 3px;\n  margin-top: 0px;\n  margin-bottom: 20px;\n  border-radius: 15%; }\n\n.bottom-links {\n  margin: 5px 15px; }\n\n.brand-text {\n  font-size: 1.2em;\n  font-weight: bold; }\n\n#grades-form {\n  margin-top: 50px; }\n  #grades-form .text-center {\n    color: #110070; }\n  #grades-form button {\n    background-color: #110070; }\n    #grades-form button:hover {\n      background-color: #0b0046; }\n\n.gold-line {\n  width: 100%;\n  height: 7px;\n  background: #f1c40f;\n  margin: 3px 0px;\n  padding: 0px; }\n\n.pre-stats-text {\n  display: -ms-flexbox;\n  display: -webkit-flex;\n  display: flex;\n  -ms-flex-align: center;\n  -webkit-align-items: center;\n  -webkit-box-align: center;\n  align-items: center;\n  height: 200px;\n  padding-left: 2.0rem;\n  color: #110070; }\n\n.chart-container {\n  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);\n  width: 100%;\n  margin-bottom: 20px;\n  background: white; }\n\n.assessments-table {\n  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);\n  margin-bottom: 30px; }\n\n/* Navbar Styles */\n.nav-container, .menu, .top-bar, .top-bar ul {\n  background-color: #110070; }\n\n.top-bar {\n  background-color: #110070;\n  color: white;\n  padding: 0px; }\n  .top-bar .top-bar-right {\n    padding: 0px;\n    height: 100%; }\n    .top-bar .top-bar-right a {\n      display: -ms-flexbox;\n      display: -webkit-flex;\n      display: flex;\n      -ms-flex-align: center;\n      -webkit-align-items: center;\n      -webkit-box-align: center;\n      align-items: center;\n      background-color: #110070;\n      color: white;\n      height: 3.2em;\n      margin: 0px;\n      font-weight: 600;\n      font-family: 'PT Sans', sans-serif; }\n      .top-bar .top-bar-right a:hover {\n        background-color: #0b0046; }\n  .top-bar .top-bar-left {\n    padding: 0px;\n    height: 100%; }\n    .top-bar .top-bar-left a {\n      display: -ms-flexbox;\n      display: -webkit-flex;\n      display: flex;\n      -ms-flex-align: center;\n      -webkit-align-items: center;\n      -webkit-box-align: center;\n      align-items: center;\n      background-color: #110070;\n      color: white;\n      margin: 0px;\n      height: 2.1em;\n      font-size: 24px; }\n      .top-bar .top-bar-left a:hover {\n        background-color: #0b0046; }\n\n/* Spinner Styles */\n.loading-spinner {\n  color: #f1c40f; }\n\n.spinner-container {\n  width: 100px;\n  height: 100px;\n  margin: 20% auto; }\n", ""]);
 
 	// exports
 
