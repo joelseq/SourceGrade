@@ -8,6 +8,7 @@
 const async = require('async');
 const request = require('request');
 const cheerio = require('cheerio');
+const axios = require('axios');
 
 var scraper = {
   scrapeData: scrapeData
@@ -46,78 +47,78 @@ function scrapeData(req, res, next) {
   // Array of async functions
   let asyncTasks = [];
 
-  // Initial request to homepage
-  request(url, (error, response, html) => {
-    if (error) {
-      return {error: 'Invalid URL'};
-    }
-    var $ = cheerio.load(html);
+  axios(url)
+    .then(response => {
+      var $ = cheerio.load(response.data);
 
-    var tables = $('center>table');
+      var tables = $('center>table');
 
-    var courseNameTable = tables.first();
-    courseName = courseNameTable.find("b").text();
-    var linksTable = courseNameTable.next();
+      var courseNameTable = tables.first();
+      courseName = courseNameTable.find("b").text();
+      var linksTable = courseNameTable.next();
 
-    coursestand = baseUrl + "coursestand.html";
+      coursestand = baseUrl + "coursestand.html";
 
-    //Filter out the table to reach the anchor tags
-    linksTable.filter(function(){
-      var table = $(this);
-      instructor = table.find("font").first().text();
-      //Get the tr containing the td we need
-      var tr = table.children().last();
-      //Get the td containing all the anchors we need
-      var td = tr.children().last();
-      //Find all the anchors
-      var anchors = td.find("a");
+      //Filter out the table to reach the anchor tags
+      linksTable.filter(function(){
+        var table = $(this);
+        instructor = table.find("font").first().text();
+        //Get the tr containing the td we need
+        var tr = table.children().last();
+        //Get the td containing all the anchors we need
+        var td = tr.children().last();
+        //Find all the anchors
+        var anchors = td.find("a");
 
-      //Get one assessment anchor
-      var anchor;
+        //Get one assessment anchor
+        var anchor;
 
-      anchors.each(function(i, elem){
-        var ahref = $(this).attr("href");
-        if(ahref.includes('as')) {
-          anchor = baseUrl + ahref;
-          return false;
+        anchors.each(function(i, elem){
+          var ahref = $(this).attr("href");
+          if(ahref.includes('as')) {
+            anchor = baseUrl + ahref;
+            return false;
+          }
+        });
+
+        asLink = anchor;
+
+        if(!asLink) {
+          return next({error: 'Invalid URL'});
+        }
+
+      }); /* end of filter */
+
+      var csData = {
+        id: id,
+        url: coursestand,
+        grades: csGrades
+      };
+
+      var asData = {
+        id: id,
+        url: asLink,
+        grades: asGrades
+      };
+
+      var dataArrays = [csData, asData];
+
+      async.each(dataArrays, getGrades, function(err) {
+        if(err) {
+          next(err);
+        } else {
+          csGrades.reverse();
+          grades = {
+            courseName,
+            instructor,
+            csGrades,
+            asGrades
+          };
+          res.json(grades);
         }
       });
-
-      asLink = anchor;
-
-    }); /* end of filter */
-
-    var csData = {
-      id: id,
-      url: coursestand,
-      grades: csGrades
-    };
-
-    var asData = {
-      id: id,
-      url: asLink,
-      grades: asGrades
-    };
-
-    var dataArrays = [csData, asData];
-
-    async.each(dataArrays, getGrades, function(err) {
-      if(err) {
-        console.error(err.message);
-        res.sendStatus(500);
-      } else {
-        csGrades.reverse();
-        grades = {
-          courseName,
-          instructor,
-          csGrades,
-          asGrades
-        };
-        res.json(grades);
-      }
-    });
-
-  });
+    })
+    .catch(err => next(err));
 }
 
 /**
@@ -127,11 +128,9 @@ function scrapeData(req, res, next) {
  * @returns true on successful execution
  */
 function getGrades(data, callback) {
-  request(data.url, (error, response, html) => {
-    if(error) {
-      return callback(error);
-    } else {
-      var $ = cheerio.load(html);
+  axios(data.url)
+    .then(response => {
+      var $ = cheerio.load(response.data);
       // Filter out the table containing the scores
       var tables = $('table');
       var table;
@@ -237,14 +236,9 @@ function getGrades(data, callback) {
         }
 
       }); /* end of filter */
-
-    } /* end of else */
-    callback();
-  }, function(err) {
-    if(err) {
-      callback(err);
-    }
-  });
+      callback();
+    })
+    .catch(err => callback(err));
 }
 
 module.exports = scraper;
