@@ -35,7 +35,7 @@ app.use(function(req,res,next) {
 	next();
 });
 
-//mongoose.connect(process.env.DB_URI);
+mongoose.connect(process.env.DB_URI);
 
 require('./routes')(app);
 
