@@ -28,6 +28,7 @@ module.exports = {
       Login: 'app/containers/auth/Login.jsx',
       Signup: 'app/containers/auth/Signup.jsx',
       Logout: 'app/containers/auth/Logout.jsx',
+      RequireAuth: 'app/containers/auth/RequireAuth.jsx',
       Classes: 'app/containers/Classes.jsx'
     },
     extensions: ['', '.js', '.jsx']

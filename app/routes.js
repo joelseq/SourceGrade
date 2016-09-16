@@ -8,6 +8,7 @@ import Login from 'Login';
 import Signup from 'Signup';
 import Logout from 'Logout';
 import Classes from 'Classes';
+import RequireAuth from 'RequireAuth';
 
 export default (
   <Route path="/" component={App}>
@@ -16,6 +17,6 @@ export default (
     <Route path="login" component={Login} />
     <Route path="signup" component={Signup} />
     <Route path="logout" component={Logout} />
-    <Route path="classes" component={Classes} />
+    <Route path="classes" component={RequireAuth(Classes)} />
   </Route>
 );
