@@ -58,6 +58,13 @@ export function userSignup({ username, password }) {
   }
 }
 
+export function userSignout(user) {
+  localStorage.removeItem('token');
+
+  return {
+    type: UNAUTH_USER
+  }
+}
 
 function authError(error) {
   return {

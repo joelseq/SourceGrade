@@ -26,7 +26,8 @@ module.exports = {
       GradesForm: 'app/components/GradesForm.jsx',
       GradesResult: 'app/containers/GradesResult.jsx',
       Login: 'app/containers/auth/Login.jsx',
-      Signup: 'app/containers/auth/Signup.jsx'
+      Signup: 'app/containers/auth/Signup.jsx',
+      Logout: 'app/containers/auth/Logout.jsx'
     },
     extensions: ['', '.js', '.jsx']
   },
