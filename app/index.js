@@ -6,7 +6,7 @@ import { Router, browserHistory } from 'react-router';
 
 import reducers from './reducers';
 import routes from './routes';
-import promise from 'redux-promise';
+import reduxThunk from 'redux-thunk';
 
 // Load foundation
 require('foundation-sites/dist/foundation.min.css');
@@ -16,7 +16,7 @@ $(document).foundation();
 require('./styles/styles.scss');
 
 const createStoreWithMiddleware = applyMiddleware(
-  promise
+  reduxThunk
 )(createStore);
 
 ReactDOM.render(
