@@ -1,8 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { fetchGrades } from '../actions';
+import { fetchGrades, selectClass } from '../actions';
 import { Chart } from 'react-google-charts';
 import FontAwesome from 'react-fontawesome';
+import GradesStats from 'GradesStats';
+import Spinner from 'Spinner';
 
 const propTypes = {
   grades: PropTypes.object
@@ -16,6 +18,7 @@ class GradesResult extends Component {
   constructor(props) {
     super(props);
     this.renderCategories = this.renderCategories.bind(this);
+    this.renderGrades = this.renderGrades.bind(this);
   }
 
   componentWillMount() {
@@ -59,16 +62,6 @@ class GradesResult extends Component {
     );
   }
 
-  renderStats(assessment) {
-    if(!assessment) {
-      return (
-        <div className="chart-container">
-          <h5 className="pre-stats-text">Click on an Assessment or Category to begin.</h5>
-        </div>
-      );
-    }
-  }
-
   renderGrades(assessment) {
     function filterScore(score) {
       const scores = score.split('%');
@@ -80,7 +73,7 @@ class GradesResult extends Component {
 
     return (
       <tr key={assessment.name}>
-        <td><a href="#">{assessment.name}</a></td>
+        <td onClick={() => this.props.selectClass(assessment) }>{assessment.name}</td>
         <td>{(assessment.Rank) ? `${assessment.Rank} / ${assessment.scores.length}` : ""}</td>
         <td>{filterScore(assessment.Score)}</td>
         <td>{assessment.Points}</td>
@@ -89,19 +82,10 @@ class GradesResult extends Component {
   }
 
   render() {
-    const { grades } = this.props;
+    const { grades, selectedClass } = this.props;
 
     if(!grades.courseName) {
-      return (
-        <div className="spinner-container">
-          <FontAwesome
-            className='loading-spinner'
-            name='circle-o-notch'
-            size='3x'
-            spin
-          />
-        </div>
-      );
+      return <Spinner />;
     }
 
     return (
@@ -114,7 +98,7 @@ class GradesResult extends Component {
         <div className="columns medium-12">
           <h3>Statistics</h3>
           <hr />
-          {this.renderStats()}
+          <GradesStats assessment={selectedClass} />
         </div>
         <div className="columns medium-6">
           <h3>Categories</h3>
@@ -156,10 +140,10 @@ class GradesResult extends Component {
 }
 
 function mapStateToProps(state) {
-  return { grades: state.grades.data };
+  return { grades: state.grades.data, selectedClass: state.grades.selectedClass };
 }
 
-export default connect(mapStateToProps, { fetchGrades })(GradesResult);
+export default connect(mapStateToProps, { fetchGrades, selectClass })(GradesResult);
 
 GradesResult.propTypes = propTypes;
 GradesResult.defaultProps = defaultProps;

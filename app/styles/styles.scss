@@ -28,6 +28,10 @@ hr {
   border-radius: 15%;
 }
 
+tr {
+  cursor: pointer;
+}
+
 .bottom-links {
   margin: 5px 15px;
 }
@@ -83,6 +87,12 @@ hr {
   height: 200px;
   padding-left: 2.0rem;
   color: $primary-color;
+}
+
+.stats-container {
+  margin: 50px auto;
+  color: $primary-color;
+  text-align: center;
 }
 
 .chart-container {

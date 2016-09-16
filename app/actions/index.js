@@ -34,7 +34,6 @@ export function fetchGrades({id, url}) {
 
 // Action creator to select a class
 export function selectClass(selected) {
-  console.log(selected);
   return {
     type: SELECTED_CLASS,
     payload: selected

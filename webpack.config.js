@@ -25,11 +25,13 @@ module.exports = {
       Nav: 'app/containers/Nav.jsx',
       GradesForm: 'app/components/GradesForm.jsx',
       GradesResult: 'app/containers/GradesResult.jsx',
+      GradesStats: 'app/components/GradesStats.jsx',
       Login: 'app/containers/auth/Login.jsx',
       Signup: 'app/containers/auth/Signup.jsx',
       Logout: 'app/containers/auth/Logout.jsx',
       RequireAuth: 'app/containers/auth/RequireAuth.jsx',
-      Classes: 'app/containers/Classes.jsx'
+      Classes: 'app/containers/Classes.jsx',
+      Spinner: 'app/components/Spinner.jsx'
     },
     extensions: ['', '.js', '.jsx']
   },
