@@ -94,7 +94,7 @@ class GradesResult extends Component {
           <div className="callout alert">
             <h4><strong>Oops!</strong> {error}</h4>
             <h5>
-              Please make sure that the URL is valid and it is the course
+              Please make sure that the ID is valid and the URL is the course
               homepage (it should end with index.html)
             </h5>
           </div>
