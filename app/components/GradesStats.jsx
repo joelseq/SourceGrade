@@ -22,7 +22,6 @@ class GradesStats extends Component {
               <div className="columns small-6">
                 <h6>Mean: {mean(assessment.scores).toFixed(2)}</h6>
                 <h6>Median: {median(assessment.scores).toFixed(2)}</h6>
-                <h6>Mode: {mode(assessment.scores).toFixed(2)}</h6>
                 <h6>Standard Deviation: {stdev(assessment.scores).toFixed(2)}</h6>
               </div>
               <div className="columns small-6">
