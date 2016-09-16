@@ -5,11 +5,14 @@ import { connect } from 'react-redux';
 class Nav extends React.Component {
   renderLinks() {
     if(this.props.authenticated) {
-      return (
-        <li>
+      return [
+        <li key={1}>
+          <Link to="classes" activeClassName="active" activeStyle={{fontWeight: 'bold'}}>Classes</Link>
+        </li>,
+        <li key={2}>
           <Link to="logout" activeClassName="active" activeStyle={{fontWeight: 'bold'}}>Logout</Link>
         </li>
-      );
+      ];
     } else {
       return [
         <li key={1}>
