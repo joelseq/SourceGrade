@@ -63,20 +63,27 @@ class GradesResult extends Component {
     if(!assessment) {
       return (
         <div className="chart-container">
-          <h5 className="pre-stats-text">Click "View Statistics" on an assessment or category to begin.</h5>
+          <h5 className="pre-stats-text">Click on an Assessment or Category to begin.</h5>
         </div>
       );
     }
   }
 
   renderGrades(assessment) {
+    function filterScore(score) {
+      const scores = score.split('%');
+      if(scores.length > 1) {
+        return `${scores[0]}%`;
+      }
+      return scores[0];
+    }
+
     return (
       <tr key={assessment.name}>
-        <td>{assessment.name}</td>
+        <td><a href="#">{assessment.name}</a></td>
         <td>{(assessment.Rank) ? `${assessment.Rank} / ${assessment.scores.length}` : ""}</td>
-        <td>{assessment.Score}</td>
+        <td>{filterScore(assessment.Score)}</td>
         <td>{assessment.Points}</td>
-        <td><a href="#">View Statistics</a></td>
       </tr>
     );
   }
@@ -104,44 +111,44 @@ class GradesResult extends Component {
           <h3>{grades.instructor}</h3>
           <hr />
         </div>
+        <div className="columns medium-12">
+          <h3>Statistics</h3>
+          <hr />
+          {this.renderStats()}
+        </div>
         <div className="columns medium-6">
           <h3>Categories</h3>
           <hr />
           <table className="assessments-table stack">
             <thead>
               <tr>
-                <th>Assessment name</th>
+                <th>Name</th>
                 <th>Rank</th>
                 <th>Score</th>
                 <th>Points</th>
-                <th></th>
               </tr>
             </thead>
             <tbody>
               {grades.csGrades.map(this.renderGrades)}
             </tbody>
           </table>
+        </div>
+        <div className="columns medium-6">
           <h3>Asessments</h3>
           <hr />
           <table className="assessments-table stack">
             <thead>
               <tr>
-                <th>Assessment name</th>
+                <th>Name</th>
                 <th>Rank</th>
                 <th>Score</th>
                 <th>Points</th>
-                <th></th>
               </tr>
             </thead>
             <tbody>
               {grades.asGrades.map(this.renderGrades)}
             </tbody>
           </table>
-        </div>
-        <div className="columns medium-6">
-          <h3>Statistics</h3>
-          <hr />
-          {this.renderStats()}
         </div>
       </div>
     );
