@@ -63,6 +63,7 @@
     "dotenv": "^2.0.0",
     "express": "^4.14.0",
     "gulp": "^3.9.1",
+    "jwt-simple": "^0.5.0",
     "lodash": "^4.15.0",
     "mongoose": "^4.5.8",
     "morgan": "^1.7.0",
