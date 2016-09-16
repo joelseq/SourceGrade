@@ -8,8 +8,18 @@ class Login extends Component {
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
   }
 
-  handleFormSubmit(formProps) {
-    actions.userLogin(formProps);
+  handleFormSubmit({ username, password }) {
+    this.props.userLogin({ username, password });
+  }
+
+  renderAlert() {
+    if(this.props.errorMessage) {
+      return (
+        <div className="callout alert">
+          <strong>Oops!</strong> {this.props.errorMessage}
+        </div>
+      );
+    }
   }
 
   render() {
@@ -26,6 +36,7 @@ class Login extends Component {
               <input {...password} type="password" name="password" placeholder="Password" />
               {password.touched && password.error && <div className="callout alert">{password.error}</div>}
               <button className="button expanded">Login</button>
+              {this.renderAlert()}
             </form>
           </div>
         </div>
@@ -34,19 +45,11 @@ class Login extends Component {
   }
 }
 
-function validate(formProps) {
-  const errors = {};
-  if(!formProps.username) {
-    errors.username = 'Please enter a Username';
-  }
-  if(!formProps.password) {
-    errors.password = 'Please enter a Password';
-  }
-  return errors;
+function mapStateToProps(state) {
+  return { errorMessage: state.auth.error };
 }
 
 export default reduxForm({
   form: 'signup',
-  fields: ['username', 'password'],
-  validate
-})(Login);
+  fields: ['username', 'password']
+}, mapStateToProps, actions)(Login);
