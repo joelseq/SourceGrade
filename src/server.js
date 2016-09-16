@@ -25,7 +25,6 @@ app.use(logger('dev'));
 app.use(express.static("public"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(errorHandler);
 
 // Allowing CORS
 app.use(function(req,res,next) {
@@ -40,6 +39,9 @@ app.use(function(req,res,next) {
 mongoose.connect(process.env.DB_URI);
 
 require('./routes')(app);
+
+// After all routes, use errorHandler to catch all errors
+app.use(errorHandler);
 
 // To make browserHistory work for ReactJS
 app.get('*', (req,res) => {

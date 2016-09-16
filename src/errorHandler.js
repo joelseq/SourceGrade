@@ -1,4 +1,7 @@
 module.exports = function(err, req, res, next) {
-  res.status(500);
-  res.json(err);
+  if(err.response.status === 404) {
+    return res.status(404).json({ error: 'Invalid URL' });
+  }
+
+  res.status(500).json({ error: 'Something went wrong'});
 }
