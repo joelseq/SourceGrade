@@ -6,10 +6,21 @@ class Signup extends Component {
   constructor(props) {
     super(props);
     this.handleFormSubmit = his.handleFormSubmit.bind(this);
+    this.renderAlert = this.renderAlert.bind(this);
   }
 
   handleFormSubmit(formProps) {
-    actions.userSignup(formProps);
+    this.props.userSignup(formProps);
+  }
+
+  renderAlert() {
+    if(this.props.errorMessage) {
+      return (
+        <div className="callout alert">
+          <strong>Oops!</strong> {this.props.errorMessage}
+        </div>
+      );
+    }
   }
 
   render() {
@@ -34,6 +45,7 @@ class Signup extends Component {
                 {passwordConfirm.touched && passwordConfirm.error && <div className="callout alert">{passwordConfirm.error}</div>}
               </fieldset>
               <button className="button expanded">Sign Up</button>
+              {this.renderAler()}
             </form>
           </div>
         </div>
@@ -59,8 +71,12 @@ function validate(formProps) {
   return errors;
 }
 
+function mapStateToProps(state) {
+  return { errorMessage: state.auth.error };
+}
+
 export default reduxForm({
   form: 'signup',
   fields: ['username', 'password', 'passwordConfirm'],
   validate
-})(Signup);
+}, mapStateToProps, actions)(Signup);

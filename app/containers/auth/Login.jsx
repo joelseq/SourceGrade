@@ -6,6 +6,7 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
+    this.renderAlert = this.renderAlert.bind(this);
   }
 
   handleFormSubmit({ username, password }) {
