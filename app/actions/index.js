@@ -3,6 +3,7 @@ import { browserHistory } from 'react-router';
 import {
   FETCH_GRADES,
   GRADES_ERROR,
+  SELECTED_CLASS,
   AUTH_USER,
   UNAUTH_USER,
   AUTH_ERROR
@@ -10,6 +11,7 @@ import {
 
 const API_URL = '/api/scrape?';
 
+// Action creator to get grades from API
 export function fetchGrades({id, url}) {
   return function(dispatch) {
     axios.get(`${API_URL}id=${id}&url=${url}`)
@@ -30,6 +32,17 @@ export function fetchGrades({id, url}) {
   };
 }
 
+// Action creator to select a class
+export function selectClass(selected) {
+  console.log(selected);
+  return {
+    type: SELECTED_CLASS,
+    payload: selected
+  }
+}
+
+
+// Action creator to log in user
 export function userLogin({ username, password }) {
   return function(dispatch) {
     axios.post('/login', { username, password })
@@ -44,6 +57,7 @@ export function userLogin({ username, password }) {
   }
 }
 
+// Action creator to sign up user
 export function userSignup({ username, password }) {
   return function(dispatch) {
     axios.post('/signup', { username, password})
@@ -58,6 +72,7 @@ export function userSignup({ username, password }) {
   }
 }
 
+// Action creator to sign out user
 export function userSignout(user) {
   localStorage.removeItem('token');
 
@@ -66,6 +81,7 @@ export function userSignout(user) {
   }
 }
 
+// Helper function for authentication related errors
 function authError(error) {
   return {
     type: AUTH_ERROR,
