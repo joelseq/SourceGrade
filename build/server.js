@@ -12,6 +12,7 @@ var logger = require('morgan');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var path = require('path');
+var errorHandler = require('./errorHandler');
 
 var app = express();
 
@@ -36,9 +37,12 @@ app.use(function (req, res, next) {
 	next();
 });
 
-//mongoose.connect(process.env.DB_URI);
+mongoose.connect(process.env.DB_URI);
 
 require('./routes')(app);
+
+// After all routes, use errorHandler to catch all errors
+app.use(errorHandler);
 
 // To make browserHistory work for ReactJS
 app.get('*', function (req, res) {

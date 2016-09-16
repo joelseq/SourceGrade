@@ -41,3 +41,6 @@ jspm_packages
 
 # Ignore WebStorm files
 .idea/
+
+# Ignore source maps for bundle
+bundle.js.map
