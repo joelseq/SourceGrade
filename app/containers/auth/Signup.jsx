@@ -5,7 +5,7 @@ import * as actions from '../../actions';
 class Signup extends Component {
   constructor(props) {
     super(props);
-    this.handleFormSubmit = his.handleFormSubmit.bind(this);
+    this.handleFormSubmit = this.handleFormSubmit.bind(this);
     this.renderAlert = this.renderAlert.bind(this);
   }
 
@@ -45,7 +45,7 @@ class Signup extends Component {
                 {passwordConfirm.touched && passwordConfirm.error && <div className="callout alert">{passwordConfirm.error}</div>}
               </fieldset>
               <button className="button expanded">Sign Up</button>
-              {this.renderAler()}
+              {this.renderAlert()}
             </form>
           </div>
         </div>
