@@ -25,7 +25,8 @@ module.exports = {
       Nav: 'app/components/Nav.jsx',
       GradesForm: 'app/components/GradesForm.jsx',
       GradesResult: 'app/containers/GradesResult.jsx',
-      Spinner: 'app/components/Spinner.jsx'
+      Login: 'app/containers/auth/Login.jsx',
+      Signup: 'app/containers/auth/Signup.jsx'
     },
     extensions: ['', '.js', '.jsx']
   },
@@ -49,5 +50,5 @@ module.exports = {
       }
     ]
   },
-  devtool: 'cheap-module-source-map'
+  devtool: 'cheap-module-eval-source-map'
 };

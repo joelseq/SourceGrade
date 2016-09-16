@@ -156,7 +156,7 @@ class GradesResult extends Component {
 }
 
 function mapStateToProps(state) {
-  return { grades: state.grades };
+  return { grades: state.grades.data };
 }
 
 export default connect(mapStateToProps, { fetchGrades })(GradesResult);
