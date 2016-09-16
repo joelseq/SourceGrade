@@ -7,6 +7,7 @@ import GradesResult from 'GradesResult';
 import Login from 'Login';
 import Signup from 'Signup';
 import Logout from 'Logout';
+import Classes from 'Classes';
 
 export default (
   <Route path="/" component={App}>
@@ -15,5 +16,6 @@ export default (
     <Route path="login" component={Login} />
     <Route path="signup" component={Signup} />
     <Route path="logout" component={Logout} />
+    <Route path="classes" component={Classes} />
   </Route>
 );

@@ -22,12 +22,13 @@ module.exports = {
   resolve: {
     root: __dirname,
     alias: {
-      Nav: 'app/components/Nav.jsx',
+      Nav: 'app/containers/Nav.jsx',
       GradesForm: 'app/components/GradesForm.jsx',
       GradesResult: 'app/containers/GradesResult.jsx',
       Login: 'app/containers/auth/Login.jsx',
       Signup: 'app/containers/auth/Signup.jsx',
-      Logout: 'app/containers/auth/Logout.jsx'
+      Logout: 'app/containers/auth/Logout.jsx',
+      Classes: 'app/containers/Classes.jsx'
     },
     extensions: ['', '.js', '.jsx']
   },

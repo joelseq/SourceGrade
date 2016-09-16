@@ -12,11 +12,11 @@ class Nav extends React.Component {
       );
     } else {
       return [
-        <li>
-          <Link to="login" activeClassName="active" activeStyle={{fontWeight: 'bold'}} key={1}>Login</Link>
+        <li key={1}>
+          <Link to="login" activeClassName="active" activeStyle={{fontWeight: 'bold'}}>Login</Link>
         </li>,
-        <li>
-          <Link to="signup" activeClassName="active" activeStyle={{fontWeight: 'bold'}} key={2}>Sign Up</Link>
+        <li key={2}>
+          <Link to="signup" activeClassName="active" activeStyle={{fontWeight: 'bold'}}>Sign Up</Link>
         </li>
       ];
     }
