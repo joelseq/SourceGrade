@@ -10,6 +10,7 @@ const logger = require('morgan');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const path = require('path');
+const errorHandler = require('./errorHandler');
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.use(logger('dev'));
 app.use(express.static("public"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(errorHandler);
 
 // Allowing CORS
 app.use(function(req,res,next) {
