@@ -22,7 +22,7 @@ h2 {
 
 hr {
   background: $accent-color;
-  height: 3px;
+  height: 2px;
   margin-top: 0px;
   margin-bottom: 20px;
   border-radius: 15%;
@@ -70,9 +70,8 @@ hr {
 
 .chart-container {
   @include depth-shadow;
-  width: 100%;
-  margin-bottom: 20px;
   background: white;
+  width: 100%;
 }
 
 .assessments-table {

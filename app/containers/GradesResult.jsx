@@ -99,11 +99,12 @@ class GradesResult extends Component {
 
     return (
       <div className="row">
-        <div className="columns medium-9 small-centered">
+        <div className="columns medium-12">
           <h2>{grades.courseName}</h2>
           <h3>{grades.instructor}</h3>
           <hr />
-          {this.renderStats()}
+        </div>
+        <div className="columns medium-6">
           <h3>Categories</h3>
           <hr />
           <table className="assessments-table stack">
@@ -136,6 +137,11 @@ class GradesResult extends Component {
               {grades.asGrades.map(this.renderGrades)}
             </tbody>
           </table>
+        </div>
+        <div className="columns medium-6">
+          <h3>Statistics</h3>
+          <hr />
+          {this.renderStats()}
         </div>
       </div>
     );
