@@ -13,8 +13,8 @@ module.exports = (passport) => {
   // Local Strategy
   //============================
   const localOptions = {
-    usernameField: username,
-    passwordField: password
+    usernameField: 'username',
+    passwordField: 'password'
   };
 
   passport.use(new LocalStrategy(localOptions, (username, password, done) => {
@@ -44,7 +44,7 @@ module.exports = (passport) => {
   };
 
   passport.use(new JwtStrategy(jwtOptions, (payload, done) => {
-    User.findById(payload.sub, (err, user) {
+    User.findById(payload.sub, (err, user) => {
       if(err) { return done(err, false); }
 
       if(user) {
