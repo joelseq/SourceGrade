@@ -101,6 +101,15 @@ tr {
   width: 100%;
 }
 
+.error-message {
+  width: 50%;
+  margin: 5em auto;
+
+  .callout {
+    color: #c0392b;
+  }
+}
+
 .assessments-table {
   @include depth-shadow;
   margin-bottom: 30px;

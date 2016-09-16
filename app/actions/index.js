@@ -4,6 +4,7 @@ import {
   FETCH_GRADES,
   GRADES_ERROR,
   SELECTED_CLASS,
+  REMOVE_GRADES,
   AUTH_USER,
   UNAUTH_USER,
   AUTH_ERROR
@@ -19,7 +20,7 @@ export function fetchGrades({id, url}) {
         dispatch({ type: FETCH_GRADES, payload: response });
       })
       .catch(error => {
-        dispatch({ type: GRADES_ERROR, payload: 'Could not fetch grades' });
+        dispatch({ type: GRADES_ERROR, payload: error.response.data });
       });
   }
 
@@ -37,6 +38,13 @@ export function selectClass(selected) {
   return {
     type: SELECTED_CLASS,
     payload: selected
+  }
+}
+
+// Action creator to return grades state to original form
+export function removeClass() {
+  return {
+    type: REMOVE_GRADES
   }
 }
 

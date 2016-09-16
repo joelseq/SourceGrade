@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { fetchGrades, selectClass } from '../actions';
+import * as actions from '../actions';
 import { Chart } from 'react-google-charts';
 import FontAwesome from 'react-fontawesome';
 import GradesStats from 'GradesStats';
@@ -26,6 +26,10 @@ class GradesResult extends Component {
     if(query) {
       this.props.fetchGrades(query);
     }
+  }
+
+  componentWillUnmount() {
+    this.props.removeClass();
   }
 
   renderCategories() {
@@ -74,7 +78,7 @@ class GradesResult extends Component {
     return (
       <tr key={assessment.name}>
         <td onClick={() => this.props.selectClass(assessment) }>{assessment.name}</td>
-        <td>{(assessment.Rank) ? `${assessment.Rank} / ${assessment.scores.length}` : ""}</td>
+        <td>{assessment.Rank && `${assessment.Rank} / ${assessment.scores.length}`}</td>
         <td>{filterScore(assessment.Score)}</td>
         <td>{assessment.Points}</td>
       </tr>
@@ -82,7 +86,21 @@ class GradesResult extends Component {
   }
 
   render() {
-    const { grades, selectedClass } = this.props;
+    const { grades, selectedClass, error } = this.props;
+
+    if(error) {
+      return (
+        <div className="error-message">
+          <div className="callout alert">
+            <h4><strong>Oops!</strong> {error}</h4>
+            <h5>
+              Please make sure that the URL is valid and it is the course
+              homepage (it should end with index.html)
+            </h5>
+          </div>
+        </div>
+      );
+    }
 
     if(!grades.courseName) {
       return <Spinner />;
@@ -140,10 +158,14 @@ class GradesResult extends Component {
 }
 
 function mapStateToProps(state) {
-  return { grades: state.grades.data, selectedClass: state.grades.selectedClass };
+  return {
+    grades: state.grades.data,
+    selectedClass: state.grades.selectedClass,
+    error: state.grades.error
+  };
 }
 
-export default connect(mapStateToProps, { fetchGrades, selectClass })(GradesResult);
+export default connect(mapStateToProps, actions)(GradesResult);
 
 GradesResult.propTypes = propTypes;
 GradesResult.defaultProps = defaultProps;
