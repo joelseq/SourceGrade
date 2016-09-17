@@ -9,7 +9,7 @@ export default function(state = {}, action) {
     case GET_CLASSES:
       return { ...state, classes: action.payload };
     case GET_USER_CLASSES:
-      return { userClasses: action.payload };
+      return { ...state, userClasses: action.payload };
     default:
       return state;
   }

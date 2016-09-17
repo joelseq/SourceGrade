@@ -28816,7 +28816,7 @@
 	    case _types.GET_CLASSES:
 	      return _extends({}, state, { classes: action.payload });
 	    case _types.GET_USER_CLASSES:
-	      return { userClasses: action.payload };
+	      return _extends({}, state, { userClasses: action.payload });
 	    default:
 	      return state;
 	  }
@@ -44382,41 +44382,27 @@
 	  }, {
 	    key: 'renderClasses',
 	    value: function renderClasses() {
-	      return this.props.classes.map(function (current) {
-	        return _react2.default.createElement(
-	          _reactRouter.Link,
-	          { key: current._id, to: 'grades?id=' + current.id + '&url=' + current.course.url },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'class-container' },
+	      if (this.props.userClasses) {
+	        return this.props.userClasses.map(function (current) {
+	          return _react2.default.createElement(
+	            _reactRouter.Link,
+	            { key: current._id, to: 'grades?id=' + current.id + '&url=' + current.course.url },
 	            _react2.default.createElement(
-	              'h3',
-	              null,
-	              current.course.courseName
+	              'div',
+	              { className: 'class-container' },
+	              _react2.default.createElement(
+	                'h3',
+	                null,
+	                current.course.courseName
+	              )
 	            )
-	          )
-	        );
-	      });
+	          );
+	        });
+	      }
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      if (!this.props.classes) {
-	        return _react2.default.createElement(
-	          'div',
-	          { className: 'row' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'columns medium-6 small-centered' },
-	            _react2.default.createElement(
-	              'h3',
-	              null,
-	              'Add a class'
-	            )
-	          )
-	        );
-	      }
-
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'row' },
@@ -44449,7 +44435,7 @@
 	}(_react.Component);
 
 	function mapStateToProps(state) {
-	  return { classes: state.classes.userClasses };
+	  return { userClasses: state.classes.userClasses };
 	}
 
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, actions)(Classes);
