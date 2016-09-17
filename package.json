@@ -56,7 +56,7 @@
   "dependencies": {
     "async": "^2.0.1",
     "axios": "^0.13.1",
-    "bcrypt-nodejs": "0.0.3",
+    "bcrypt": "^0.8.7",
     "body-parser": "^1.15.2",
     "chart.js": "^1.1.1",
     "cheerio": "^0.20.0",

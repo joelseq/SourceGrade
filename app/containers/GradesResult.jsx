@@ -111,7 +111,6 @@ class GradesResult extends Component {
         <div className="columns medium-12">
           <h2>{grades.courseName}</h2>
           <h3>{grades.instructor}</h3>
-          <hr />
         </div>
         <div className="columns medium-12">
           <h3>Statistics</h3>

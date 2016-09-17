@@ -1,4 +1,4 @@
-import { ADD_CLASS, ERR_CLASS, GET_CLASSES } from '../actions/types';
+import { ADD_CLASS, ERR_CLASS, GET_CLASSES, GET_USER_CLASSES } from '../actions/types';
 
 export default function(state = {}, action) {
   switch(action.type) {
@@ -8,6 +8,8 @@ export default function(state = {}, action) {
       return { ...state, error: action.payload.error };
     case GET_CLASSES:
       return { ...state, classes: action.payload };
+    case GET_USER_CLASSES:
+      return { userClasses: action.payload };
     default:
       return state;
   }

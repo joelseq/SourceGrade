@@ -119,6 +119,15 @@ tr {
   margin-bottom: 30px;
 }
 
+.class-container {
+  @include center-elements;
+  @include transition-shadow;
+  border-radius: 25px;
+  height: 150px;
+  margin-top: 50px;
+  background-color: white;
+  padding-left: 15px;
+}
 
 /* Navbar Styles */
 .nav-container, .menu, .top-bar, .top-bar ul {

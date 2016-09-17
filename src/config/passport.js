@@ -13,7 +13,8 @@ module.exports = (passport) => {
   // Local Strategy
   //============================
   const localOptions = {
-    usernameField: 'username'
+    usernameField: 'username',
+    passwordField: 'password'
   };
 
   passport.use(new LocalStrategy(localOptions, (username, password, done) => {
@@ -23,7 +24,7 @@ module.exports = (passport) => {
       if(!user) { return done(null, false); }
 
       // User was found, compare passwords
-      user.comparePassword(password, (err, isMatch) => {
+      user.comparePassword(password, function(err, isMatch) {
         if(err) { return done(err); }
 
         if(!isMatch) { return done(null, false) }

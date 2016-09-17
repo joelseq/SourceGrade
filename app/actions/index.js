@@ -73,6 +73,21 @@ export function getClasses() {
   }
 }
 
+// Action creator to get the classes of a single user
+export function getUserClasses() {
+  return function(dispatch) {
+    axios.get(`${API_URL}/me/classes`, {
+      headers: { authorization: localStorage.getItem('token') }
+    })
+      .then(response => {
+        dispatch({
+          type: GET_USER_CLASSES,
+          payload: response.data
+        });
+      });
+  }
+}
+
 // Action creator to log in user
 export function userLogin({ username, password }) {
   return function(dispatch) {
