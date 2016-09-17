@@ -5,17 +5,22 @@ import {
   GRADES_ERROR,
   SELECTED_CLASS,
   REMOVE_GRADES,
+  ADD_CLASS,
+  ERR_CLASS,
+  GET_CLASSES,
+  ADD_USER_CLASS,
+  GET_USER_CLASSES,
   AUTH_USER,
   UNAUTH_USER,
   AUTH_ERROR
 } from './types';
 
-const API_URL = '/api/scrape?';
+const API_URL = '/api';
 
 // Action creator to get grades from API
 export function fetchGrades({id, url}) {
   return function(dispatch) {
-    axios.get(`${API_URL}id=${id}&url=${url}`)
+    axios.get(`${API_URL}/scrape?id=${id}&url=${url}`)
       .then(response => {
         dispatch({ type: FETCH_GRADES, payload: response });
       })
@@ -23,14 +28,6 @@ export function fetchGrades({id, url}) {
         dispatch({ type: GRADES_ERROR, payload: error.response.data });
       });
   }
-
-
-  const request = axios.get(`${API_URL}id=${id}&url=${url}`);
-
-  return {
-    type: FETCH_GRADES,
-    payload: request
-  };
 }
 
 // Action creator to select a class
@@ -42,12 +39,39 @@ export function selectClass(selected) {
 }
 
 // Action creator to return grades state to original form
-export function removeClass() {
+export function removeGrades() {
   return {
     type: REMOVE_GRADES
   }
 }
 
+// Action creator to add a class
+export function addClass(url) {
+  return function(dispatch) {
+    axios.post(`${API_URL}/classes`, {
+      url
+    })
+    .then(response => {
+      dispatch({ type: ADD_CLASS });
+    })
+    .catch(err => {
+      dispatch({ type: ERR_CLASS, payload: err.response.data });
+    });
+  }
+}
+
+// Action creator to get classes
+export function getClasses() {
+  return function(dispatch) {
+    axios.get(`${API_URL}/classes`)
+      .then(response => {
+        dispatch({ type: GET_CLASSES, payload: response.data })
+      })
+      .catch(err => {
+        dispatch({ type: ERR_CLASS, payload: err.response.data });
+      });
+  }
+}
 
 // Action creator to log in user
 export function userLogin({ username, password }) {

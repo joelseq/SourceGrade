@@ -29,7 +29,7 @@ class GradesResult extends Component {
   }
 
   componentWillUnmount() {
-    this.props.removeClass();
+    this.props.removeGrades();
   }
 
   renderCategories() {
