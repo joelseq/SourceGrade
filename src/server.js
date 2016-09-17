@@ -25,7 +25,7 @@ app.use(logger('dev'));
 app.use(express.static("public"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-
+app.disable('x-powered-by');
 // Allowing CORS
 app.use(function(req,res,next) {
 	res.append('Access-Control-Allow-Origin', req.headers.origin || '*');
