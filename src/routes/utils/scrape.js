@@ -56,7 +56,8 @@ function scrapeClass(req, res, next) {
       }); /* end of filter */
 
       if(courseName && instructor) {
-        Class.create({ courseName: courseName, instructor: instructor }, (err, created) => {
+        const courseString = `${courseName} - ${instructor}`;
+        Class.create({ courseName: courseString }, (err, created) => {
           if(err) {
             return next({ error: 'Class already exists' });
           }
