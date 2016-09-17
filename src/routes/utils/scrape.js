@@ -9,8 +9,10 @@ const async = require('async');
 const request = require('request');
 const cheerio = require('cheerio');
 const axios = require('axios');
+const Class = require('../../models/class');
 
 var scraper = {
+  scrapeClass: scrapeClass,
   scrapeData: scrapeData
 };
 
@@ -26,10 +28,52 @@ function replaceUrl(url) {
 }
 
 /**
+ * scrapeClass - scrapes the url given to get the class info
+ * @param  req - the request object
+ * @param  res - the response object
+ * @param  next - to pass errors on to the error handler
+ */
+function scrapeClass(req, res, next) {
+  const url = req.body.url;
+
+  let courseName;
+  let instructor;
+
+  axios(url)
+    .then(response => {
+      var $ = cheerio.load(response.data);
+
+      var tables = $('center>table');
+
+      var courseNameTable = tables.first();
+      courseName = courseNameTable.find("b").text();
+      var linksTable = courseNameTable.next();
+
+      //Filter out the table to reach the anchor tags
+      linksTable.filter(function(){
+        var table = $(this);
+        instructor = table.find("font").first().text();
+      }); /* end of filter */
+
+      if(courseName && instructor) {
+        Class.create({ courseName: courseName, instructor: instructor }, (err, created) => {
+          if(err) {
+            return next({ error: 'Class already exists' });
+          }
+          return res.json({ message: 'Successfully added class' });
+        });
+      } else {
+        next({ error: 'Could not find course' });
+      }
+    })
+    .catch(err => next(err));
+}
+
+/**
  * scrapeData - Scrapes the user's data depending on the given id and url
  * @param req - the request object
  * @param res - the response object
- * @param next
+ * @param next - to pass errors on to the error handler
  */
 function scrapeData(req, res, next) {
   const id = req.query.id;
