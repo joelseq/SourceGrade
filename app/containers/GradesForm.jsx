@@ -6,6 +6,20 @@ import { connect } from 'react-redux';
 //Styles for react-select
 import 'react-select/dist/react-select.css';
 
+// PropTypes expected from parent component
+const propTypes = {
+  handleFormSubmit: PropTypes.func,
+  buttonText: PropTypes.string,
+  buttonClass: PropTypes.string
+};
+
+// Default props if none are given from parent
+const defaultProps = {
+  handleFormSubmit() {},
+  buttonText: 'Submit',
+  buttonClass: 'button'
+};
+
 class GradesForm extends Component {
   constructor(props) {
     super(props);
@@ -18,7 +32,7 @@ class GradesForm extends Component {
 
     this.onFormSubmit = this.onFormSubmit.bind(this);
     this.onIdChange = this.onIdChange.bind(this);
-    this.handleClassChange = this.handleClassChange.bind(this);
+    this.onClassChange = this.onClassChange.bind(this);
   }
 
   static contextTypes = {
@@ -35,7 +49,8 @@ class GradesForm extends Component {
     const { id, url } = this.state;
 
     if(id.length > 0 && url.length > 0) {
-      this.context.router.push(`/grades?id=${id}&url=${url}`);
+      // handleFormSubmit needs to be passed in from parent
+      this.props.handleFormSubmit(id, url);
     }
   };
 
@@ -45,7 +60,7 @@ class GradesForm extends Component {
     });
   }
 
-  handleClassChange(val) {
+  onClassChange(val) {
     this.setState({
       class: val,
       url: val.value
@@ -64,32 +79,20 @@ class GradesForm extends Component {
       });
     }
 
-
-
     return (
-      <div id="grades-form" className="row">
-        <div className="columns medium-6 small-centered">
-          <h1 className="text-center">Welcome to SourceGrade</h1>
-          <h3 className="text-center">Search for your grades</h3>
-          <form onSubmit={this.onFormSubmit}>
-            <input value={this.state.id} type="text" onChange={this.onIdChange} placeholder="Secret Number"/>
-            <Select
-              name="class-form"
-              value={this.state.class}
-              placeholder="Search for a Class"
-              options={options}
-              onChange={this.handleClassChange}
-              className="select"
-              clearable={false}
-            />
-            <button className="button expanded">Get Grades</button>
-          </form>
-        </div>
-      </div>
-    );
-
-    return (
-      <input value={this.state.url} type="text" onChange={this.onUrlChange} placeholder="Course URL"/>
+      <form onSubmit={this.onFormSubmit}>
+        <input value={this.state.id} type="text" onChange={this.onIdChange} placeholder="Secret Number"/>
+        <Select
+          name="class-form"
+          value={this.state.class}
+          placeholder="Search for a Class"
+          options={options}
+          onChange={this.onClassChange}
+          className="select"
+          clearable={false}
+        />
+      <button className={this.props.buttonClass}>{this.props.buttonText}</button>
+      </form>
     );
   }
 }
@@ -99,5 +102,8 @@ function mapStateToProps(state) {
     classes: state.classes.classes,
   };
 }
+
+GradesForm.propTypes = propTypes;
+GradesForm.defaultProps = defaultProps;
 
 export default connect(mapStateToProps, actions)(GradesForm);
