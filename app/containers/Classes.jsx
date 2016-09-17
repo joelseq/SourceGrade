@@ -14,30 +14,22 @@ class Classes extends Component {
   }
 
   renderClasses() {
-    return (
-      this.props.classes.map(current => {
-        return (
-          <Link key={current._id} to={`grades?id=${current.id}&url=${current.course.url}`}>
-            <div className="class-container">
-                <h3>{current.course.courseName}</h3>
-            </div>
-          </Link>
-        );
-      })
-    );
+    if(this.props.userClasses) {
+      return (
+        this.props.userClasses.map(current => {
+          return (
+            <Link key={current._id} to={`grades?id=${current.id}&url=${current.course.url}`}>
+              <div className="class-container">
+                  <h3>{current.course.courseName}</h3>
+              </div>
+            </Link>
+          );
+        })
+      );
+    }
   }
 
   render() {
-    if(!this.props.classes) {
-      return (
-        <div className="row">
-          <div className="columns medium-6 small-centered">
-            <h3>Add a class</h3>
-          </div>
-        </div>
-      );
-    }
-
     return (
       <div className="row">
         <div className="columns medium-10 small-centered">
@@ -55,7 +47,7 @@ class Classes extends Component {
 }
 
 function mapStateToProps(state) {
-  return { classes: state.classes.userClasses };
+  return { userClasses: state.classes.userClasses };
 }
 
 export default connect(mapStateToProps, actions)(Classes);
