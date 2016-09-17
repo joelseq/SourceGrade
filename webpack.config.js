@@ -27,6 +27,7 @@ module.exports = {
   resolve: {
     root: __dirname,
     alias: {
+      Home: 'app/components/Home.jsx',
       Nav: 'app/containers/Nav.jsx',
       GradesForm: 'app/containers/GradesForm.jsx',
       GradesResult: 'app/containers/GradesResult.jsx',

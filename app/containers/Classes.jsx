@@ -2,10 +2,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 import { Link } from 'react-router';
+import GradesForm from 'GradesForm';
 
 class Classes extends Component {
   componentWillMount() {
     this.props.getUserClasses();
+  }
+
+  handleFormSubmit() {
+
   }
 
   renderClasses() {
@@ -35,9 +40,13 @@ class Classes extends Component {
 
     return (
       <div className="row">
-        <div className="columns medium-9 small-centered">
+        <div className="columns medium-10 small-centered">
           <h3>My Classes</h3>
           <hr />
+          <h4>Add a Class</h4>
+          <div className="inline-form">
+            <GradesForm buttonText={'Add'} />
+          </div>
           {this.renderClasses()}
         </div>
       </div>
