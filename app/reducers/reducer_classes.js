@@ -5,7 +5,7 @@ export default function(state = {}, action) {
     case ADD_CLASS:
       return { ...state, added: true, error: '' };
     case ERR_CLASS:
-      return { ...state, error: action.payload.error };
+      return { ...state, added: false, error: action.payload.error };
     case GET_CLASSES:
       return { ...state, classes: action.payload };
     case GET_USER_CLASSES:

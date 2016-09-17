@@ -28812,7 +28812,7 @@
 	    case _types.ADD_CLASS:
 	      return _extends({}, state, { added: true, error: '' });
 	    case _types.ERR_CLASS:
-	      return _extends({}, state, { error: action.payload.error });
+	      return _extends({}, state, { added: false, error: action.payload.error });
 	    case _types.GET_CLASSES:
 	      return _extends({}, state, { classes: action.payload });
 	    case _types.GET_USER_CLASSES:
