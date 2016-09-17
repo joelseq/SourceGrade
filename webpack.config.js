@@ -28,7 +28,7 @@ module.exports = {
     root: __dirname,
     alias: {
       Nav: 'app/containers/Nav.jsx',
-      GradesForm: 'app/components/GradesForm.jsx',
+      GradesForm: 'app/containers/GradesForm.jsx',
       GradesResult: 'app/containers/GradesResult.jsx',
       GradesStats: 'app/components/GradesStats.jsx',
       Login: 'app/containers/auth/Login.jsx',
