@@ -7,11 +7,8 @@ const userSchema = new Schema({
   password: String,
   classes: [
     {
-      course: {
-        type: Schema.Types.ObjectId,
-        ref: "class"
-      },
-      id: String
+      type: Schema.Types.ObjectId,
+      ref: 'user-class'
     }
   ]
 });

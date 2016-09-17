@@ -9,6 +9,7 @@ const express = require('express');
 const scraper = require('./utils/scrape');
 const Class = require('../models/class');
 const User = require('../models/user');
+const UserClass = require('../models/user-class');
 const passport = require('passport');
 
 const router = express.Router();
@@ -31,7 +32,7 @@ router.get('/classes', (req, res, next) => {
 router.post('/classes', scraper.scrapeClass);
 
 router.get('/me/classes', requireAuth, (req, res, next) => {
-  User.findById(req.user._id).populate('classes.course').exec((err, user) => {
+  User.findById(req.user._id).populate('classes').exec((err, user) => {
     if(err) {
       return next({ error: 'Could not find classes for user' });
     }
@@ -48,9 +49,13 @@ router.post('/me/classes', requireAuth, (req, res, next) => {
       if(err) {
         return next({ error: 'Something went wrong'});
       }
-      user.classes.push({ course: foundClass, id: req.body.id });
-      user.save();
-      res.status(201).json({ message: 'Successfully added class to user' });
+      UserClass.create({id: req.body.id, class: foundClass, user: user}, (err, created) => {
+        if(err) { return next({ error: 'Could not create class for user' }); }
+
+        user.classes.push(created);
+        user.save();
+        res.status(201).json({ message: 'Successfully added class to user' });
+      });
     });
   });
 });
