@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import * as actions from '../actions';
 import { Link } from 'react-router';
 import GradesForm from 'GradesForm';
+import FontAwesome from 'react-fontawesome';
 
 class Classes extends Component {
   componentWillMount() {
@@ -18,12 +19,26 @@ class Classes extends Component {
       return (
         this.props.userClasses.map(current => {
           return (
-            <Link key={current._id} to={`grades?id=${current.id}&url=${current.class.url}`}>
-              <div className="class-container">
-                  <h4>{current.class.courseName}</h4>
-                  <h5>ID: {current.id}</h5>
+            <div className="columns medium-12">
+              <div className="row class-container">
+                <div className="columns small-11">
+                  <Link key={current._id} to={`grades?id=${current.id}&url=${current.class.url}`}>
+                    <div>
+                        <h4>{current.class.courseName}</h4>
+                        <h5>ID: {current.id}</h5>
+                    </div>
+                  </Link>
+                </div>
+                <div className="columns small-1">
+                  <button onClick={() => this.props.removeUserClass(current._id)} className="delete-button">
+                    <FontAwesome
+                      name="trash-o"
+                      size="lg"
+                    />
+                  </button>
+                </div>
               </div>
-            </Link>
+            </div>
           );
         })
       );
@@ -32,6 +47,12 @@ class Classes extends Component {
 
   onSuccess = () => {
     if(this.props.addedUserClass) {
+      this.props.getUserClasses();
+    }
+  }
+
+  onDelete = () => {
+    if(this.props.deletedUserClass) {
       this.props.getUserClasses();
     }
   }
@@ -51,6 +72,7 @@ class Classes extends Component {
 
   render() {
     this.onSuccess();
+    this.onDelete();
 
     return (
       <div className="row">
@@ -73,6 +95,7 @@ function mapStateToProps(state) {
   return {
     userClasses: state.classes.userClasses,
     addedUserClass: state.classes.addedUserClass,
+    deletedUserClass: state.classes.deletedUserClass,
     userClassError: state.classes.userClassError
   };
 }

@@ -12,7 +12,6 @@ import reduxThunk from 'redux-thunk';
 // Load foundation
 require('foundation-sites/dist/foundation.min.css');
 $(document).foundation();
-require('motion-ui/dist/motion-ui.min.css');
 
 // App css
 require('./styles/styles.scss');

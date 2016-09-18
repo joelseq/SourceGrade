@@ -10,6 +10,7 @@ import {
   GET_CLASSES,
   ADD_USER_CLASS,
   ERR_USER_CLASS,
+  DELETE_USER_CLASS,
   GET_USER_CLASSES,
   AUTH_USER,
   UNAUTH_USER,
@@ -108,9 +109,30 @@ export function addUserClass(id, name) {
       })
       .catch(err => {
         dispatch({
-          type: ERR_USER_CLASS
+          type: ERR_USER_CLASS,
+          payload: err.response.data
+        });
+      });
+  }
+}
+
+// Action creator to remove a class of a user
+export function removeUserClass(id) {
+  return function(dispatch) {
+    axios.delete(`${API_URL}/me/classes/${id}`, {
+      headers: { authorization: localStorage.getItem('token') }
+    })
+      .then(response => {
+        dispatch({
+          type: DELETE_USER_CLASS
         });
       })
+      .catch(err => {
+        dispatch({
+          type: ERR_USER_CLASS,
+          payload: err.response.data
+        });
+      });
   }
 }
 
