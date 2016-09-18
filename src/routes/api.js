@@ -59,6 +59,20 @@ router.post('/me/classes', requireAuth, (req, res, next) => {
   });
 });
 
+router.delete('/me/classes/:id', requireAuth, (req, res, next) => {
+  UserClass.findOneAndRemove({ _id: req.params.id, user: req.user}, (err, removed) => {
+    if(err) {
+      return next({ error: 'Could not remove class'});
+    }
+
+    if(!removed) {
+      return next({ error: 'No class to remove'});
+    }
+
+    res.status(200).json(removed);
+  });
+});
+
 router.get('/scrape', scraper.scrapeData);
 
 module.exports = router;
