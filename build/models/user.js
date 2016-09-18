@@ -2,39 +2,45 @@
 
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var bcrypt = require('bcrypt-nodejs');
+var bcrypt = require('bcrypt');
 
 var userSchema = new Schema({
   username: { type: String, lowercase: true, unique: true },
-  password: String
+  password: String,
+  classes: [{
+    type: Schema.Types.ObjectId,
+    ref: 'user-class'
+  }]
 });
 
+// Generate a hash
 userSchema.pre('save', function (next) {
   var user = this;
-
-  bcrypt.genSalt(10, function (err, salt) {
-    if (err) {
-      return next(err);
-    }
-
-    bcrypt.hash(user.password, salt, null, function (err, hash) {
+  if (this.isModified('password') || this.isNew) {
+    bcrypt.genSalt(10, function (err, salt) {
       if (err) {
         return next(err);
       }
-
-      user.password = hash;
-      next();
+      bcrypt.hash(user.password, salt, function (err, hash) {
+        if (err) {
+          return next(err);
+        }
+        user.password = hash;
+        next();
+      });
     });
-  });
+  } else {
+    return next();
+  }
 });
 
-userSchema.methods.comparePassword = function (candidatePassword, callback) {
-  bcrypt.compare(candidatePassword, this.password, function (err, isMatch) {
+// Method to compare password input to password saved in DB
+userSchema.methods.comparePassword = function (pw, cb) {
+  bcrypt.compare(pw, this.password, function (err, isMatch) {
     if (err) {
-      return callback(err);
+      return cb(err);
     }
-
-    callback(null, isMatch);
+    cb(null, isMatch);
   });
 };
 

@@ -15,7 +15,8 @@ module.exports = function (passport) {
   // Local Strategy
   //============================
   var localOptions = {
-    usernameField: 'username'
+    usernameField: 'username',
+    passwordField: 'password'
   };
 
   passport.use(new LocalStrategy(localOptions, function (username, password, done) {

@@ -11,8 +11,10 @@ var async = require('async');
 var request = require('request');
 var cheerio = require('cheerio');
 var axios = require('axios');
+var Class = require('../../models/class');
 
 var scraper = {
+  scrapeClass: scrapeClass,
   scrapeData: scrapeData
 };
 
@@ -27,10 +29,53 @@ function replaceUrl(url) {
 }
 
 /**
+ * scrapeClass - scrapes the url given to get the class info
+ * @param  req - the request object
+ * @param  res - the response object
+ * @param  next - to pass errors on to the error handler
+ */
+function scrapeClass(req, res, next) {
+  var url = req.body.url;
+
+  var courseName = void 0;
+  var instructor = void 0;
+
+  axios(url).then(function (response) {
+    var $ = cheerio.load(response.data);
+
+    var tables = $('center>table');
+
+    var courseNameTable = tables.first();
+    courseName = courseNameTable.find("b").text();
+    var linksTable = courseNameTable.next();
+
+    //Filter out the table to reach the anchor tags
+    linksTable.filter(function () {
+      var table = $(this);
+      instructor = table.find("font").first().text();
+    }); /* end of filter */
+
+    if (courseName && instructor) {
+      var courseString = courseName + ' - ' + instructor;
+      Class.create({ courseName: courseString, url: url }, function (err, created) {
+        if (err) {
+          return next({ error: 'Class already exists' });
+        }
+        return res.json({ message: 'Successfully added class' });
+      });
+    } else {
+      next({ error: 'Could not find course' });
+    }
+  }).catch(function (err) {
+    return next(err);
+  });
+}
+
+/**
  * scrapeData - Scrapes the user's data depending on the given id and url
  * @param req - the request object
  * @param res - the response object
- * @param next
+ * @param next - to pass errors on to the error handler
  */
 function scrapeData(req, res, next) {
   var id = req.query.id;
