@@ -46,6 +46,7 @@
     "gulp-sourcemaps": "^1.6.0",
     "gulp-watch": "^4.3.9",
     "jquery": "^2.2.1",
+    "motion-ui": "^1.2.2",
     "node-sass": "^3.9.3",
     "react-fontawesome": "^1.2.0",
     "sass-loader": "^4.0.2",

@@ -9,6 +9,7 @@ import {
   ERR_CLASS,
   GET_CLASSES,
   ADD_USER_CLASS,
+  ERR_USER_CLASS,
   GET_USER_CLASSES,
   AUTH_USER,
   UNAUTH_USER,
@@ -85,6 +86,31 @@ export function getUserClasses() {
           payload: response.data
         });
       });
+  }
+}
+
+// Action creator to add a class to a single user
+export function addUserClass(id, name) {
+  return function(dispatch) {
+    axios({
+      method: 'post',
+      url: `${API_URL}/me/classes`,
+      data: {
+        id: id,
+        name: name
+      },
+      headers: { authorization: localStorage.getItem('token') }
+    })
+      .then(response => {
+        dispatch({
+          type: ADD_USER_CLASS
+        });
+      })
+      .catch(err => {
+        dispatch({
+          type: ERR_USER_CLASS
+        });
+      })
   }
 }
 

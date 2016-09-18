@@ -26,7 +26,7 @@ class GradesForm extends Component {
 
     this.state = {
       id: '',
-      class: '',
+      currentClass: '',
       url: ''
     };
 
@@ -46,11 +46,11 @@ class GradesForm extends Component {
   onFormSubmit(e) {
     e.preventDefault();
 
-    const { id, url } = this.state;
+    const { id, url, currentClass } = this.state;
 
     if(id.length > 0 && url.length > 0) {
       // handleFormSubmit needs to be passed in from parent
-      this.props.handleFormSubmit(id, url);
+      this.props.handleFormSubmit(id, currentClass);
     }
   };
 
@@ -62,7 +62,7 @@ class GradesForm extends Component {
 
   onClassChange(val) {
     this.setState({
-      class: val,
+      currentClass: val,
       url: val.value
     });
   }
@@ -84,7 +84,7 @@ class GradesForm extends Component {
         <input value={this.state.id} type="text" onChange={this.onIdChange} placeholder="Secret Number"/>
         <Select
           name="class-form"
-          value={this.state.class}
+          value={this.state.currentClass}
           placeholder="Search for a Class"
           options={options}
           onChange={this.onClassChange}

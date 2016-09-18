@@ -1,4 +1,11 @@
-import { ADD_CLASS, ERR_CLASS, GET_CLASSES, GET_USER_CLASSES } from '../actions/types';
+import {
+  ADD_CLASS,
+  ERR_CLASS,
+  GET_CLASSES,
+  ADD_USER_CLASS,
+  ERR_USER_CLASS,
+  GET_USER_CLASSES,
+} from '../actions/types';
 
 export default function(state = {}, action) {
   switch(action.type) {
@@ -8,8 +15,12 @@ export default function(state = {}, action) {
       return { ...state, added: false, error: action.payload.error };
     case GET_CLASSES:
       return { ...state, classes: action.payload };
+    case ADD_USER_CLASS:
+      return { ...state, addedUserClass: true, userClassError: '' };
+    case ERR_USER_CLASS:
+      return { ...state, userClassError: 'Could not add class to user', addedUserClass: false };
     case GET_USER_CLASSES:
-      return { ...state, userClasses: action.payload };
+      return { ...state, userClasses: action.payload, addedUserClass: false };
     default:
       return state;
   }

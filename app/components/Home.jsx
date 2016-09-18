@@ -6,8 +6,8 @@ export default class Home extends Component {
     router: PropTypes.object
   };
 
-  handleFormSubmit(id, url) {
-    this.context.router.push(`/grades?id=${id}&url=${url}`);
+  handleFormSubmit(id, currentClass) {
+    this.context.router.push(`/grades?id=${id}&url=${currentClass.value}`);
   }
 
   render() {

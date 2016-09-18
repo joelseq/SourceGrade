@@ -32,11 +32,10 @@ router.get('/classes', (req, res, next) => {
 router.post('/classes', scraper.scrapeClass);
 
 router.get('/me/classes', requireAuth, (req, res, next) => {
-  User.findById(req.user._id).populate('classes').exec((err, user) => {
-    if(err) {
-      return next({ error: 'Could not find classes for user' });
-    }
-    res.status(200).json(user.classes);
+  UserClass.find({user: req.user}).populate('class').exec((err, classes) => {
+    if(err) { return next({ error: 'Could not find classes for user' }); }
+
+    res.status(200).json(classes);
   });
 });
 
