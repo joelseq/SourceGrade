@@ -129,6 +129,7 @@ tr {
 
 .stats-container {
   margin: 50px auto;
+  padding-left: 60px;
   color: $primary-color;
   text-align: center;
 }
@@ -137,6 +138,8 @@ tr {
   @include depth-shadow;
   background: white;
   width: 100%;
+  text-align: center;
+  height: auto;
 }
 
 .error-message {
@@ -172,6 +175,14 @@ tr {
 
 .delete-button {
   color: #c0392b;
+}
+
+/* Canvas Style for Chart */
+canvas {
+  width: 80% !important;
+  max-width: 800px;
+  min-height: 300px;
+  height: auto !important;
 }
 
 /* Navbar Styles */

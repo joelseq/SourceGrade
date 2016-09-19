@@ -72,6 +72,7 @@
     "passport-jwt": "^2.1.0",
     "passport-local": "^1.0.0",
     "react": "^15.3.0",
+    "react-chartjs": "^0.8.0",
     "react-dom": "^15.3.0",
     "react-google-charts": "^1.1.1",
     "react-redux": "^4.4.5",
