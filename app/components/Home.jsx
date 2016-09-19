@@ -13,7 +13,7 @@ export default class Home extends Component {
 
   render() {
     return (
-      <div class="grades-form" className="row">
+      <div className="row grades-form">
         <div className="columns medium-6 small-centered">
           <h1 className="text-center">Welcome to SourceGrade!</h1>
           <h3 className="text-center">Search for your grades</h3>
