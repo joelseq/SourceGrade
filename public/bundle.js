@@ -119,18 +119,18 @@
 
 	var _routes2 = _interopRequireDefault(_routes);
 
-	var _reduxThunk = __webpack_require__(378);
+	var _reduxThunk = __webpack_require__(379);
 
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	// Load foundation
-	__webpack_require__(379);
+	__webpack_require__(380);
 	$(document).foundation();
 
 	// App css
-	__webpack_require__(381);
+	__webpack_require__(382);
 
 	var createStoreWithMiddleware = (0, _redux.applyMiddleware)(_reduxThunk2.default)(_redux.createStore);
 
@@ -28686,6 +28686,7 @@
 	var REMOVE_GRADES = exports.REMOVE_GRADES = 'REMOVE_GRADES';
 	var ADD_CLASS = exports.ADD_CLASS = 'ADD_CLASS';
 	var ERR_CLASS = exports.ERR_CLASS = 'ERR_CLASS';
+	var REMOVE_ALERT = exports.REMOVE_ALERT = 'REMOVE_ALERT';
 	var GET_CLASSES = exports.GET_CLASSES = 'GET_CLASSES';
 	var ADD_USER_CLASS = exports.ADD_USER_CLASS = 'ADD_USER_CLASS';
 	var ERR_USER_CLASS = exports.ERR_USER_CLASS = 'ERR_USER_CLASS';
@@ -28815,6 +28816,8 @@
 	      return _extends({}, state, { added: true, error: '' });
 	    case _types.ERR_CLASS:
 	      return _extends({}, state, { added: false, error: action.payload.error });
+	    case _types.REMOVE_ALERT:
+	      return _extends({}, state, { added: false, error: '', addedUserClass: false, userClassError: '' });
 	    case _types.GET_CLASSES:
 	      return _extends({}, state, { classes: action.payload });
 	    case _types.ADD_USER_CLASS:
@@ -31959,7 +31962,7 @@
 
 	var _AddClass2 = _interopRequireDefault(_AddClass);
 
-	var _RequireAuth = __webpack_require__(377);
+	var _RequireAuth = __webpack_require__(378);
 
 	var _RequireAuth2 = _interopRequireDefault(_RequireAuth);
 
@@ -32208,7 +32211,7 @@
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'div',
-	        { 'class': 'grades-form', className: 'row' },
+	        { className: 'row grades-form' },
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'columns medium-6 small-centered' },
@@ -34584,6 +34587,7 @@
 	exports.selectClass = selectClass;
 	exports.removeGrades = removeGrades;
 	exports.addClass = addClass;
+	exports.removeAlert = removeAlert;
 	exports.getClasses = getClasses;
 	exports.getUserClasses = getUserClasses;
 	exports.addUserClass = addUserClass;
@@ -34643,6 +34647,13 @@
 	    }).catch(function (err) {
 	      dispatch({ type: _types.ERR_CLASS, payload: err.response.data });
 	    });
+	  };
+	}
+
+	// Action creator to remove alerts for classes
+	function removeAlert() {
+	  return {
+	    type: _types.REMOVE_ALERT
 	  };
 	}
 
@@ -44621,6 +44632,10 @@
 
 	var actions = _interopRequireWildcard(_actions);
 
+	var _Alert = __webpack_require__(377);
+
+	var _Alert2 = _interopRequireDefault(_Alert);
+
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -44645,8 +44660,6 @@
 	      var url = _this.state.url;
 
 
-	      console.log("URL is: " + url);
-
 	      if (url.length > 0) {
 	        _this.props.addClass(url);
 	      }
@@ -44658,21 +44671,13 @@
 
 	    _this.renderSuccess = function () {
 	      if (_this.props.added) {
-	        return _react2.default.createElement(
-	          'div',
-	          { className: 'callout success' },
-	          'Added Class Successfully'
-	        );
+	        return _react2.default.createElement(_Alert2.default, { className: 'success', message: 'Added Class Successfully', onClose: _this.props.removeAlert });
 	      }
 	    };
 
 	    _this.renderFailure = function () {
 	      if (_this.props.error) {
-	        return _react2.default.createElement(
-	          'div',
-	          { className: 'callout alert' },
-	          _this.props.error
-	        );
+	        return _react2.default.createElement(_Alert2.default, { className: 'alert', message: _this.props.error, onClose: _this.props.removeAlert });
 	      }
 	    };
 
@@ -44688,10 +44693,10 @@
 	        { className: 'row' },
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'columns medium-5 small-centered grades-form' },
+	          { className: 'columns medium-5 small-centered' },
 	          _react2.default.createElement(
 	            'form',
-	            { onSubmit: this.onFormSubmit },
+	            { className: 'grades-form', onSubmit: this.onFormSubmit },
 	            _react2.default.createElement(
 	              'h3',
 	              null,
@@ -44707,10 +44712,10 @@
 	              'button',
 	              { type: 'submit', className: 'button expanded' },
 	              'Submit'
-	            ),
-	            this.renderSuccess(),
-	            this.renderFailure()
-	          )
+	            )
+	          ),
+	          this.renderSuccess(),
+	          this.renderFailure()
 	        )
 	      );
 	    }
@@ -44723,10 +44728,48 @@
 	  return { added: state.classes.added, error: state.classes.error };
 	}
 
-	exports.default = (0, _reactRedux.connect)(null, actions)(AddClass);
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, actions)(AddClass);
 
 /***/ },
 /* 377 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	exports.default = function (props) {
+	  var message = props.message;
+	  var className = props.className;
+	  var onClose = props.onClose;
+
+
+	  return _react2.default.createElement(
+	    "div",
+	    { id: "alert", className: "callout " + className, "data-closable": true },
+	    message,
+	    _react2.default.createElement(
+	      "button",
+	      { onClick: onClose, className: "close-button", "aria-label": "Dismiss alert", type: "button", "data-close": true },
+	      _react2.default.createElement(
+	        "span",
+	        { "aria-hidden": "true" },
+	        "×"
+	      )
+	    )
+	  );
+	};
+
+	var _react = __webpack_require__(8);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/***/ },
+/* 378 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -44798,7 +44841,7 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 /***/ },
-/* 378 */
+/* 379 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -44826,13 +44869,13 @@
 	exports['default'] = thunk;
 
 /***/ },
-/* 379 */
+/* 380 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(380);
+	var content = __webpack_require__(381);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(355)(content, {});
@@ -44852,7 +44895,7 @@
 	}
 
 /***/ },
-/* 380 */
+/* 381 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(354)();
@@ -44866,13 +44909,13 @@
 
 
 /***/ },
-/* 381 */
+/* 382 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(382);
+	var content = __webpack_require__(383);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(355)(content, {});
@@ -44892,7 +44935,7 @@
 	}
 
 /***/ },
-/* 382 */
+/* 383 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(354)();

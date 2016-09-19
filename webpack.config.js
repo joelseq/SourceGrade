@@ -38,7 +38,8 @@ module.exports = {
       RequireAuth: 'app/containers/auth/RequireAuth.jsx',
       Classes: 'app/containers/Classes.jsx',
       AddClass: 'app/containers/AddClass.jsx',
-      Spinner: 'app/components/Spinner.jsx'
+      Spinner: 'app/components/Spinner.jsx',
+      Alert: 'app/components/Alert.jsx'
     },
     extensions: ['', '.js', '.jsx']
   },

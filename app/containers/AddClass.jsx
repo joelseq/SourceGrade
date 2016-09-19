@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
+import Alert from 'Alert';
 
 class AddClass extends Component {
   constructor(props) {
@@ -14,8 +15,6 @@ class AddClass extends Component {
 
     const { url } = this.state;
 
-    console.log("URL is: " + url);
-
     if(url.length > 0) {
       this.props.addClass(url);
     }
@@ -28,7 +27,7 @@ class AddClass extends Component {
   renderSuccess = () => {
     if(this.props.added) {
       return (
-        <div className="callout success">Added Class Successfully</div>
+        <Alert className={'success'} message={'Added Class Successfully'} onClose={this.props.removeAlert} />
       );
     }
   }
@@ -36,7 +35,7 @@ class AddClass extends Component {
   renderFailure = () => {
     if(this.props.error) {
       return (
-        <div className="callout alert">{this.props.error}</div>
+        <Alert className={'alert'} message={this.props.error} onClose={this.props.removeAlert} />
       );
     }
   }
@@ -44,15 +43,15 @@ class AddClass extends Component {
   render() {
     return (
       <div className="row">
-        <div className="columns medium-5 small-centered grades-form">
-          <form onSubmit={this.onFormSubmit}>
+        <div className="columns medium-5 small-centered">
+          <form className="grades-form" onSubmit={this.onFormSubmit}>
             <h3>Add a Class if it hasn't already been added</h3>
             <label>Enter Class Url</label>
             <input onChange={this.onUrlChange} type="url" value={this.state.url} />
             <button type="submit" className="button expanded">Submit</button>
-            {this.renderSuccess()}
-            {this.renderFailure()}
           </form>
+          {this.renderSuccess()}
+          {this.renderFailure()}
         </div>
       </div>
     );
@@ -63,4 +62,4 @@ function mapStateToProps(state) {
   return { added: state.classes.added, error: state.classes.error };
 }
 
-export default connect(null, actions)(AddClass);
+export default connect(mapStateToProps, actions)(AddClass);
