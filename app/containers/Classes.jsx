@@ -4,6 +4,7 @@ import * as actions from '../actions';
 import { Link } from 'react-router';
 import GradesForm from 'GradesForm';
 import FontAwesome from 'react-fontawesome';
+import Alert from 'Alert';
 
 class Classes extends Component {
   componentWillMount() {
@@ -19,10 +20,10 @@ class Classes extends Component {
       return (
         this.props.userClasses.map(current => {
           return (
-            <div className="columns medium-12">
+            <div key={current._id} className="columns medium-12">
               <div className="row class-container">
                 <div className="columns small-11">
-                  <Link key={current._id} to={`grades?id=${current.id}&url=${current.class.url}`}>
+                  <Link to={`grades?id=${current.id}&url=${current.class.url}`}>
                     <div>
                         <h4>{current.class.courseName}</h4>
                         <h5>ID: {current.id}</h5>
@@ -60,12 +61,7 @@ class Classes extends Component {
   renderError = () => {
     if(this.props.userClassError) {
       return (
-        <div className="callout alert" data-closable>
-          <strong>Oops!</strong> {this.props.userClassError}
-            <button className="close-button" aria-label="Dismiss alert" type="button" data-close>
-              <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
+        <div></div>
       );
     }
   }

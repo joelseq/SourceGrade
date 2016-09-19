@@ -44443,6 +44443,10 @@
 
 	var _reactFontawesome2 = _interopRequireDefault(_reactFontawesome);
 
+	var _Alert = __webpack_require__(377);
+
+	var _Alert2 = _interopRequireDefault(_Alert);
+
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -44472,7 +44476,7 @@
 	        return _this.props.userClasses.map(function (current) {
 	          return _react2.default.createElement(
 	            'div',
-	            { className: 'columns medium-12' },
+	            { key: current._id, className: 'columns medium-12' },
 	            _react2.default.createElement(
 	              'div',
 	              { className: 'row class-container' },
@@ -44481,7 +44485,7 @@
 	                { className: 'columns small-11' },
 	                _react2.default.createElement(
 	                  _reactRouter.Link,
-	                  { key: current._id, to: 'grades?id=' + current.id + '&url=' + current.class.url },
+	                  { to: 'grades?id=' + current.id + '&url=' + current.class.url },
 	                  _react2.default.createElement(
 	                    'div',
 	                    null,
@@ -44527,26 +44531,7 @@
 	      }
 	    }, _this.renderError = function () {
 	      if (_this.props.userClassError) {
-	        return _react2.default.createElement(
-	          'div',
-	          { className: 'callout alert', 'data-closable': true },
-	          _react2.default.createElement(
-	            'strong',
-	            null,
-	            'Oops!'
-	          ),
-	          ' ',
-	          _this.props.userClassError,
-	          _react2.default.createElement(
-	            'button',
-	            { className: 'close-button', 'aria-label': 'Dismiss alert', type: 'button', 'data-close': true },
-	            _react2.default.createElement(
-	              'span',
-	              { 'aria-hidden': 'true' },
-	              '×'
-	            )
-	          )
-	        );
+	        return _react2.default.createElement('div', null);
 	      }
 	    }, _temp), _possibleConstructorReturn(_this, _ret);
 	  }
