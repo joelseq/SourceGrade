@@ -9,6 +9,7 @@ import Login from 'Login';
 import Signup from 'Signup';
 import Logout from 'Logout';
 import Classes from 'Classes';
+import AddClass from 'AddClass';
 import RequireAuth from 'RequireAuth';
 
 export default (
@@ -19,5 +20,6 @@ export default (
     <Route path="signup" component={Signup} />
     <Route path="logout" component={Logout} />
     <Route path="classes" component={RequireAuth(Classes)} />
+    <Route path="add" component={AddClass} />
   </Route>
 );

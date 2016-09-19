@@ -46,8 +46,8 @@ tr {
   font-weight: bold;
 }
 
-#grades-form {
-  margin-top: 50px;
+.grades-form {
+  margin-top: 75px;
 
   .text-center {
     color: $primary-color;
@@ -59,6 +59,14 @@ tr {
     &:hover {
       background-color: $primary-hover-color;
     }
+  }
+
+  p {
+    color: $primary-color;
+  }
+
+  .bottom-info-text {
+    margin-top: 5rem;
   }
 }
 

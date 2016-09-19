@@ -51,14 +51,14 @@ export function removeGrades() {
 export function addClass(url) {
   return function(dispatch) {
     axios.post(`${API_URL}/classes`, {
-      url
+      url: url
     })
-    .then(response => {
-      dispatch({ type: ADD_CLASS });
-    })
-    .catch(err => {
-      dispatch({ type: ERR_CLASS, payload: err.response.data });
-    });
+      .then(response => {
+        dispatch({ type: ADD_CLASS });
+      })
+      .catch(err => {
+        dispatch({ type: ERR_CLASS, payload: err.response.data });
+      });
   }
 }
 
