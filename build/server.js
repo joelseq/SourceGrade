@@ -13,12 +13,19 @@ var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var path = require('path');
 var errorHandler = require('./errorHandler');
+var RateLimit = require('express-rate-limit');
 
 var app = express();
 
 if (process.env.NODE_ENV !== 'production') {
 	require('dotenv').config();
 }
+
+var limiter = new RateLimit({
+	windowMs: 15 * 60 * 1000, // 15 minutes
+	max: 100, // limit each IP to 100 requests per windowMs
+	delayMs: 0 // disable delaying - full speed until the max limit is reached
+});
 
 //==============================
 // Express Config
@@ -36,6 +43,8 @@ app.use(function (req, res, next) {
 	res.append('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
 	next();
 });
+app.enable('trust proxy');
+app.use(limiter);
 
 mongoose.connect(process.env.DB_URI);
 

@@ -1,6 +1,6 @@
 {
   "name": "sourcegrade2",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "A web scraper to find grades easily from gradesource.com",
   "main": "server.js",
   "scripts": {

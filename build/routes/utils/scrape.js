@@ -37,6 +37,10 @@ function replaceUrl(url) {
 function scrapeClass(req, res, next) {
   var url = req.body.url;
 
+  if (!url) {
+    res.status(422).json({ error: 'URL must be provided' });
+  }
+
   var courseName = void 0;
   var instructor = void 0;
 
@@ -60,8 +64,9 @@ function scrapeClass(req, res, next) {
       Class.create({ courseName: courseString, url: url }, function (err, created) {
         if (err) {
           return next({ error: 'Class already exists' });
+        } else {
+          res.status(201).json(created);
         }
-        return res.json({ message: 'Successfully added class' });
       });
     } else {
       next({ error: 'Could not find course' });
