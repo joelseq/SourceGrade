@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { mean, median, mode, stdev } from 'stats-lite';
-import { Bar } from 'react-chartjs';
 import { Chart } from 'react-google-charts';
 
 class GradesStats extends Component {
