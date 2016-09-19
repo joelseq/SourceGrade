@@ -55,6 +55,12 @@ class GradesStats extends Component {
       }
     };
 
+    // Create a copy of scores array and sort it in ascending order
+    // using a comparator function
+    const sortedScores = [ ...assessment.scores ].sort((a, b) => a - b);
+    const max = sortedScores[sortedScores.length - 1];
+    const min = sortedScores[0];
+
     return (
       <div className="chart-container">
         <div className="row">
@@ -63,6 +69,8 @@ class GradesStats extends Component {
             <div className="row">
               <div className="columns small-6">
                 <h5>Class Scores:</h5>
+                <h6>Max: {max}</h6>
+                <h6>Min: {min}</h6>
                 <h6>Mean: {mean(assessment.scores).toFixed(2)}</h6>
                 <h6>Median: {median(assessment.scores).toFixed(2)}</h6>
                 <h6>Standard Deviation: {stdev(assessment.scores).toFixed(2)}</h6>
