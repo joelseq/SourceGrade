@@ -71,7 +71,7 @@ class Classes extends Component {
     this.onDelete();
 
     return (
-      <div className="row">
+      <div className="row user-classes">
         <div className="columns medium-10 small-centered">
           <h3>My Classes</h3>
           <hr />
