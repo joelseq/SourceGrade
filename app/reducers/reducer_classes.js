@@ -1,6 +1,7 @@
 import {
   ADD_CLASS,
   ERR_CLASS,
+  REMOVE_ALERT,
   GET_CLASSES,
   ADD_USER_CLASS,
   ERR_USER_CLASS,
@@ -14,6 +15,8 @@ export default function(state = {}, action) {
       return { ...state, added: true, error: '' };
     case ERR_CLASS:
       return { ...state, added: false, error: action.payload.error };
+    case REMOVE_ALERT:
+      return { ...state, added: false, error: '', addedUserClass: false, userClassError: '' };
     case GET_CLASSES:
       return { ...state, classes: action.payload };
     case ADD_USER_CLASS:

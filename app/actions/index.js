@@ -7,6 +7,7 @@ import {
   REMOVE_GRADES,
   ADD_CLASS,
   ERR_CLASS,
+  REMOVE_ALERT,
   GET_CLASSES,
   ADD_USER_CLASS,
   ERR_USER_CLASS,
@@ -60,6 +61,13 @@ export function addClass(url) {
         dispatch({ type: ERR_CLASS, payload: err.response.data });
       });
   }
+}
+
+// Action creator to remove alerts for classes
+export function removeAlert() {
+  return {
+    type: REMOVE_ALERT
+  };
 }
 
 // Action creator to get classes
