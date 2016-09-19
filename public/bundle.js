@@ -36480,6 +36480,8 @@
 
 	var actions = _interopRequireWildcard(_actions);
 
+	var _reactGoogleCharts = __webpack_require__(357);
+
 	var _reactFontawesome = __webpack_require__(367);
 
 	var _reactFontawesome2 = _interopRequireDefault(_reactFontawesome);
@@ -36518,7 +36520,6 @@
 
 	    var _this = _possibleConstructorReturn(this, (GradesResult.__proto__ || Object.getPrototypeOf(GradesResult)).call(this, props));
 
-	    _this.renderCategories = _this.renderCategories.bind(_this);
 	    _this.renderGrades = _this.renderGrades.bind(_this);
 	    return _this;
 	  }
