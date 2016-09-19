@@ -47,7 +47,12 @@ tr {
 }
 
 .grades-form {
-  margin-top: 75px;
+  margin-top: 25px;
+
+  h5, h6 {
+    text-align: center;
+    color: $primary-color;
+  }
 
   .text-center {
     color: $primary-color;

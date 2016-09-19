@@ -17,6 +17,8 @@ export default class Home extends Component {
         <div className="columns medium-6 small-centered">
           <h1 className="text-center">Welcome to SourceGrade!</h1>
           <h3 className="text-center">Search for your grades</h3>
+          <h5>For a demonstration, try:</h5>
+          <h6>Secret Number: 8010, Class: Math 20 - Spring 2000</h6>
           <GradesForm
             handleFormSubmit={this.handleFormSubmit.bind(this)}
             buttonText={'Get Grades'}
