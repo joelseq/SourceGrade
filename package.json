@@ -62,6 +62,7 @@
     "cheerio": "^0.20.0",
     "dotenv": "^2.0.0",
     "express": "^4.14.0",
+    "express-rate-limit": "^2.5.0",
     "gulp": "^3.9.1",
     "jwt-simple": "^0.5.0",
     "lodash": "^4.15.0",
