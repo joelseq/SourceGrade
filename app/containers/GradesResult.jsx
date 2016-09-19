@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
+import { Chart } from 'react-google-charts';
 import FontAwesome from 'react-fontawesome';
 import GradesStats from 'GradesStats';
 import Spinner from 'Spinner';
@@ -29,6 +30,40 @@ class GradesResult extends Component {
 
   componentWillUnmount() {
     this.props.removeGrades();
+  }
+
+  renderCategories() {
+    const { csGrades } = this.props.grades;
+    const names = csGrades.map(grade => grade.name);
+    const values = csGrades.map(grade => {
+      const num = parseFloat(grade.Score.split("%")[0]);
+      return num;
+    });
+    const data = [['Category', 'Score']];
+
+    for(let i = 0; i < names.length; i++) {
+      const name = names[i];
+      const value = values[i];
+      data.push([name, value]);
+    }
+
+    const options = {
+      title: 'Category Scores'
+    }
+
+    return (
+      <div className="chart-container">
+        <Chart
+          chartType="ColumnChart"
+          data={data}
+          options={options}
+          graph_id="ColumnChart"
+          width={"100%"}
+          height={"400px"}
+          legend_toggle={true}
+        />
+      </div>
+    );
   }
 
   renderGrades(assessment) {
