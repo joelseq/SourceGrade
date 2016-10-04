@@ -1,6 +1,6 @@
 # SourceGrade
 
-o make [SourceGrade](http://www.sourcegrade.xyz/) is a web scraping app built with MongoDB, Express.js, Node.js, React, and Redux for [GradeSource](http://www.gradesource.com/). SourceGrade is designed to make your life easier by finding all your scores for a particular class on GradeSource, and presenting all the data in a meaningful and elegant way. It also allows you to create accounts to save all your information for a class so that you never have to remember your secret number or course url again!
+[SourceGrade](http://www.sourcegrade.xyz/) is a web scraping app built with MongoDB, Express.js, Node.js, React, and Redux for [GradeSource](http://www.gradesource.com/). SourceGrade is designed to make your life easier by finding all your scores for a particular class on GradeSource, and presenting all the data in a meaningful and elegant way. It also allows you to create accounts to save all your information for a class so that you never have to remember your secret number or course url again!
 
 ## Usage
 
