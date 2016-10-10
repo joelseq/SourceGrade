@@ -29,6 +29,7 @@ class Signup extends Component {
     return (
       <div>
         <h3 className="auth-header-text">Create an account</h3>
+        <h5 className="warning-text">Do Not Use Your UCSD username and password!</h5>
         <div className="row">
           <div className="columns medium-4 small-centered">
             <form className="auth-form" onSubmit={handleSubmit(this.handleFormSubmit)}>

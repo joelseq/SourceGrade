@@ -100,7 +100,7 @@ class GradesResult extends Component {
           </table>
         </div>
         <div className="columns medium-6">
-          <h3>Asessments</h3>
+          <h3>Assessments</h3>
           <hr />
           <table className="assessments-table stack">
             <thead>
