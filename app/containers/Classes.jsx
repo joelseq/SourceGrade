@@ -19,6 +19,10 @@ class Classes extends Component {
     if(this.props.userClasses) {
       return (
         this.props.userClasses.map(current => {
+          if (current.class === null) {
+            this.props.removeUserClass(current._id);
+            return null;
+          }
           return (
             <div key={current._id} className="columns medium-12">
               <div className="row class-container">
