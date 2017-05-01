@@ -76,7 +76,7 @@ class GradesForm extends Component {
           value: current.url,
           label: current.courseName
         };
-      });
+      }).reverse();
     }
 
     return (
