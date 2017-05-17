@@ -22,9 +22,9 @@ router.post('/login', requireLogin, function (req, res, next) {
 });
 
 router.post('/signup', function (req, res, next) {
-  var _req$body = req.body;
-  var username = _req$body.username;
-  var password = _req$body.password;
+  var _req$body = req.body,
+      username = _req$body.username,
+      password = _req$body.password;
 
 
   if (!username || !password) {
