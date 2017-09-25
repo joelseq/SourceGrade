@@ -10,7 +10,7 @@ import routes from './routes';
 import reduxThunk from 'redux-thunk';
 
 // Load foundation
-require('foundation-sites/dist/foundation.min.css');
+require('foundation-sites/dist/css/foundation.min.css');
 $(document).foundation();
 
 // App css
