@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import GradesForm from 'GradesForm';
+import Footer from 'Footer';
 import { Link } from 'react-router';
 
 export default class Home extends Component {
@@ -33,6 +34,7 @@ export default class Home extends Component {
             remember your course url or secret number again!
           </p>
         </div>
+        <Footer />
       </div>
     );
   }

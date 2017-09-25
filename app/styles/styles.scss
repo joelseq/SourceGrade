@@ -116,9 +116,7 @@ tr {
   }
 
   input, .Select {
-    width: 40%;
     display: inline;
-    float: left;
     margin-right: 10px;
   }
 }
@@ -242,6 +240,20 @@ canvas {
         background-color: $primary-hover-color;
       }
     }
+  }
+}
+
+.footer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 50px;
+
+  > iframe {
+    margin: 10px;
+    border: none;
+    display: flex;
+    justify-content: center;
   }
 }
 

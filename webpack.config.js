@@ -29,6 +29,7 @@ module.exports = {
     alias: {
       Home: 'app/components/Home.jsx',
       Nav: 'app/containers/Nav.jsx',
+      Footer: 'app/components/Footer.jsx',
       GradesForm: 'app/containers/GradesForm.jsx',
       GradesResult: 'app/containers/GradesResult.jsx',
       GradesStats: 'app/components/GradesStats.jsx',
