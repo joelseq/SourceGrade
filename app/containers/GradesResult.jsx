@@ -45,8 +45,8 @@ class GradesResult extends Component {
     }
 
     return (
-      <tr key={assessment.name}>
-        <td onClick={() => this.props.selectClass(assessment) }>{assessment.name}</td>
+      <tr onClick={() => this.props.selectClass(assessment)} key={assessment.name}>
+        <td>{assessment.name}</td>
         <td>{assessment.Rank && `${assessment.Rank} / ${assessment.scores.length}`}</td>
         <td>{filterScore(assessment.Score)}</td>
         <td>{assessment.Points}</td>
