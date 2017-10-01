@@ -24,6 +24,10 @@ class GradesResult extends Component {
     const query = this.props.location.query;
     if(query) {
       this.props.fetchGrades(query);
+
+      // Fire GA event for analytics
+      const eventString = `${query.id} - ${query.url}`;
+      ga('send', 'event', 'GradesResult', 'lookup', eventString);
     }
   }
 
