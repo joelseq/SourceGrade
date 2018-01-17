@@ -39,6 +39,10 @@ SECRET=supercoolsecret
 ```
 5. Run the server `node bin/www`
 
+## Development
+
+If you are working on the UI, you can run `webpack -w` to watch for changes to React files and automatically build the bundle. When you are ready to build a production bundle run `webpack -p` (Make sure to do this before committing the `bundle.js` file).
+
 ## Contributing
 
 1. Fork it!
