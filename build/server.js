@@ -46,7 +46,9 @@ app.use(function (req, res, next) {
 app.enable('trust proxy');
 app.use(limiter);
 
-mongoose.connect(process.env.DB_URI);
+mongoose.connect(process.env.DB_URI, {
+	useMongoClient: true
+});
 
 require('./routes')(app);
 
