@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
 const bcrypt = require('bcrypt-nodejs');
+
+const { Schema } = mongoose;
 
 const userSchema = new Schema({
   username: { type: String, lowercase: true, unique: true },
@@ -8,39 +9,41 @@ const userSchema = new Schema({
   classes: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'user-class'
-    }
-  ]
+      ref: 'user-class',
+    },
+  ],
 });
 
 // Generate a hash
-userSchema.pre('save', function(next) {
-  let user = this;
-  if( this.isModified('password') || this.isNew ) {
-    bcrypt.genSalt(10, (err, salt) => {
-      if(err) {
+userSchema.pre('save', (next) => {
+  const user = this;
+
+  if (this.isModified('password') || this.isNew) {
+    return bcrypt.genSalt(10, (err, salt) => {
+      if (err) {
         return next(err);
       }
-      bcrypt.hash(user.password, salt, () => {}, (err, hash) => {
-        if(err) {
-          return next(err);
+
+      return bcrypt.hash(user.password, salt, () => {}, (error, hash) => {
+        if (error) {
+          return next(error);
         }
         user.password = hash;
-        next();
+        return next();
       });
     });
-  } else {
-    return next();
   }
+
+  return next();
 });
 
 // Method to compare password input to password saved in DB
-userSchema.methods.comparePassword = function(pw, cb) {
-  bcrypt.compare(pw, this.password, (err, isMatch) => {
-    if(err) {
+userSchema.methods.comparePassword = (pw, cb) => {
+  return bcrypt.compare(pw, this.password, (err, isMatch) => {
+    if (err) {
       return cb(err);
     }
-    cb(null, isMatch);
+    return cb(null, isMatch);
   });
 };
 

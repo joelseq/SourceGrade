@@ -1,16 +1,15 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
 
-const userClassSchema = new Schema({
+const userClassSchema = new mongoose.Schema({
   id: String,
   class: {
-    type: Schema.Types.ObjectId,
-    ref: "class"
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'class',
   },
   user: {
-    type: Schema.Types.ObjectId,
-    ref: "user"
-  }
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'user',
+  },
 });
 
 module.exports = mongoose.model('user-class', userClassSchema);
