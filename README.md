@@ -1,62 +1,33 @@
-# SourceGrade
+# MERN-boilerplate
 
-[SourceGrade](http://www.sourcegrade.xyz/) is a web scraping app built with MongoDB, Express.js, Node.js, React, and Redux for [GradeSource](http://www.gradesource.com/). SourceGrade is designed to make your life easier by finding all your scores for a particular class on GradeSource, and presenting all the data in a meaningful and elegant way. It also allows you to create accounts to save all your information for a class so that you never have to remember your secret number or course url again!
+This is a boilerplate project using the following technologies:
+- [React](https://facebook.github.io/react/) and [React Router](https://reacttraining.com/react-router/) for the frontend
+- [Express](http://expressjs.com/) and [Mongoose](http://mongoosejs.com/) for the backend
+- [Sass](http://sass-lang.com/) for styles (using the SCSS syntax)
+- [Webpack](https://webpack.github.io/) for compilation
 
-## Usage
 
-1) Add your class url [here](http://www.sourcegrade.xyz/add) if it hasn't already been previously added.
+## Requirements
 
-2) Enter your Secret Number and Class in the input fields
+- [Node.js](https://nodejs.org/en/) 6+
 
-![enter info](https://github.com/joelseq/SourceGrade/blob/master/img/image1.png)
-
-3) View your scores and statistics for each assessment or category.
-
-![view scores](https://github.com/joelseq/SourceGrade/blob/master/img/image2.png)
-
-![view scores 2](https://github.com/joelseq/SourceGrade/blob/master/img/image3.png)
-
-In addition, if you want to use the API directly the route is:
-
-`http://www.sourcegrade.xyz/api/scrape?id={secret number}&url={class url}`
-
-Example API Request:
-
-`http://www.sourcegrade.xyz/api/scrape?id=8010&url=http://www.gradesource.com/demo/example1/index.html`
-
-## Install and run locally
-
-To install and run this on your local machine you need [MongoDB](https://www.mongodb.com/)
-
-1. Clone this repository
-2. Run `npm install`
-3. Start MongoDB
-4. Create a `.env` file in the main directory, providing the two environment variables DB_URI (url to your MongoDB server) and SECRET (secret for encrypting JSONWebTokens).
-Example:
+```shell
+npm install
 ```
-DB_URI=mongodb://localhost:27017/sourcegrade
-SECRET=supercoolsecret
+
+
+## Running
+
+Make sure to add a `config.js` file in the `config` folder. See the example there for more details.
+
+Production mode:
+
+```shell
+npm start
 ```
-5. Run the server `node bin/www`
 
-## Development
+Development (Webpack dev server) mode:
 
-If you are working on the UI, you can run `webpack -w` to watch for changes to React files and automatically build the bundle. When you are ready to build a production bundle run `webpack -p` (Make sure to do this before committing the `bundle.js` file).
-
-## Contributing
-
-1. Fork it!
-2. Create your feature branch: `git checkout -b my-new-feature`
-3. Commit your changes: `git commit -am 'Add some feature'`
-4. Push to the branch: `git push origin my-new-feature`
-5. Submit a pull request :D
-
-Contributions are always welcome!
-
-## Credits
-
-Chris Korkos for the designs.
-
-## Misc.
-
-Source code for old version available [here](https://github.com/joelseq/SourceGrade-Old)
+```shell
+npm run start:dev
+```
