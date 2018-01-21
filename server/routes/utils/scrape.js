@@ -43,7 +43,7 @@ function scrapeClass(req, res, next) {
       // TODO: Figure out why I did this 'filtering' and then remove eslint disable
       // Filter out the table to reach the anchor tags
       /* eslint-disable array-callback-return */
-      linksTable.filter(() => {
+      linksTable.filter(function needThis() {
         const table = $(this);
         instructor = table.find('font').first().text();
       });
@@ -78,7 +78,7 @@ function getGrades(data, callback) {
       let table;
       let categories;
 
-      tables.each(() => {
+      tables.each(function needThis() {
         if ($(this).attr('cellpadding', '3')) {
           table = $(this);
         }
@@ -196,8 +196,8 @@ function scrapeData(req, res, next) {
   const { id, url } = req.query;
 
   let grades = {};
-  const csGrades = [];
-  const asGrades = [];
+  let csGrades = [];
+  let asGrades = [];
   let courseName;
   let instructor;
 
@@ -221,7 +221,7 @@ function scrapeData(req, res, next) {
       // Filter out the table to reach the anchor tags
       /* eslint-disable array-callback-return */
       /* eslint-disable consistent-return */
-      linksTable.filter(() => {
+      linksTable.filter(function needThis() {
         const table = $(this);
         instructor = table.find('font').first().text();
         // Get the tr containing the td we need
@@ -234,7 +234,7 @@ function scrapeData(req, res, next) {
         // Get one assessment anchor
         let anchor;
 
-        anchors.each(() => {
+        anchors.each(function needThisAlso() {
           const ahref = $(this).attr('href');
           if (ahref.includes('as')) {
             anchor = baseUrl + ahref;

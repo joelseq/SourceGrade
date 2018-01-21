@@ -43,7 +43,7 @@ app.use(helmet());
 app.use(cors());
 app.use(compression());
 app.use(logger('dev'));
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.disable('x-powered-by');
 app.enable('trust proxy');
