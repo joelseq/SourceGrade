@@ -1,4 +1,4 @@
-module.exports = (err, req, res) => {
+module.exports = (err, req, res, next) => {
   if (err.response && err.response.status === 404) {
     return res.status(404).json({ error: 'Invalid URL' });
   }
