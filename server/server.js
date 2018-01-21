@@ -1,41 +1,65 @@
 const bodyParser = require('body-parser');
+const compression = require('compression');
+const cors = require('cors');
 const express = require('express');
-const fs = require('fs');
+const helmet = require('helmet');
 const historyApiFallback = require('connect-history-api-fallback');
+const logger = require('morgan');
 const mongoose = require('mongoose');
 const path = require('path');
+const RateLimit = require('express-rate-limit');
 const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 
-const config = require('../config/config');
+const errorHandler = require('./errorHandler');
 const webpackConfig = require('../webpack.config');
 
 const isDev = process.env.NODE_ENV !== 'production';
-const port  = process.env.PORT || 8080;
+const port = process.env.PORT || 8080;
 
 
 // Configuration
 // ================================================================================================
 
+const limiter = new RateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // limit each IP to 100 requests per windowMs
+  delayMs: 0, // disable delaying - full speed until the max limit is reached
+});
+
+if (isDev) {
+  require('dotenv').config(); // eslint-disable-line
+}
+
 // Set up Mongoose
-mongoose.connect(isDev ? config.db_dev : config.db, {
+mongoose.connect(process.env.DB_URI, {
   useMongoClient: true,
 });
 mongoose.Promise = global.Promise;
 
 const app = express();
+app.use(helmet());
+app.use(cors());
+app.use(compression());
+app.use(logger('dev'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.disable('x-powered-by');
+app.enable('trust proxy');
+app.use(limiter);
 
 // API routes
 require('./routes')(app);
+
+// Handle all errors from routes in errorHandler
+app.use(errorHandler);
 
 if (isDev) {
   const compiler = webpack(webpackConfig);
 
   app.use(historyApiFallback({
-    verbose: false
+    verbose: false,
   }));
 
   app.use(webpackDevMiddleware(compiler, {
@@ -47,15 +71,15 @@ if (isDev) {
       timings: true,
       chunks: false,
       chunkModules: false,
-      modules: false
-    }
+      modules: false,
+    },
   }));
 
   app.use(webpackHotMiddleware(compiler));
   app.use(express.static(path.resolve(__dirname, '../dist')));
 } else {
   app.use(express.static(path.resolve(__dirname, '../dist')));
-  app.get('*', function (req, res) {
+  app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, '../dist/index.html'));
     res.end();
   });
@@ -63,10 +87,10 @@ if (isDev) {
 
 app.listen(port, '0.0.0.0', (err) => {
   if (err) {
-    console.log(err);
+    console.log(err); // eslint-disable-line
   }
 
-  console.info('>>> 🌎 Open http://0.0.0.0:%s/ in your browser.', port);
+  console.info('>>> 🌎 Open http://0.0.0.0:%s/ in your browser.', port); // eslint-disable-line
 });
 
 module.exports = app;
