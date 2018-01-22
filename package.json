@@ -6,8 +6,8 @@
   "author": "Joel Sequeira",
   "license": "MIT",
   "scripts": {
-    "start": "webpack -p --progress --profile --colors && node server",
-    "start:dev": "nodemon server"
+    "start": "webpack -p --progress --profile --colors && node index",
+    "start:dev": "nodemon index"
   },
   "dependencies": {
     "async": "^2.6.0",
