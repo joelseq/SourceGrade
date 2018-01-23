@@ -12,6 +12,7 @@ const isProd = NODE_ENV === 'production';
 module.exports = {
   entry: {
     'app': [
+      'react-hot-loader/patch',
       helpers.root('client/app/index.js')
     ]
   },
@@ -59,6 +60,31 @@ module.exports = {
               }
             },
             'sass-loader'
+          ]
+        })
+      },
+
+      // CSS files
+      {
+        test: /\.css$/,
+        loader: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                'sourceMap': true,
+                'importLoaders': 1
+              }
+            },
+            {
+              loader: 'postcss-loader',
+              options: {
+                plugins: () => [
+                  autoprefixer
+                ]
+              }
+            }
           ]
         })
       }
