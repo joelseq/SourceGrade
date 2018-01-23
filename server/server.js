@@ -1,6 +1,5 @@
 const bodyParser = require('body-parser');
 const compression = require('compression');
-const cors = require('cors');
 const express = require('express');
 const helmet = require('helmet');
 const historyApiFallback = require('connect-history-api-fallback');
@@ -40,12 +39,22 @@ mongoose.Promise = global.Promise;
 
 const app = express();
 app.use(helmet());
-app.use(cors());
 app.use(compression());
 app.use(logger('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.disable('x-powered-by');
+// Allowing CORS
+app.use((req, res, next) => {
+  res.append('Access-Control-Allow-Origin', req.headers.origin || '*');
+  res.append('Access-Control-Allow-Credentials', 'true');
+  res.append('Access-Control-Allow-Methods', ['GET', 'OPTIONS', 'PUT', 'POST', 'DELETE']);
+  res.append(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept'
+  );
+  next();
+});
 app.enable('trust proxy');
 app.use(limiter);
 
