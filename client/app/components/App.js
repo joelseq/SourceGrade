@@ -10,6 +10,7 @@ import GradesResult from './GradesResult';
 const theme = {
   primaryColor: '#110070',
   accentColor: '#f1c40f',
+  fontSize: 20,
 };
 
 const App = () => (

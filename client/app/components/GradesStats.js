@@ -12,6 +12,7 @@ const Container = styled.div`
   text-align: center;
   height: auto;
   min-height: 200px;
+  font-size: ${props => props.theme.fontSize * 1.2}px;
 `;
 
 const StatsContainer = styled(Col)`

@@ -34,9 +34,27 @@ export function removeGrades() {
   };
 }
 
+// Add a new class to the DB
+export function addClass(url) {
+  return dispatch => axios.post(`${API_URL}/classes`, {
+    url,
+  })
+    .then(() => dispatch({ type: types.ADD_CLASS }))
+    .catch(err => dispatch({ type: types.ERR_CLASS, payload: err.response.data }));
+}
+
+// Action creator to remove alerts for classes
+export function removeAlert() {
+  return {
+    type: types.REMOVE_ALERT,
+  };
+}
+
 export default {
   getClasses,
   fetchGrades,
   selectClass,
   removeGrades,
+  addClass,
+  removeAlert,
 };
