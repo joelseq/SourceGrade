@@ -39,26 +39,20 @@ function scrapeClass(req, res, next) {
       const courseNameTable = tables.first();
       courseName = courseNameTable.find('b').text();
       const linksTable = courseNameTable.next();
+      instructor = linksTable.find('font').first().text();
 
-      // TODO: Figure out why I did this 'filtering' and then remove eslint disable
-      // Filter out the table to reach the anchor tags
-      /* eslint-disable array-callback-return */
-      linksTable.filter(function needThis() {
-        const table = $(this);
-        instructor = table.find('font').first().text();
-      });
-      /* eslint-enable array-callback-return */
-
-      if (courseName && instructor) {
-        const courseString = `${courseName} - ${instructor}`;
-        Class.create({ courseName: courseString, url }, (err, created) => {
-          if (err) {
-            return next({ error: 'Class already exists' });
-          }
-          return res.status(201).json(created);
-        });
+      // If course name or instructor name cannot be parsed, throw error
+      if (!courseName || !instructor) {
+        return next({ error: 'Could not find course' });
       }
-      return next({ error: 'Could not find course' });
+
+      const courseString = `${courseName} - ${instructor}`;
+      return Class.create({ courseName: courseString, url }, (err, created) => {
+        if (err) {
+          return next({ error: 'Class already exists' });
+        }
+        return res.status(201).json(created);
+      });
     })
     .catch(err => next(err));
 }
