@@ -53,6 +53,16 @@ export function addClass(url) {
   return dispatch => axios.post(`${API_URL}/classes`, {
     url,
   })
-    .then(() => dispatch({ type: ADD_CLASS }))
+    .then(() => {
+      dispatch({ type: ADD_CLASS });
+      getClasses()(dispatch);
+    })
     .catch(err => dispatch({ type: ERR_CLASS, payload: err.response.data }));
+}
+
+// Remove alerts for adding classes modal
+export function removeAlert() {
+  return {
+    type: REMOVE_ALERT,
+  };
 }

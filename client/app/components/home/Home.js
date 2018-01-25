@@ -13,10 +13,11 @@ import {
   Modal,
   Button,
   ButtonToolbar,
+  Alert,
 } from 'react-bootstrap';
 import { history } from '../../store';
 
-import { addClass } from '../../modules/home';
+import { addClass, removeAlert } from '../../modules/home';
 
 import AddClassContainer from './AddClassContainer';
 import GradesForm from './GradesForm';
@@ -28,6 +29,11 @@ class Home extends React.Component {
      * @type {function}
      */
     addClass: PropTypes.func,
+    /**
+     * Action creator to dismiss alerts
+     * @type {function}
+     */
+    removeAlert: PropTypes.func,
     /**
      * Boolean whether class was added successfully
      * @type {bool}
@@ -42,6 +48,7 @@ class Home extends React.Component {
 
   static defaultProps = {
     addClass() {},
+    removeAlert() {},
     added: false,
     error: '',
   }
@@ -75,7 +82,9 @@ class Home extends React.Component {
   onModalHide() {
     this.setState({
       showModal: false,
+      url: '',
     });
+    this.props.removeAlert();
   }
 
   onFormSubmit(e) {
@@ -92,16 +101,6 @@ class Home extends React.Component {
     this.setState({ url: e.target.value });
   }
 
-  renderAlert() {
-    if (this.props.added) {
-      return <p>Added Class Successfully!</p>;
-    } else if (this.props.error) {
-      return <p>{this.props.error}</p>;
-    }
-
-    return null;
-  }
-
   getValidationState() {
     const { url } = this.state;
     let valid = false;
@@ -109,6 +108,20 @@ class Home extends React.Component {
       valid = true;
     }
     return valid ? 'success' : 'warning';
+  }
+
+  renderAlert() {
+    if (this.props.added) {
+      return (
+        <Alert bsStyle="success" onDismiss={this.props.removeAlert}>Added Class Successfully!</Alert>
+      );
+    } else if (this.props.error) {
+      return (
+        <Alert bsStyle="danger" onDismiss={this.props.removeAlert}>{this.props.error}</Alert>
+      );
+    }
+
+    return null;
   }
 
   render() {
@@ -139,6 +152,7 @@ class Home extends React.Component {
             <Modal.Title>Add a new class</Modal.Title>
           </Modal.Header>
           <Modal.Body>
+            {this.renderAlert()}
             <h3>Add a Class if it has not already been added</h3>
             <FormGroup controlId="url" validationState={this.getValidationState()}>
               <ControlLabel>Enter Class URL</ControlLabel>
@@ -167,4 +181,4 @@ const mapStateToProps = state => ({
   error: state.classes.error,
 });
 
-export default connect(mapStateToProps, { addClass })(Home);
+export default connect(mapStateToProps, { addClass, removeAlert })(Home);

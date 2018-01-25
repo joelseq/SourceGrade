@@ -55,8 +55,9 @@ class GradesForm extends React.Component {
   }
 
   static getValidationState(val) {
-    const len = val.length;
-    if (len) return 'success';
+    if (val && val.length) {
+      return 'success';
+    }
     return 'error';
   }
 
@@ -65,9 +66,8 @@ class GradesForm extends React.Component {
 
     this.state = {
       id: '',
-      currentClass: {
-        value: '',
-      },
+      currentClass: '',
+      url: '',
     };
 
     this.onFormSubmit = this.onFormSubmit.bind(this);
@@ -82,9 +82,9 @@ class GradesForm extends React.Component {
   onFormSubmit(e) {
     e.preventDefault();
 
-    const { id, currentClass } = this.state;
+    const { id, currentClass, url } = this.state;
 
-    if (id.length > 0 && currentClass.value.length) {
+    if (id.length > 0 && url.length) {
       this.props.handleFormSubmit(id, currentClass);
     }
   }
@@ -99,6 +99,7 @@ class GradesForm extends React.Component {
     if (val) {
       this.setState({
         currentClass: val,
+        url: val.value,
       });
     }
   }
@@ -131,7 +132,7 @@ class GradesForm extends React.Component {
         </FormGroup>
         <FormGroup
           controlId="course"
-          validationState={this.constructor.getValidationState(this.state.currentClass.value)}
+          validationState={this.constructor.getValidationState(this.state.url)}
         >
           <ControlLabel>Class</ControlLabel>
           <Select
