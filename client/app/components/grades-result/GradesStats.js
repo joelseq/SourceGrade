@@ -2,25 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Chart } from 'react-google-charts';
 import { mean, median, stdev } from 'stats-lite';
-import styled from 'styled-components';
 import { Row, Col } from 'react-bootstrap';
 
-const Container = styled.div`
-  @include depth-shadow;
-  background: white;
-  width: 100%;
-  text-align: center;
-  height: auto;
-  min-height: 200px;
-  font-size: ${props => props.theme.fontSize * 1.2}px;
-`;
-
-const StatsContainer = styled(Col)`
-  margin: 50px auto;
-  padding-left: 60px;
-  color: ${props => props.theme.primaryColor};
-  text-align: center;
-`;
+import Container from './Container';
+import StatsContainer from './StatsContainer';
 
 const GradesStats = ({ assessment }) => {
   if (!assessment) {
@@ -84,18 +69,18 @@ const GradesStats = ({ assessment }) => {
         <StatsContainer md={5}>
           <Row>
             <Col sm={6}>
-              <h5>Class Scores:</h5>
-              <h6>Max: {max}</h6>
-              <h6>Min: {min}</h6>
-              <h6>Mean: {mean(assessment.scores).toFixed(2)}</h6>
-              <h6>Median: {median(assessment.scores).toFixed(2)}</h6>
-              <h6>Standard Deviation: {stdev(assessment.scores).toFixed(2)}</h6>
+              <h4>Class Scores:</h4>
+              <h5>Max: {max}</h5>
+              <h5>Min: {min}</h5>
+              <h5>Mean: {mean(assessment.scores).toFixed(2)}</h5>
+              <h5>Median: {median(assessment.scores).toFixed(2)}</h5>
+              <h5>Std Dev: {stdev(assessment.scores).toFixed(2)}</h5>
             </Col>
             <Col sm={6}>
               <h5>You:</h5>
-              {assessment.Rank && <h6>Rank: {assessment.Rank} / {assessment.scores.length}</h6>}
-              {assessment.Score && <h6>Score: {assessment.Score}</h6>}
-              {assessment.Points && <h6>Points: {assessment.Points}</h6>}
+              {assessment.Rank && <h5>Rank: {assessment.Rank} / {assessment.scores.length}</h5>}
+              {assessment.Score && <h5>Score: {assessment.Score}</h5>}
+              {assessment.Points && <h5>Points: {assessment.Points}</h5>}
             </Col>
           </Row>
         </StatsContainer>

@@ -12,7 +12,7 @@ import {
 // Import styles for react-select
 import 'react-select/dist/react-select.css';
 
-import { getClasses } from '../actions';
+import { getClasses } from '../../modules/home';
 
 class GradesForm extends React.Component {
   static propTypes = {

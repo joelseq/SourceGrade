@@ -8,8 +8,8 @@ import {
 } from 'react-bootstrap';
 import queryString from 'query-string';
 
-import { fetchGrades, removeGrades } from '../actions';
-import Spinner from './Spinner';
+import { fetchGrades, removeGrades } from '../../modules/grades-result';
+import Spinner from '../Spinner';
 import GradesTable from './GradesTable';
 import GradesStats from './GradesStats';
 

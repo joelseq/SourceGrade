@@ -4,8 +4,8 @@ import { Route, Switch } from 'react-router-dom';
 
 // Components
 import NavigationBar from './NavigationBar';
-import Home from './Home';
-import GradesResult from './GradesResult';
+import Home from './home/Home';
+import GradesResult from './grades-result/GradesResult';
 
 const theme = {
   primaryColor: '#110070',

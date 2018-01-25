@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import validUrl from 'valid-url';
-import styled from 'styled-components';
 import {
   Grid,
   Row,
@@ -15,16 +14,12 @@ import {
   Button,
   ButtonToolbar,
 } from 'react-bootstrap';
-import { history } from '../store';
+import { history } from '../../store';
 
-import { addClass } from '../actions';
+import { addClass } from '../../modules/home';
 
+import AddClassContainer from './AddClassContainer';
 import GradesForm from './GradesForm';
-
-const AddClassContainer = styled.div`
-  margin: 50px;
-  font-size: 1.2em;
-`;
 
 class Home extends React.Component {
   static propTypes = {

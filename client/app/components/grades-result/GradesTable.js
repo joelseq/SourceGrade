@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import { Table } from 'react-bootstrap';
 import { connect } from 'react-redux';
 
-import { selectClass } from '../actions';
+import TableRow from './TableRow';
+
+import { selectClass } from '../../modules/grades-result';
 
 class GradesTable extends React.Component {
   static propTypes = {
@@ -45,12 +47,12 @@ class GradesTable extends React.Component {
     }
 
     return (
-      <tr onClick={() => this.props.selectClass(assessment)} key={assessment.name}>
+      <TableRow onClick={() => this.props.selectClass(assessment)} key={assessment.name}>
         <td>{assessment.name}</td>
         <td>{assessment.Rank && `${assessment.Rank} / ${assessment.scores.length}`}</td>
         <td>{filterScore(assessment.Score)}</td>
         <td>{assessment.Points}</td>
-      </tr>
+      </TableRow>
     );
   }
 
@@ -58,7 +60,7 @@ class GradesTable extends React.Component {
     const { grades } = this.props;
 
     return (
-      <Table>
+      <Table striped bordered hover>
         <thead>
           <tr>
             <th>Name</th>
