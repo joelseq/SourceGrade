@@ -7,6 +7,7 @@ import NavigationBar from './NavigationBar';
 import Home from './home/Home';
 import GradesResult from './grades-result/GradesResult';
 import Signup from './auth/Signup';
+import Login from './auth/Login';
 
 const theme = {
   primaryColor: '#110070',
@@ -22,6 +23,7 @@ const App = () => (
         <Route exact path="/" component={Home} />
         <Route path="/grades" component={GradesResult} />
         <Route path="/signup" component={Signup} />
+        <Route path="/login" component={Login} />
       </Switch>
     </div>
   </ThemeProvider>

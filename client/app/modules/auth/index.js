@@ -40,7 +40,11 @@ export function userLogin({ username, password }) {
       localStorage.setItem('token', response.data.token);
       history.push('/classes');
     })
-    .catch(() => dispatch(authError('Bad Login Info')));
+    .catch(() => {
+      throw new SubmissionError({
+        _error: 'Invalid Login or Password',
+      });
+    });
 }
 
 // Sign up user
