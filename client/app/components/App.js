@@ -6,6 +6,7 @@ import { Route, Switch } from 'react-router-dom';
 import NavigationBar from './NavigationBar';
 import Home from './home/Home';
 import GradesResult from './grades-result/GradesResult';
+import Signup from './auth/Signup';
 
 const theme = {
   primaryColor: '#110070',
@@ -20,6 +21,7 @@ const App = () => (
       <Switch>
         <Route exact path="/" component={Home} />
         <Route path="/grades" component={GradesResult} />
+        <Route path="/signup" component={Signup} />
       </Switch>
     </div>
   </ThemeProvider>

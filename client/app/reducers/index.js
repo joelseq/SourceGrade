@@ -1,10 +1,14 @@
 import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
-import ClassesReducer from '../modules/home';
-import GradesReducer from '../modules/grades-result';
+import { reducer as formReducer } from 'redux-form';
+import classesReducer from '../modules/home';
+import gradesReducer from '../modules/grades-result';
+import authReducer from '../modules/auth';
 
 export default combineReducers({
   routing: routerReducer,
-  classes: ClassesReducer,
-  grades: GradesReducer,
+  classes: classesReducer,
+  grades: gradesReducer,
+  form: formReducer,
+  auth: authReducer,
 });
