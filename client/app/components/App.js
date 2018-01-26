@@ -9,6 +9,8 @@ import GradesResult from './grades-result/GradesResult';
 import Signup from './auth/Signup';
 import Login from './auth/Login';
 import Logout from './auth/Logout';
+import PrivateRoute from './auth/PrivateRoute';
+import UserClasses from './user-classes/UserClasses';
 
 const theme = {
   primaryColor: '#110070',
@@ -26,6 +28,7 @@ const App = () => (
         <Route path="/signup" component={Signup} />
         <Route path="/login" component={Login} />
         <Route path="/logout" component={Logout} />
+        <PrivateRoute path="/classes" component={UserClasses} />
       </Switch>
     </div>
   </ThemeProvider>
