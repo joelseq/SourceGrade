@@ -15,7 +15,7 @@ const userSchema = new Schema({
 });
 
 // Generate a hash
-userSchema.pre('save', (next) => {
+userSchema.pre('save', function cb(next) { // cannot be an arrow function
   const user = this;
 
   if (this.isModified('password') || this.isNew) {
@@ -38,7 +38,7 @@ userSchema.pre('save', (next) => {
 });
 
 // Method to compare password input to password saved in DB
-userSchema.methods.comparePassword = (pw, cb) => {
+userSchema.methods.comparePassword = function comparePassword(pw, cb) { // cannot be an arrow function
   return bcrypt.compare(pw, this.password, (err, isMatch) => {
     if (err) {
       return cb(err);
