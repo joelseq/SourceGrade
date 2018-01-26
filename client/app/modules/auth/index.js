@@ -26,12 +26,6 @@ export default function (state = {}, action) {
 
 // Action creators
 
-// Helper function to dispatch auth errors
-const authError = err => ({
-  type: AUTH_ERROR,
-  payload: err,
-});
-
 // Action creator to log in user
 export function userLogin({ username, password }) {
   return dispatch => axios.post('/login', { username, password })

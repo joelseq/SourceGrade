@@ -8,6 +8,7 @@ import Home from './home/Home';
 import GradesResult from './grades-result/GradesResult';
 import Signup from './auth/Signup';
 import Login from './auth/Login';
+import Logout from './auth/Logout';
 
 const theme = {
   primaryColor: '#110070',
@@ -24,6 +25,7 @@ const App = () => (
         <Route path="/grades" component={GradesResult} />
         <Route path="/signup" component={Signup} />
         <Route path="/login" component={Login} />
+        <Route path="/logout" component={Logout} />
       </Switch>
     </div>
   </ThemeProvider>
