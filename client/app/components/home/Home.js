@@ -130,11 +130,9 @@ class Home extends React.Component {
         <Grid fluid>
           <Row>
             <Col md={6} sm={8} mdOffset={3} smOffset={2} className="text-center">
-              <h1 className="text-center">Welcome to SourceGrade!</h1>
-              <h2 className="text-center">Search for your grades</h2>
+              <h2 className="text-center">Easily search for your grades on GradeSource!</h2>
               <h3>For a demonstration, try:</h3>
-              <p>Secret Number: 8010</p>
-              <p>Class: Math 20 - Spring, 2000</p>
+              <p>Secret Number: 8010, Class: Math 20 - Spring, 2000</p>
               <GradesForm
                 handleFormSubmit={Home.handleFormSubmit}
                 buttonText="Get Grades"
