@@ -5,35 +5,42 @@ import { NavLink } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Navbar, Nav, NavItem } from 'react-bootstrap';
 
+import BrandText from './BrandText';
+
 const NavigationBar = ({ authenticated }) => (
-  <Navbar>
+  <Navbar collapseOnSelect>
     <Navbar.Header>
       <Navbar.Brand>
-        <NavLink to="/">SourceGrade</NavLink>
+        <NavLink to="/">
+          <BrandText>SourceGrade</BrandText>
+        </NavLink>
       </Navbar.Brand>
+      <Navbar.Toggle />
     </Navbar.Header>
-    <Nav pullRight>
-      {authenticated
-        ?
-          [
-            <LinkContainer key="classes" to="classes">
-              <NavItem eventKey={1}>Classes</NavItem>
-            </LinkContainer>,
-            <LinkContainer key="logout" to="logout">
-              <NavItem eventKey={2}>Logout</NavItem>
-            </LinkContainer>,
-          ]
-        :
-          [
-            <LinkContainer key="login" to="login">
-              <NavItem eventKey={3}>Login</NavItem>
-            </LinkContainer>,
-            <LinkContainer key="signup" to="signup">
-              <NavItem eventKey={4}>Sign Up</NavItem>
-            </LinkContainer>,
-          ]
-      }
-    </Nav>
+    <Navbar.Collapse>
+      <Nav pullRight>
+        {authenticated
+          ?
+            [
+              <LinkContainer key="classes" to="classes">
+                <NavItem eventKey={1}>Classes</NavItem>
+              </LinkContainer>,
+              <LinkContainer key="logout" to="logout">
+                <NavItem eventKey={2}>Logout</NavItem>
+              </LinkContainer>,
+            ]
+          :
+            [
+              <LinkContainer key="login" to="login">
+                <NavItem eventKey={3}>Login</NavItem>
+              </LinkContainer>,
+              <LinkContainer key="signup" to="signup">
+                <NavItem eventKey={4}>Sign Up</NavItem>
+              </LinkContainer>,
+            ]
+        }
+      </Nav>
+    </Navbar.Collapse>
   </Navbar>
 );
 
