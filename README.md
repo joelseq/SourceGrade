@@ -1,24 +1,43 @@
-# MERN-boilerplate
+# SourceGrade
 
-This is a boilerplate project using the following technologies:
-- [React](https://facebook.github.io/react/) and [React Router](https://reacttraining.com/react-router/) for the frontend
-- [Express](http://expressjs.com/) and [Mongoose](http://mongoosejs.com/) for the backend
-- [Sass](http://sass-lang.com/) for styles (using the SCSS syntax)
-- [Webpack](https://webpack.github.io/) for compilation
+[SourceGrade](http://www.sourcegrade.xyz/) is a web scraping app built with MongoDB, Express.js, Node.js, React, and Redux for [GradeSource](http://www.gradesource.com/). SourceGrade is designed to make your life easier by finding all your scores for a particular class on GradeSource, and presenting all the data in a meaningful and elegant way. It also allows you to create accounts to save all your information for a class so that you never have to remember your secret number or course url again!
 
+## Usage
 
-## Requirements
+1) Add your class url [here](http://www.sourcegrade.xyz/add) if it hasn't already been previously added.
 
-- [Node.js](https://nodejs.org/en/) 6+
+2) Enter your Secret Number and Class in the input fields
 
-```shell
-npm install
+![enter info](https://github.com/joelseq/SourceGrade/blob/master/img/image1.png)
+
+3) View your scores and statistics for each assessment or category.
+
+![view scores](https://github.com/joelseq/SourceGrade/blob/master/img/image2.png)
+
+In addition, if you want to use the API directly the route is:
+
+`http://www.sourcegrade.xyz/api/scrape?id={secret number}&url={class url}`
+
+Example API Request:
+
+`http://www.sourcegrade.xyz/api/scrape?id=8010&url=http://www.gradesource.com/demo/example1/index.html`
+
+## Install and run locally
+
+  Requirements:
+
+ * [MongoDB](https://www.mongodb.com/)
+ * [Node.js](https://nodejs.org/en/) 6+
+
+1. Clone this repository
+2. Run `npm install`
+3. Start MongoDB
+4. Create a `.env` file in the main directory, providing the two environment variables `DB_URI` (url to your MongoDB server) and `SECRET` (secret for encrypting JSONWebTokens).
+Example:
 ```
-
-
-## Running
-
-Make sure to add a `config.js` file in the `config` folder. See the example there for more details.
+DB_URI=mongodb://localhost:27017/sourcegrade
+SECRET=supercoolsecret
+```
 
 Production mode:
 
@@ -31,3 +50,13 @@ Development (Webpack dev server) mode:
 ```shell
 npm run start:dev
 ```
+
+## Contributing
+
+1. Fork it!
+2. Create your feature branch: `git checkout -b my-new-feature`
+3. Commit your changes: `git commit -am 'Add some feature'`
+4. Push to the branch: `git push origin my-new-feature`
+5. Submit a pull request :D
+
+Contributions are always welcome!
