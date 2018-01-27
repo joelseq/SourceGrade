@@ -1,3 +1,15 @@
 body, html {
   font-size: 16px;
+
+  @media (max-width: 340px) {
+    font-size: 12px;
+
+    h2 {
+      font-size: 2rem;
+    }
+
+    h3 {
+      font-size: 1.9rem;
+    }
+  }
 }

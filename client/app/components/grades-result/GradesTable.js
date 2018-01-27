@@ -49,9 +49,9 @@ class GradesTable extends React.Component {
     return (
       <TableRow onClick={() => this.props.selectClass(assessment)} key={assessment.name}>
         <td>{assessment.name}</td>
-        <td>{assessment.Rank && `${assessment.Rank} / ${assessment.scores.length}`}</td>
+        <td>{(assessment.Rank && `${assessment.Rank} / ${assessment.scores.length}`) || 'N/A'}</td>
         <td>{filterScore(assessment.Score)}</td>
-        <td>{assessment.Points}</td>
+        <td>{assessment.Points || 'N/A'}</td>
       </TableRow>
     );
   }

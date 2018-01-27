@@ -16,6 +16,7 @@
     "react/jsx-no-bind": [0],
     "react/jsx-filename-extension": [0],
     "import/no-unresolved": [0],
-    "no-plusplus": [0]
+    "no-plusplus": [0],
+    "jsx-a11y/anchor-is-valid": [0],
   }
 }
