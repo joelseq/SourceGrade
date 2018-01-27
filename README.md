@@ -14,8 +14,6 @@
 
 ![view scores](https://github.com/joelseq/SourceGrade/blob/master/img/image2.png)
 
-![view scores 2](https://github.com/joelseq/SourceGrade/blob/master/img/image3.png)
-
 In addition, if you want to use the API directly the route is:
 
 `http://www.sourcegrade.xyz/api/scrape?id={secret number}&url={class url}`
@@ -26,22 +24,32 @@ Example API Request:
 
 ## Install and run locally
 
-To install and run this on your local machine you need [MongoDB](https://www.mongodb.com/)
+  Requirements:
+
+ * [MongoDB](https://www.mongodb.com/)
+ * [Node.js](https://nodejs.org/en/) 6+
 
 1. Clone this repository
 2. Run `npm install`
 3. Start MongoDB
-4. Create a `.env` file in the main directory, providing the two environment variables DB_URI (url to your MongoDB server) and SECRET (secret for encrypting JSONWebTokens).
+4. Create a `.env` file in the main directory, providing the two environment variables `DB_URI` (url to your MongoDB server) and `SECRET` (secret for encrypting JSONWebTokens).
 Example:
 ```
 DB_URI=mongodb://localhost:27017/sourcegrade
 SECRET=supercoolsecret
 ```
-5. Run the server `node bin/www`
 
-## Development
+Production mode:
 
-If you are working on the UI, you can run `webpack -w` to watch for changes to React files and automatically build the bundle. When you are ready to build a production bundle run `webpack -p` (Make sure to do this before committing the `bundle.js` file).
+```shell
+npm start
+```
+
+Development (Webpack dev server) mode:
+
+```shell
+npm run start:dev
+```
 
 ## Contributing
 
@@ -52,11 +60,3 @@ If you are working on the UI, you can run `webpack -w` to watch for changes to R
 5. Submit a pull request :D
 
 Contributions are always welcome!
-
-## Credits
-
-Chris Korkos for the designs.
-
-## Misc.
-
-Source code for old version available [here](https://github.com/joelseq/SourceGrade-Old)
