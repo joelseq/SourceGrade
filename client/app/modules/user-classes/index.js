@@ -1,12 +1,33 @@
 import axios from 'axios';
 
+const API_URL = '/api';
+
 // Types
 const GET_USER_CLASSES = 'user-classes/GET_USER_CLASSES';
 const ADD_USER_CLASS = 'user-classes/ADD_USER_CLASS';
 const ERR_USER_CLASS = 'user-classes/ERR_USER_CLASS';
 const DELETE_USER_CLASS = 'user-classes/DELETE_USER_CLASS';
 
-const API_URL = '/api';
+// Reducer
+export default function (state = {}, action) {
+  switch (action.type) {
+    case ADD_USER_CLASS:
+      return { ...state, addedUserClass: true, userClassError: '' };
+    case ERR_USER_CLASS:
+      return { ...state, userClassError: action.payload.error, addedUserClass: false };
+    case DELETE_USER_CLASS:
+      return { ...state, deletedUserClass: true, userClassError: '' };
+    case GET_USER_CLASSES:
+      return {
+        ...state,
+        classes: action.payload,
+        addedUserClass: false,
+        deletedUserClass: false,
+      };
+    default:
+      return state;
+  }
+}
 
 // Action Creators
 
