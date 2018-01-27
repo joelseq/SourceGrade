@@ -41,7 +41,7 @@ const GradesStats = ({ assessment }) => {
     return `${i * 10}% - ${(i + 1) * 10}%`;
   });
 
-  const data = [['Score', 'No. of students']];
+  const data = [['Score', '# of students']];
 
   for (let i = 0; i < labels.length; i++) {
     data.push([labels[i], frequencies[i]]);
@@ -69,7 +69,7 @@ const GradesStats = ({ assessment }) => {
         <StatsContainer md={5}>
           <Row>
             <Col sm={6}>
-              <h4>Class Scores:</h4>
+              <h4><strong>Class Scores:</strong></h4>
               <h5>Max: {max}</h5>
               <h5>Min: {min}</h5>
               <h5>Mean: {mean(assessment.scores).toFixed(2)}</h5>
@@ -77,7 +77,7 @@ const GradesStats = ({ assessment }) => {
               <h5>Std Dev: {stdev(assessment.scores).toFixed(2)}</h5>
             </Col>
             <Col sm={6}>
-              <h5>You:</h5>
+              <h4><strong>You:</strong></h4>
               {assessment.Rank && <h5>Rank: {assessment.Rank} / {assessment.scores.length}</h5>}
               {assessment.Score && <h5>Score: {assessment.Score}</h5>}
               {assessment.Points && <h5>Points: {assessment.Points}</h5>}

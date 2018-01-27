@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 const Container = styled.div`
-  @include depth-shadow;
   background: white;
   width: 100%;
   text-align: center;
