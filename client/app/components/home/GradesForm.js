@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Select from 'react-select';
 import { connect } from 'react-redux';
 import {
+  Form,
   FormGroup,
   FormControl,
   ControlLabel,
@@ -12,6 +12,7 @@ import {
 // Import styles for react-select
 import 'react-select/dist/react-select.css';
 
+import ClassSelect from './ClassSelect';
 import { getClasses } from '../../modules/home';
 
 class GradesForm extends React.Component {
@@ -44,6 +45,11 @@ class GradesForm extends React.Component {
      * @type {function}
      */
     getClasses: PropTypes.func,
+    /**
+     * Boolean indicating whether form should be inline
+     * @type {boolean}
+     */
+    inline: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -52,6 +58,7 @@ class GradesForm extends React.Component {
     buttonClass: 'button',
     classes: [],
     getClasses() {},
+    inline: false,
   }
 
   static getValidationState(val) {
@@ -96,57 +103,68 @@ class GradesForm extends React.Component {
   }
 
   onClassChange(val) {
-    if (val) {
-      this.setState({
-        currentClass: val,
-        url: val.value,
-      });
+    const currentClass = val || '';
+    let url = '';
+
+    if (currentClass) {
+      url = currentClass.value;
     }
+
+    this.setState({
+      currentClass,
+      url,
+    });
   }
 
   render() {
     let options = [];
+    const { classes, inline } = this.props;
+    const { id, url, currentClass } = this.state;
 
-    if (this.props.classes) {
-      options = this.props.classes.map(current => (
-        {
-          value: current.url,
-          label: current.courseName,
-        }
-      )).reverse();
+    if (classes) {
+      options = classes.map(current => ({
+        value: current.url,
+        label: current.courseName,
+      })).reverse();
     }
 
     return (
-      <form onSubmit={this.onFormSubmit}>
+      <Form inline={inline} onSubmit={this.onFormSubmit}>
         <FormGroup
           controlId="secretNumber"
-          validationState={this.constructor.getValidationState(this.state.id)}
+          validationState={GradesForm.getValidationState(id)}
         >
-          <ControlLabel>Secret Number</ControlLabel>
+          {!inline && <ControlLabel>Secret Number</ControlLabel>}
           <FormControl
             type="text"
-            value={this.state.id}
+            value={id}
             placeholder="Secret Number"
             onChange={this.onIdChange}
           />
         </FormGroup>
         <FormGroup
           controlId="course"
-          validationState={this.constructor.getValidationState(this.state.url)}
+          validationState={GradesForm.getValidationState(url)}
         >
-          <ControlLabel>Class</ControlLabel>
-          <Select
+          {!inline && <ControlLabel>Class</ControlLabel>}
+          <ClassSelect
             name="class-form"
-            value={this.state.currentClass}
+            value={currentClass && currentClass.value}
             placeholder="Search for a Class"
             options={options}
             onChange={this.onClassChange}
-            className="select"
-            clearable={false}
+            inline={inline}
           />
         </FormGroup>
-        <Button bsStyle="primary" type="submit" className={this.props.buttonClass} block>{this.props.buttonText}</Button>
-      </form>
+        <Button
+          bsStyle="primary"
+          type="submit"
+          className={this.props.buttonClass}
+          block={!inline}
+        >
+          {this.props.buttonText}
+        </Button>
+      </Form>
     );
   }
 }
