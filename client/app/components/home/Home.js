@@ -21,6 +21,7 @@ import { addClass, removeAlert } from '../../modules/home';
 
 import AddClassContainer from './AddClassContainer';
 import GradesForm from './GradesForm';
+import GithubButtons from './GithubButtons';
 
 class Home extends React.Component {
   static propTypes = {
@@ -141,6 +142,7 @@ class Home extends React.Component {
                 <p>Class not found?</p>
                 <Button onClick={this.onModalShow} bsStyle="default">Add New Class</Button>
               </AddClassContainer>
+              <GithubButtons />
             </Col>
           </Row>
         </Grid>
