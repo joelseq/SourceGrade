@@ -1,19 +1,10 @@
-const nodemon = require('nodemon');
-const path = require('path');
+const app = require('./server/server');
 
-nodemon({
-  execMap: {
-    js: 'node',
-  },
-  script: path.join(__dirname, 'server/server'),
-  ignore: [],
-  watch: process.env.NODE_ENV !== 'production' ? ['server/*'] : false,
-  ext: 'js',
-})
-  .on('restart', () => {
-    console.log('Server restarted!'); // eslint-disable-line
-  })
-  .once('exit', () => {
-    console.log('Shutting down server'); // eslint-disable-line
-    process.exit();
-  });
+const port = process.env.PORT || 8080;
+
+app.listen(port, (err) => {
+  if (err) {
+    console.log(err); // eslint-disable-line
+  }
+  console.info('>>> 🌎 Open http://0.0.0.0:%s/ in your browser.', port); // eslint-disable-line
+});

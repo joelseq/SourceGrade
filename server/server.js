@@ -14,13 +14,10 @@ const webpackHotMiddleware = require('webpack-hot-middleware');
 const errorHandler = require('./errorHandler');
 const webpackConfig = require('../webpack.config');
 
-const isDev = process.env.NODE_ENV !== 'production';
-const port = process.env.PORT || 8080;
-
 
 // Configuration
 // ================================================================================================
-
+const isDev = process.env.NODE_ENV === 'development';
 const limiter = new RateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 100, // limit each IP to 100 requests per windowMs
@@ -59,7 +56,7 @@ app.enable('trust proxy');
 app.use(limiter);
 
 // API routes
-require('./routes')(app);
+require('./routes')(app); // eslint-disable-line
 
 // Handle all errors from routes in errorHandler
 app.use(errorHandler);
@@ -93,13 +90,5 @@ if (isDev) {
     res.end();
   });
 }
-
-app.listen(port, '0.0.0.0', (err) => {
-  if (err) {
-    console.log(err); // eslint-disable-line
-  }
-
-  console.info('>>> 🌎 Open http://0.0.0.0:%s/ in your browser.', port); // eslint-disable-line
-});
 
 module.exports = app;
