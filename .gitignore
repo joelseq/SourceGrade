@@ -7,6 +7,9 @@ config/config.js
 # ENV VARS
 .env
 
+# Coverage reports
+coverage/
+
 # Node stuff
 node_modules
 .npm

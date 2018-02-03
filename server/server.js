@@ -18,18 +18,21 @@ const webpackConfig = require('../webpack.config');
 // Configuration
 // ================================================================================================
 const isDev = process.env.NODE_ENV === 'development';
+const isTest = process.env.NODE_ENV === 'test';
 const limiter = new RateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 100, // limit each IP to 100 requests per windowMs
   delayMs: 0, // disable delaying - full speed until the max limit is reached
 });
 
-if (isDev) {
+if (isDev || (isTest && !process.env.DB_URI_TEST)) {
   require('dotenv').config(); // eslint-disable-line
 }
 
+const DB_URI = isTest ? process.env.DB_URI_TEST : process.env.DB_URI;
+
 // Set up Mongoose
-mongoose.connect(process.env.DB_URI, {
+mongoose.connect(DB_URI, {
   useMongoClient: true,
 });
 mongoose.Promise = global.Promise;
@@ -37,7 +40,10 @@ mongoose.Promise = global.Promise;
 const app = express();
 app.use(helmet());
 app.use(compression());
-app.use(logger('dev'));
+// Disable API logging in test
+if (!isTest) {
+  app.use(logger('dev'));
+}
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.disable('x-powered-by');

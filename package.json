@@ -8,8 +8,9 @@
   "scripts": {
     "start": "cross-env NODE_ENV=production webpack -p --progress --profile --colors && node index",
     "start:dev": "cross-env NODE_ENV=development nodemon index",
-    "test": "cross-env NODE_ENV=test jest --coverage",
-    "test:watch": "cross-env NODE_ENV=test jest --watch"
+    "test": "cross-env NODE_ENV=test jest",
+    "test:watch": "cross-env NODE_ENV=test jest --watch",
+    "test:cov": "cross-env NODE_ENV=test jest --coverage"
   },
   "dependencies": {
     "async": "^2.6.0",
