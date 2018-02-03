@@ -20,7 +20,7 @@ describe('Test API', () => {
       // Close server
       // await server.close();
     } catch (error) {
-      console.log(error);
+      console.log(error); // eslint-disable-line
     }
   });
 

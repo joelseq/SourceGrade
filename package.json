@@ -10,7 +10,8 @@
     "start:dev": "cross-env NODE_ENV=development nodemon index",
     "test": "cross-env NODE_ENV=test jest",
     "test:watch": "cross-env NODE_ENV=test jest --watch",
-    "test:cov": "cross-env NODE_ENV=test jest --coverage"
+    "test:cov": "cross-env NODE_ENV=test jest --coverage",
+    "lint": "eslint client server"
   },
   "dependencies": {
     "async": "^2.6.0",
@@ -31,6 +32,8 @@
     "cross-env": "^5.1.3",
     "css-loader": "^0.28.5",
     "dotenv": "^4.0.0",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
     "express": "^4.15.4",
     "express-rate-limit": "^2.11.0",
     "extract-text-webpack-plugin": "^3.0.0",
@@ -78,8 +81,6 @@
   "devDependencies": {
     "babel-eslint": "^8.2.1",
     "babel-plugin-styled-components": "^1.5.0",
-    "enzyme": "^3.3.0",
-    "enzyme-adapter-react-16": "^1.1.1",
     "enzyme-to-json": "^3.3.1",
     "eslint": "^4.15.0",
     "eslint-config-airbnb": "^16.1.0",

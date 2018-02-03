@@ -191,8 +191,12 @@ function scrapeData(req, res, next) {
   const { id, url } = req.query;
 
   let grades = {};
+  // csGrades and asGrades get mutated in the async function later on
+  // TODO: avoid mutating csGrades and asGrades
+  /* eslint-disable prefer-const */
   let csGrades = [];
   let asGrades = [];
+  /* eslint-enable prefer-const */
   let courseName;
   let instructor;
 
