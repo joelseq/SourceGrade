@@ -3,6 +3,7 @@ const async = require('async');
 const cheerio = require('cheerio');
 const axios = require('axios');
 const Class = require('../../models/class');
+const validUrl = require('valid-url');
 
 /**
  * replaceUrl - Function to get the base url for the course
@@ -23,14 +24,14 @@ function replaceUrl(url) {
 function scrapeClass(req, res, next) {
   const { url } = req.body;
 
-  if (!url) {
-    res.status(422).json({ error: 'URL must be provided' });
+  if (!url || !validUrl.isUri(url)) {
+    return res.status(422).json({ error: 'Valid URL must be provided' });
   }
 
   let courseName;
   let instructor;
 
-  axios(url)
+  return axios(url)
     .then((response) => {
       const $ = cheerio.load(response.data);
 

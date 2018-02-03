@@ -1,11 +1,16 @@
 {
   "presets": [
-    ["es2015", { "modules": false }],
+    "env",
     "react",
     "stage-0"
   ],
   "env": {
     "development": {
+      "presets": [
+        ["env", { "modules": false }],
+        "react",
+        "stage-0"
+      ],
       "plugins": ["babel-plugin-styled-components", "react-hot-loader/babel"]
     }
   }
