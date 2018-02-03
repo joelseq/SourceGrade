@@ -15,7 +15,18 @@ import GradesStats from './GradesStats';
 
 class GradesResult extends React.Component {
   static propTypes = {
-    grades: PropTypes.object,
+    /**
+     * Grades for a particular class
+     * @type {object}
+     */
+    grades: PropTypes.shape({
+      courseName: PropTypes.string,
+      instructor: PropTypes.string,
+      // Categories grades
+      csGrades: PropTypes.arrayOf(PropTypes.object),
+      // Assessments grades
+      asGrades: PropTypes.arrayOf(PropTypes.object),
+    }),
     /**
      * Location object passed in from react-router
      * @type {object}
@@ -38,6 +49,13 @@ class GradesResult extends React.Component {
      * @type {[type]}
      */
     error: PropTypes.string,
+    selectedClass: PropTypes.shape({
+      name: PropTypes.string,
+      Rank: PropTypes.string,
+      scores: PropTypes.arrayOf(PropTypes.number),
+      Points: PropTypes.string,
+      Score: PropTypes.string,
+    }),
   }
 
   static defaultProps = {
@@ -48,6 +66,7 @@ class GradesResult extends React.Component {
     fetchGrades() {},
     removeGrades() {},
     error: '',
+    selectedClass: null,
   }
 
   static filterScore(score) {

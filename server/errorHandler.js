@@ -1,3 +1,5 @@
+// The exported function needs to have 'next' param
+// eslint-disable-next-line
 module.exports = (err, req, res, next) => {
   if (err.response && err.response.status === 404) {
     return res.status(404).json({ error: 'Invalid URL' });

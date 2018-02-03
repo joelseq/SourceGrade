@@ -1,13 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ReactRouterPropTypes from 'react-router-prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {
   Grid,
   Row,
   Col,
-  Panel,
 } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
 
@@ -24,7 +22,6 @@ class UserClasses extends React.Component {
     addedUserClass: PropTypes.bool,
     deletedUserClass: PropTypes.bool,
     userClassError: PropTypes.string,
-    match: ReactRouterPropTypes.match.isRequired,
   }
 
   static defaultProps = {
@@ -67,8 +64,6 @@ class UserClasses extends React.Component {
   }
 
   renderClasses() {
-    const { match } = this.props;
-
     if (this.props.userClasses) {
       return (
         this.props.userClasses.map((current) => {
