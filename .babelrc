@@ -1,9 +1,4 @@
 {
-  "presets": [
-    "env",
-    "react",
-    "stage-0"
-  ],
   "env": {
     "development": {
       "presets": [
@@ -12,6 +7,20 @@
         "stage-0"
       ],
       "plugins": ["babel-plugin-styled-components", "react-hot-loader/babel"]
+    },
+    "production": {
+      "presets": [
+        "env",
+        "react",
+        "stage-0"
+      ]
+    },
+    "test": {
+      "presets": [
+        "env",
+        "react",
+        "stage-0"
+      ]
     }
   }
 }
