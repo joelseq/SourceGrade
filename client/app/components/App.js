@@ -9,7 +9,8 @@ import GradesResult from './grades-result/GradesResult';
 import Signup from './auth/Signup';
 import Login from './auth/Login';
 import Logout from './auth/Logout';
-import PrivateRoute from './auth/PrivateRoute';
+import ConnectedAuthRoute from './auth/ConnectedAuthRoute';
+import ConnectedUnauthRoute from './auth/ConnectedUnauthRoute';
 import UserClasses from './user-classes/UserClasses';
 
 const theme = {
@@ -25,10 +26,10 @@ const App = () => (
       <Switch>
         <Route exact path="/" component={Home} />
         <Route path="/grades" component={GradesResult} />
-        <Route path="/signup" component={Signup} />
-        <Route path="/login" component={Login} />
+        <ConnectedUnauthRoute path="/signup" redirectTo="/classes" component={Signup} />
+        <ConnectedUnauthRoute path="/login" redirectTo="/classes" component={Login} />
         <Route path="/logout" component={Logout} />
-        <PrivateRoute path="/classes" component={UserClasses} />
+        <ConnectedAuthRoute path="/classes" redirectTo="/login" component={UserClasses} />
       </Switch>
     </div>
   </ThemeProvider>
